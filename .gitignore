@@ -23,6 +23,7 @@
 # *.ps
 # *.eps
 # *.pdf
+paper/praca-inzynierska.pdf
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
