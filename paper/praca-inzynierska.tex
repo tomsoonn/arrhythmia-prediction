@@ -42,9 +42,14 @@ W wypadku krótkotrwa³ych arytmii stosuje siê monitorowanie pracy serca przez ca³
 Istnieje potrzeba zautomatyzowania procesu wykrywania arytmii w wiêkszym stopniu i za pomoc± bardziej niezawodnych metod, które wykorzystywa³yby wiedzê dziedzinow±. Proces ten dodatkowo mo¿e byæ usprawniony przez system predykcji wyst±pienia arytmii, który umo¿liwia³by wcze¶niejsze wykrywanie arytmii i reagowanie na jej potencjalne wyst±pienie z wyprzedzeniem. Umo¿liwi³oby to znaczne ograniczenie kosztownego czasu pracy lekarzy i mog³oby zwiêkszyæ jej efektywno¶æ. Poniewa¿ problem ten wymaga posiadania wiedzy dziedzinowej do rozwi±zania bardzo obiecuj±cym podej¶ciem jest wykorzystanie metod uczenia maszynowego. Metody te mog± "uczyæ" siê wiedzy specjalistycznej z oznaczonych danych. Jest to szczególnie przydatne, gdy wiedza ta jest ciê¿ka do reprezentacji za pomoc± klasycznych metod, ze wzglêdu na czynniki takie jak du¿a ilo¶æ danych wej¶ciowych, brak jasnych powi±zañ miêdzy danymi czy konieczno¶æ reprezentacji ludzkiego rozumowania.
 
 \subsection{Motywacja projektu}
-% TODO uzupe³niæ
+Podstawow± motywacj± do stworzenia takiego produktu by³ brak podobnych rozwi±zañ dostêpnych obecnie na rynku oraz chêæ rozwijania siê w tematyce uczenia maszynowego.
+Bardzo ma³o jest materia³ów dotycz±cych problematyki naszego projektu, który mo¿e staæ podstaw± dla polepszenia zdrowia oraz pozwoli na wcze¶niejsze wykrywanie powa¿niejszych schorzeñ. Nasze rozwi±zanie mo¿e siê przydaæ osobom, które s± zagro¿one arytmi± i obawiaj± siê o swoje zdrowie. Ponadto stworzenie takiego programu pozwoli nam poszerzyæ wiedzê w dziedzinie uczenia maszynowego, które staje siê coraz popularniejsze. W naszym projekcie zdecydowali¶my siê wykorzystaæ sieæ neuronow±, co wydaje siê byæ bardzo ciekawym pomys³em. Coraz wiêcej siê o niej s³yszy oraz technologia to jest coraz lepiej rozwijana i udoskonalana. Rozwi±zanie takie ma bardzo du¿y potencja³, jednak pojawiæ siê mog± te¿ liczne problemy ze stworzeniem takiego systemu. Bardzo wa¿n± kwesti±, je¿eli chodzi o nasz projekt jest odpowiednio oznaczona i du¿a baza danych.
+Sieæ neuronowa aby uzyskaæ skuteczno¶æ musi zostaæ wytrenowana na odpowiedniej ilo¶ci danych. Dodatkowo dane te musz± byæ szczegó³owo oznakowane. Jako ¿e nie ma podobnych rozwi±zañ na rynku, nie mamy te¿ pewno¶ci ¿e mo¿liwe jest skuteczne przewidywanie arytmii.
+
 \subsection{Wizja produktu}
 % TODO uzupe³niæ
+Celem naszego projektu jest stworzenie aplikacji na komputery z systemem Windows, wykorzystuj±c± sieæ neuronow± do przewidywania wyst±pienia arytmii serca. Program po odpowiednim przetrenowaniu na zbiorze danych ma byæ w stanie przewidywaæ mo¿liwe nieprawid³owo¶ci w dzia³aniu serca z wyprzedzeniem. U¿ytkownik bêdzie móg³ odczytywaæ predykcje dostarczone przez algorytm. Mo¿liwe równie¿ bêdzie wy¶wietlanie wykresów EKG oraz zarz±dzanie nimi, jak i odczytanie z nich oznaczeñ wyst±pienia arytmii. Docelowo program ma umo¿liwiaæ monitorowanie i analizowanie w czasie rzeczywistym. Aplikacja bêdzie mia³a klasyczny wygl±d aplikacji Windows z menu w górnej czê¶ci. Przebieg wykresu bêdzie mo¿na przewijaæ na pasku, a oznaczenia bêd± obecne pod nim.
+
 \subsection{Studium wykonalno¶ci}
 
 % Jak z³o¿ony jest problem
@@ -66,9 +71,19 @@ Podsumowj±c projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzgl
 
 \subsection{Analiza zagro¿eñ}
 % TODO uzupe³niæ
-\emph{Charakterystyka problemu, motywacja projektu (w tym przegl±d
-  istniej±cych rozwi±zañ prowadz±ca do uzasadnienia celu prac),
-  wizja produktu, studium wykonalno¶ci i analiza zagro¿eñ.}  % niniejsza linijka to tylko komentarz, który nale¿y usun±æ
+Podczas tworzenia aplikacji przewiduj±cej wyst±pienie arytmii przy u¿yciu sieci neuronowej w ma³ym zespole istnieje wiele zagro¿eñ, wymienionych poni¿ej:
+\begin{itemize}
+\item Brak wiedzy dziedzinowej - jako studenci informatyki nie posiadamy ¿adnej wiedzy z zakresu medycyny i chorób serca, nie wiemy szczegó³owo jak dzia³a ludzki organizm oraz jak pracuje narz±d, który pompuje krew w jego wnêtrzu. Mo¿e to bardzo utrudniæ pracê oraz prowadziæ do pewnych b³êdów w rozumowaniu.
+
+\item Brak wystarczaj±cej ilo¶ci danych - potrzebujemy du¿ej ilo¶ci danych aby program móg³ siê nauczyæ przewidywaæ arytmie. Dodatkowo dane te musz± byæ dok³adnie oznaczone, gdy¿ nie jeste¶my w stanie zrobiæ tego sami, a bardzo ciê¿ko o takie dane.
+
+\item Niewystarczaj±ca skuteczno¶æ sieci neuronowej - mo¿e siê okazaæ ¿e nie jeste¶my w stanie uzyskaæ skuteczno¶ci która by³aby satysfakcjonuj±ca, byæ mo¿e nie ma specjalnych prawid³owo¶ci które pozwoli³yby przewidywaæ nieprawid³owo¶ci w pracy serca lub sieæ neuronowa nie poradzi sobie z tak skomplikowanym problemem.
+
+\item Ró¿norodno¶æ typów arytmii - rodzajów arytmii jest wiele, nie wszystkie s± dok³adnie zbadane i opisane. Prawdopodobnie niektórych nie da siê przewidzieæ i nie bêdziemy mogli braæ wszystkich pod uwagê.
+\end{itemize}
+%\emph{Charakterystyka problemu, motywacja projektu (w tym przegl±d
+%istniej±cych rozwi±zañ prowadz±ca do uzasadnienia celu prac),
+% wizja produktu, studium wykonalno¶ci i analiza zagro¿eñ.}
 
 \section{\SectionTitleScope}
 \label{sec:zakres-funkcjonalnosci}
