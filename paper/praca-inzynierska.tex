@@ -5,6 +5,7 @@
 
 \usepackage[latin2]{inputenc}
 \usepackage{url}
+\usepackage{indentfirst}
 
 \author{Konrad Dobro¶, Tomasz Nizio}
 
@@ -25,13 +26,44 @@
 \section{\SectionTitleProjectVision}
 \label{sec:cel-wizja}
 \subsection{Charakterystyka problemu}
-% TODO uzupe³niæ
+
+% Czym jest arytmia
+Arytmia serca jest to stan, w którym praca serca jest nieregularna, a czêstotliwo¶æ wychodzi poza zakres 60-100 uderzeñ na minutê bez przyczyny zewnêtrznej. Stan taki mo¿e stanowiæ zagro¿enie dla ¿ycia, chocia¿ nie jest to regu³±. 
+Stan w którym tempo bicia serca wynosi ponad 100 uderzeñ na minutê nazywany jest tachykardi±. D³u¿sza praca serca w przyspieszonym rytmie mo¿e prowadziæ do szkodliwych efektów. Tachykardia mo¿e byæ odczuwana jako nieprzyjemne i mocne bicie serca popularnie okre¶lane ko³ataniem.
+Zbyt wolny rytm pracy serca, który wynosi poni¿ej 50 uderzeñ na minutê nazywany jest bradykardi±. Zazwyczaj stan ten nie zagra¿a ¿yciu, choæ mo¿e powodowaæ niepo¿±dane objawy.
+% TODO ¼ród³o: wikipedia
+
+% EKG
+Najczê¶ciej stosowan± metod± diagnozowania arytmii jest elektrokardiogram - zapis elektrycznej czynno¶ci serca. Pozwala on dok³adnie okre¶liæ rodzaj arytmii, a wiêc i jej szkodliwo¶æ oraz potencjalne przyczyny. W wypadku krótkotrwa³ych arytmii stosuje siê monitory holterowskie umo¿liwiaj±ce ca³odobowe monitorowanie pracy serca.
+
+W wypadku krótkotrwa³ych arytmii stosuje siê monitorowanie pracy serca przez ca³± dobê. Podej¶cie takie produkuje ogromn± ilo¶æ danych, do analizy której potrzebna jest specjalistyczna wiedza, a rêczne oznaczenie danych jest bardzo czasoch³onne. Obecnie w procesie tym wykorzystywane s± metody matematyczne, które wykorzystuj± w bardzo ogranicznonym zakresie wiedze dziedzinow± i wymagaj± bardzo uwa¿nego nadzorowania.
+
+% Jaka jest potrzeba
+Istnieje potrzeba zautomatyzowania procesu wykrywania arytmii w wiêkszym stopniu i za pomoc± bardziej niezawodnych metod, które wykorzystywa³yby wiedzê dziedzinow±. Proces ten dodatkowo mo¿e byæ usprawniony przez system predykcji wyst±pienia arytmii, który umo¿liwia³by wcze¶niejsze wykrywanie arytmii i reagowanie na jej potencjalne wyst±pienie z wyprzedzeniem. Umo¿liwi³oby to znaczne ograniczenie kosztownego czasu pracy lekarzy i mog³oby zwiêkszyæ jej efektywno¶æ. Poniewa¿ problem ten wymaga posiadania wiedzy dziedzinowej do rozwi±zania bardzo obiecuj±cym podej¶ciem jest wykorzystanie metod uczenia maszynowego. Metody te mog± "uczyæ" siê wiedzy specjalistycznej z oznaczonych danych. Jest to szczególnie przydatne, gdy wiedza ta jest ciê¿ka do reprezentacji za pomoc± klasycznych metod, ze wzglêdu na czynniki takie jak du¿a ilo¶æ danych wej¶ciowych, brak jasnych powi±zañ miêdzy danymi czy konieczno¶æ reprezentacji ludzkiego rozumowania.
+
 \subsection{Motywacja projektu}
 % TODO uzupe³niæ
 \subsection{Wizja produktu}
 % TODO uzupe³niæ
 \subsection{Studium wykonalno¶ci}
-% TODO uzupe³niæ
+
+% Jak z³o¿ony jest problem
+Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i publicznych publikacji na ten temat. Dodatkowo problem jest interdyscyplinarny, obejmuj±c w swoim zakresie zagadnienia informatyczne, jak i zagadnienia zwi±zane z medycyn±. Z tego wzglêdu konieczne jest uwa¿ne przestudiowanie wiedzy dziedzinowej, z któr± autorzy nie s± zaznajomieni, a które do pe³nego zrozumienia wymaga osobnych studiów.
+
+Ze wzglêdu na konieczno¶æ posiadania wiedzy dziedzinowej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ" siê reprezentacji wiedzy dziedzinowej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
+
+Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjny model organizacyji, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci pozyskanych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia rówie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
+
+Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwaj±c elastyczniejsze podej¶cie do problemu.
+
+% TODO Wkleiæ obrazki
+
+Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zestaw technologi Keras + Tensorflow. Umo¿liwia on bardzo ³atwe tworzenie sieci neuronowych, co jeszcze bardziej zmniejsza czas potrzebny na przetestowanie ró¿nych architektur sieci. S± to aktywnie rozwijane technologie posiadaj±ce bardzo rozleg³e mo¿liwo¶ci, a przy tym posiadaj± szczegó³owe dokumentacje. Dodatkowo biblioteki te s± szeroko wykorzystywane w profesjonalnych rozwi±zaniach co prowadzi do du¿ej liczby dostêpnych informacji i aktywnego wsparcia.
+
+Jako technolgiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zosta³a biblioteka PyQt, dostarczaj±ca interfejs dla jêzyka Python do biblioteki Qt. Dziêki temu dostêpna jest rozleg³a dokumentacja, której brakuje w innych rozwa¿anych bibliotekach dla jêyka Python. Dodatkowo jest to biblioteka aktywnie rozwijana w przeciwieñstwie do przestarza³ej biblioteki dostêpnej domy¶lnie w jêzyku Python - Tkinter.
+
+Podsumowj±c projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
+
 \subsection{Analiza zagro¿eñ}
 % TODO uzupe³niæ
 \emph{Charakterystyka problemu, motywacja projektu (w tym przegl±d
@@ -41,13 +73,36 @@
 \section{\SectionTitleScope}
 \label{sec:zakres-funkcjonalnosci}
 \subsection{Charakterystyka u¿ytkowników systemu}
-% TODO uzupe³niæ
+% TODO uzupe³niæ -- KD
+% Chwilowo nie mam pojêcia co tu opisaæ, wiêc na razie omijam
 \subsection{Wymagania funkcjonalne}
-% TODO uzupe³niæ
+Wymagania funkcjonalne zosta³y przedstawione za pomoc± historyjek u¿ytkownika (ang. user stories), które okre¶laj± co u¿ytkownik chcê zrobiæ za pomoc± systemu i w jakim celu.
+
+\begin{itemize}
+	\item Chcê wy¶wietliæ zapisany wykres EKG ¿eby go przeanalizowaæ
+	\item Chcê zobaczyæ wykres EKG aktualizowny w czasie rzeczywistym ¿eby na bierz±co widzieæ jego zmiany i wyniki analizy
+	\item Chcê zobaczyæ oznaczenia poszczególnych uderzeñ serca ¿eby lepiej zorientowaæ siê w wykresie i ³atwiej odnale¼æ interesuj±ce fragmenty
+	\item Chcê zobaczyæ oznaczenia wykrytej arytmii serca ¿eby zlokalizowaæ poszczególne epizody oraz móc ³atwiej je przeanalizowaæ
+	\item Chcê zobaczyæ podstawowe informacjê o poszczególnych arytmiach ¿eby lepiej zrozumieæ wyniki analizy i odpowiednio na nie zareagowaæ
+	\item Chcê zobaczyæ wyniki predykcji arytmii w przysz³o¶ci ¿eby odpowiednio wcze¶niej zareagowaæ na spodziewane nieprawid³owo¶ci
+\end{itemize}
+
 \subsection{Wymagania niefunkcjonalne}
-% TODO uzupe³niæ
-\emph{Kontekst u¿ytkowania produktu (aktorzy, wspó³pracuj±ce systemy)
-  oraz specyfikacja wymagañ funkcjonalnych i niefunkcjonalnych.}  % niniejsza linijka to tylko komentarz, który nale¿y usun±æ
+
+Wymagania aplikacji:
+
+\begin{itemize}
+	\item Musi dzia³aæ na systemach Windows
+	\item Interfejs musi byæ intuicyjny, przejrzysty i dostarczaæ wszystkich wymaganych informacji
+	\item Wy¶wietlane wykresy musz± byæ skalowalne
+\end{itemize}
+
+Wymagania technologiczne:
+
+\begin{itemize}
+	\item Musi istnieæ prosty sposób rozszerzania systemu o nowe formaty zapisu wykresów EKG
+	\item System musi umo¿liwiaæ proste rozszerzanie o nowe metody analizy, w tym o ró¿ne algorytmy wykrywania i predykcji
+\end{itemize}
 
 \section{\SectionTitleRealizationAspects}
 \label{sec:wybrane-aspekty-realizacji}
