@@ -1,6 +1,5 @@
-from .helpers import PipeObject, Pipeline, FunctionPipe
+from ..model.helpers import PipeObject, Pipeline, FunctionPipe
 
-# TODO Write or get some testing framework
 
 class MulPipe(PipeObject):
     """
@@ -24,15 +23,6 @@ class AddPipe(PipeObject):
 
     def compute(self, value):
         return [self.add + value]
-
-
-def expect_eq(test_name, expected, result):
-    if expected == result:
-        print("[PASS] " + test_name)
-        return True
-    else:
-        print("[FAIL] " + test_name + ": expected " + str(expected) + " != " + str(result) + " actual")
-        return False
 
 
 def test_simple_pipes():
@@ -60,7 +50,7 @@ def test_simple_pipes():
     mul2.push_value(12)
 
     # Then
-    expect_eq("Test simple pipes", (12 * 2 + 3) * 4, result)
+    assert(result == (12 * 2 + 3) * 4)
 
 
 def test_branching_pipes():
@@ -95,8 +85,8 @@ def test_branching_pipes():
     mul2.push_value(12)
 
     # Then
-    expect_eq("Test branching pipes 1", 12 * 2 * 4, result1)
-    expect_eq("Test branching pipes 2", 12 * 2 + 3, result2)
+    assert(result1 ==  12 * 2 * 4)
+    assert(result2 == 12 * 2 + 3)
 
 
 def test_pipeline():
@@ -128,10 +118,5 @@ def test_pipeline():
     pipeline.push_value(12)
 
     # Then
-    expect_eq("Test pipeline 1", (12 * 2 + 3) * 4, result1)
-    expect_eq("Test pipeline 2", 12 * 2 + 3 + 9, result2)
-
-
-test_simple_pipes()
-test_branching_pipes()
-test_pipeline()
+    assert(result1 == (12 * 2 + 3) * 4)
+    assert(result2 == 12 * 2 + 3 + 9)
