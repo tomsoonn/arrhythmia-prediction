@@ -12,7 +12,10 @@ class BeatType:
         self.symbol = symbol
         self.name = name
 
-# TODO Create table of BeatTypes
+
+beat_types = [BeatType('N', 'Normal beat'), BeatType('SVEB', 'Supraventricular ectopic beat'),
+              BeatType('VEB', 'Ventricular ectopic beat'), BeatType('F','Fusion'),
+              BeatType('Q', 'Unknown beat')]
 
 
 class PipeObject:
