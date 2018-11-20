@@ -58,11 +58,11 @@ class TimeSeries:
         if other.frequency != self.frequency:
             other_ = other.convert(self.frequency, interpolation)
 
-        # TODO Implement
+        self.points += other_.points
         return self
 
     def __len__(self):
         return len(self.points)
 
     def __getitem__(self, i):
-        return self.points[i]
+        return TimeSeries(self.points[i], self.frequency)

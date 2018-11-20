@@ -46,3 +46,12 @@ def test_linear_back(sinus_ts):
     # Then
     assert(len(result) == len(sinus_ts))
     assert(result.points == sinus_ts.points)
+
+
+def test_slicing():
+    """
+    Test slicing operator for TimeSeries.
+    """
+    ts = TimeSeries([1, 2, 3], 1)
+    ts2 = ts[:2]
+    assert ts2.points == [1, 2]
