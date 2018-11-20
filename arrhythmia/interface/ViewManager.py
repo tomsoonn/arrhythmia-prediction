@@ -21,31 +21,31 @@ def load_ui(ui_filename):
     return window
 
 
-class ViewManager:
+class ViewManager(QStackedWidget):
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
         self.predict = PredictWindow(self, load_ui('resources/predict.ui'))
         self.types = TypesWindow(self, load_ui('resources/types.ui'))
         self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
 
-        self.window = QStackedWidget()
-        self.window.addWidget(self.menu.window)
-        self.window.addWidget(self.predict.window)
-        self.window.addWidget(self.types.window)
-        self.window.addWidget(self.explore.window)
+        self.addWidget(self.menu.window)
+        self.addWidget(self.predict.window)
+        self.addWidget(self.types.window)
+        self.addWidget(self.explore.window)
 
-        self.window.resize(800, 600)
-        self.window.show()
+        self.resize(800, 600)
+        self.show()
 
     def show_menu(self):
-        self.window.setCurrentWidget(self.menu.window)
+        self.setCurrentWidget(self.menu.window)
 
     def show_predict(self):
-        self.window.setCurrentWidget(self.predict.window)
+        self.setCurrentWidget(self.predict.window)
 
     def show_types(self):
-        self.window.setCurrentWidget(self.types.window)
+        self.setCurrentWidget(self.types.window)
 
     def show_explore(self):
-        self.window.setCurrentWidget(self.explore.window)
+        self.setCurrentWidget(self.explore.window)

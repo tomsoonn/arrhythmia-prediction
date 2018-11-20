@@ -30,7 +30,9 @@ py==1.6.0
 # pygpu==0.7.6 TODO Resolve version conflicts
 pyparsing==2.2.0
 pyreadline==2.1
+PySide2==5.11.2
 pytest==3.8.0
+pytest-qt==3.2.1
 python-dateutil==2.7.3
 pytz==2018.4
 PyYAML==3.12
@@ -48,4 +50,3 @@ webencodings==0.5.1
 Werkzeug==0.14.1
 wfdb==2.1.1
 wincertstore==0.2
-pyside2==5.11.2
