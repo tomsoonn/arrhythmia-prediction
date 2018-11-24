@@ -1,3 +1,5 @@
+import numpy as np
+
 from .helpers import PipeObject
 from .time_series import TimeSeries
 
@@ -82,3 +84,27 @@ class IntervalSplitter(PipeObject):
     def compute(self, value):
         self.extend(value)
         return self.find_trim()
+
+
+class StandardNormalizer(PipeObject):
+    """
+    Normalizer performing standard normalization, that is:
+    x' = (x - mean(x)) / std(x)
+    Output values should have mean close to 0 and standard deviation close to 1.
+    Does not change the length of input sequences.
+    """
+    @staticmethod
+    def normalize(values):
+        """
+        Normalize values to achieve mean = 0 and standard deviation = 1
+        :param values: Numpy array of values to normalize
+        :return: Numpy array of normalized values
+        """
+        mean = values.mean()
+        std = values.std()
+        return (values - mean) / std
+
+    def compute(self, value):
+        points = value.points
+        normalized = self.normalize(points)
+        return [TimeSeries(normalized, value.frequency)]
