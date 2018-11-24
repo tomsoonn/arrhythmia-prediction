@@ -53,4 +53,3 @@ dependencies:
   - numpy=1.14.3=py36h9fa60d3_2
   - numpy-base=1.14.3=py36h5c71026_0
   - scipy=1.1.0=py36h672f292_0
-

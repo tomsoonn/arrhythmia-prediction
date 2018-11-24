@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>777</width>
-    <height>518</height>
+    <width>1000</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,12 +16,18 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="0">
-     <widget class="QListView" name="listView">
+     <widget class="QListView" name="types_list">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="spacing">
+       <number>7</number>
       </property>
      </widget>
     </item>
@@ -31,9 +37,6 @@
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QTextBrowser" name="textBrowser"/>
     </item>
     <item row="3" column="0">
      <widget class="QPushButton" name="back_button">
@@ -72,6 +75,16 @@
       </property>
      </widget>
     </item>
+    <item row="2" column="2">
+     <widget class="QTextEdit" name="text_field">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -79,7 +92,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>777</width>
+     <width>1000</width>
      <height>26</height>
     </rect>
    </property>

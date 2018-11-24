@@ -1,8 +1,8 @@
-import sys
-
 from PySide2.QtWidgets import QPushButton
 from PySide2.QtCore import QObject
 
+
+# TODO everything here
 
 class ExploreWindow(QObject):
 

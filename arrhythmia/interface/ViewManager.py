@@ -1,8 +1,8 @@
 import os
 
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile, QObject
-from PySide2.QtWidgets import QMainWindow, QStackedWidget
+from PySide2.QtCore import QFile
+from PySide2.QtWidgets import QStackedWidget
 
 from arrhythmia.interface.ExploreWindow import ExploreWindow
 from arrhythmia.interface.PredictWindow import PredictWindow
@@ -35,7 +35,8 @@ class ViewManager(QStackedWidget):
         self.addWidget(self.types.window)
         self.addWidget(self.explore.window)
 
-        self.resize(800, 600)
+        self.resize(1000, 700)
+        self.setWindowTitle("Arrhythmia prediction")
         self.show()
 
     def show_menu(self):
