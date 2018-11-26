@@ -6,6 +6,7 @@
 \usepackage[latin2]{inputenc}
 \usepackage{url}
 \usepackage{indentfirst}
+\usepackage{graphicx}
 
 \author{Konrad Dobro¶, Tomasz Nizio}
 
@@ -56,7 +57,14 @@ Celem naszego projektu jest stworzenie aplikacji na komputery z systemem Windows
 % Jak z³o¿ony jest problem
 Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i publicznych publikacji na ten temat. Dodatkowo problem jest interdyscyplinarny, obejmuj±c w swoim zakresie zagadnienia informatyczne, jak i zagadnienia zwi±zane z medycyn±. Z tego wzglêdu konieczne jest uwa¿ne przestudiowanie wiedzy dziedzinowej, z któr± autorzy nie s± zaznajomieni, a które do pe³nego zrozumienia wymaga osobnych studiów.
 
-Ze wzglêdu na konieczno¶æ posiadania wiedzy dziedzinowej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ" siê reprezentacji wiedzy dziedzinowej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
+Ze wzglêdu na konieczno¶æ posiadania wiedzy dziedzinowej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ"\ siê reprezentacji wiedzy dziedzinowej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{mitdb.jpg}
+	\caption{Fragment oznaczonych danych EKG z bazy MIT-BIH}
+	\label{fig:mitdb}
+\end{figure}
 
 Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjny model organizacyji, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci pozyskanych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia rówie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
 
@@ -66,7 +74,22 @@ Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ 
 
 Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zestaw technologi Keras + Tensorflow. Umo¿liwia on bardzo ³atwe tworzenie sieci neuronowych, co jeszcze bardziej zmniejsza czas potrzebny na przetestowanie ró¿nych architektur sieci. S± to aktywnie rozwijane technologie posiadaj±ce bardzo rozleg³e mo¿liwo¶ci, a przy tym posiadaj± szczegó³owe dokumentacje. Dodatkowo biblioteki te s± szeroko wykorzystywane w profesjonalnych rozwi±zaniach co prowadzi do du¿ej liczby dostêpnych informacji i aktywnego wsparcia.
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{keras-tensor.jpg}
+	\caption{Technologie uczenia maszynowego}
+	\label{fig:kt}
+\end{figure}
+
+
 Jako technolgiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zosta³a biblioteka PySide2, dostarczaj±ca interfejs dla jêzyka Python do biblioteki Qt. Dziêki temu dostêpna jest rozleg³a dokumentacja, której brakuje w innych rozwa¿anych bibliotekach dla jêyka Python. Dodatkowo jest to biblioteka aktywnie rozwijana w przeciwieñstwie do przestarza³ej biblioteki dostêpnej domy¶lnie w jêzyku Python - Tkinter. Inn± rozwa¿an± opcj± by³a biblioteka PyQt, jednak nie zosta³a ona finalnie wybrana, gdy¿ posiada zbyt restrykcyjn± licencjê GPL.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{pyside.jpg}
+	\caption{Biblioteka do interfejsu grafisznego}
+	\label{fig:pyside}
+\end{figure}
 
 Podsumowj±c projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
 
