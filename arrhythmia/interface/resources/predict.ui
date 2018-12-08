@@ -15,8 +15,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
-     <widget class="QPushButton" name="go_prev_button">
+    <item row="5" column="1">
+     <widget class="QPushButton" name="settings_button">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -24,7 +24,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>&lt;</string>
+       <string>Settings</string>
       </property>
      </widget>
     </item>
@@ -41,7 +41,50 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="0" rowspan="2" colspan="5">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Data view</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLineEdit" name="start_line">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QPushButton" name="play_button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QPushButton" name="back_button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Back to menu</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" rowspan="2" colspan="8">
      <widget class="QTextEdit" name="textEdit">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -60,15 +103,8 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Data view</string>
-      </property>
-     </widget>
-    </item>
-    <item row="9" column="0">
-     <widget class="QPushButton" name="back_button">
+    <item row="0" column="5">
+     <widget class="QPushButton" name="go_prev_button">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -76,7 +112,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Back to menu</string>
+       <string>&lt;</string>
       </property>
      </widget>
     </item>
@@ -87,7 +123,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item row="0" column="7">
      <widget class="QPushButton" name="go_next_button">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -101,15 +137,15 @@
      </widget>
     </item>
     <item row="0" column="3">
-     <widget class="QPushButton" name="play_button">
+     <widget class="QLabel" name="start_label">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Play</string>
+       <string>Start at:</string>
       </property>
      </widget>
     </item>

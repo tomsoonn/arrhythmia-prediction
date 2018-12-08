@@ -1,46 +1,13 @@
-import os
-
+from PySide2.QtGui import QIntValidator
 from matplotlib.backends.backend_qt5agg import FigureCanvas
 from matplotlib.figure import Figure
 
 from arrhythmia.experimental.mitdb import get_record
 
-from PySide2.QtWidgets import QPushButton, QGraphicsView, QGraphicsScene, QFileDialog, QGridLayout, QTextEdit
+from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QTextEdit, QLineEdit, QLabel
 from PySide2.QtCore import QObject
 
-STEP = 36  # step for '<' and '>' buttons
-PLOT_WIDTH = STEP * 30  # length of shown plot
-
-
-# TODO sensible plotting
-# as for now matplotlib basic plot, just to see something
-
-
-def update_plot(start, figure):
-    ax = figure.axes[0]
-    ax.axis([start, start + PLOT_WIDTH, -1, 2])
-
-    # Matplotlib documentation says it should be
-    # ax.axis(start, start + PLOT_WIDTH, -1, 2)
-    # but there is a bug in implementation
-
-    ax.autoscale(enable=True, axis='y', tight=True)
-    figure.canvas.draw_idle()
-
-
-def plot(record_signals, start, graphics):
-    figure = Figure(dpi=800)
-    ax = figure.add_subplot(111)
-    ax.plot(record_signals)  # plot 3 seconds of record
-    ax.axis([start, start + PLOT_WIDTH, -1, 2])
-    ax.grid()
-    ax.autoscale(enable=True, axis='y', tight=True)
-    figure.tight_layout()
-    canvas = FigureCanvas(figure)
-    scene = QGraphicsScene()
-    scene.addWidget(canvas)
-    graphics.setScene(scene)
-    return figure
+from arrhythmia.interface.utils import MyQGraphicsView, update_plot, PLOT_WIDTH, STEP, Player, load_datafile_name, plot
 
 
 class PredictWindow(QObject):
@@ -51,7 +18,11 @@ class PredictWindow(QObject):
         self.manager = manager
         self.play_active = False
         self.start = 0
-        self.signals = []
+        self.sig_len = 0
+        self.player = Player(self)
+        self.back_player = Player(self)
+        self.player.updated.connect(self.next_handler)
+        self.back_player.updated.connect(self.prev_handler)
         self.figure = Figure()
         self.graphics = MyQGraphicsView()
         self.text_logs = self.window.findChild(QTextEdit, 'textEdit')
@@ -59,74 +30,93 @@ class PredictWindow(QObject):
         self.graphics.setScene(QGraphicsScene())
 
         layout = self.window.findChild(QGridLayout, 'gridLayout')
-        layout.addWidget(self.graphics, 4, 0, 1, 5)  # put in layout
+        layout.addWidget(self.graphics, 1, 0, 1, 8)  # put in layout
 
-        go_next_button = self.window.findChild(QPushButton, 'go_next_button')
-        go_prev_button = self.window.findChild(QPushButton, 'go_prev_button')
+        self.start_line = self.window.findChild(QLineEdit, 'start_line')
+        self.start_line.setValidator(QIntValidator(0, 0))
+        self.start_label = self.window.findChild(QLabel, 'start_label')
+
+        next_button = self.window.findChild(QPushButton, 'go_next_button')
+        prev_button = self.window.findChild(QPushButton, 'go_prev_button')
         back_button = self.window.findChild(QPushButton, 'back_button')
         load_button = self.window.findChild(QPushButton, 'load_button')
+        settings_button = self.window.findChild(QPushButton, 'settings_button')
         self.play_button = self.window.findChild(QPushButton, 'play_button')
 
-        go_next_button.clicked.connect(self.go_next_handler)
-        go_prev_button.clicked.connect(self.go_prev_handler)
+        next_button.pressed.connect(self.start_player)
+        next_button.released.connect(self.stop_player)
+        prev_button.pressed.connect(self.start_back_player)
+        prev_button.released.connect(self.stop_player)
         self.play_button.clicked.connect(self.play_handler)
         load_button.clicked.connect(self.load_handler)
         back_button.clicked.connect(self.back_handler)
+        self.start_line.returnPressed.connect(self.change_start)
 
-    def go_next_handler(self):
-        if self.start + STEP < len(self.signals):
+    def next_handler(self):
+        if self.start + STEP < self.sig_len - PLOT_WIDTH:
             self.start += STEP  # step 0.1 sec
             update_plot(self.start, self.figure)
+            self.start_line.setText(str(self.start))
 
-    def go_prev_handler(self):
+    def prev_handler(self):
         if self.start - STEP >= 0:
             self.start -= STEP  # step 0.1 sec
             update_plot(self.start, self.figure)
+            self.start_line.setText(str(self.start))
 
     def play_handler(self):
         if self.play_active:
-            self.play_button.setText('Play')
-            self.play_active = False
-        else:
+            self.stop_player()
+        elif self.sig_len > 0:
+            self.start_player()
             self.play_button.setText('Stop')
-            self.play_active = True
-            self.start_playing()
 
-    def start_playing(self):
-        # while self.start + STEP < len(self.signals) and self.play_active:
-        #     self.go_next_handler()
-        #     sleep(1)
-        # TODO
-        pass
+    def start_player(self):
+        self.play_active = True
+        self.player.start()
+
+    def stop_player(self):
+        self.play_active = False
+        self.play_button.setText('Play')
 
     def load_handler(self):
-        actual_dir = os.path.dirname(os.path.realpath(__file__))
-        # getting main project directory as '.../download/mitdb' is not working
-        # so as for now
-        project_dir = os.path.join(actual_dir, '../download/mitdb')
-        filepath = QFileDialog.getOpenFileName(self.window, 'Load file', project_dir, '*.dat')[0]
-        if filepath != "":
-            self.set_right_plot(filepath)
+        file_path = load_datafile_name(self.window)
+        if file_path != "":
+            self.load_plot_from_file(file_path)
+            self.set_plot()
 
-    def set_right_plot(self, filepath):
-        filename = filepath.split('/')[-1].split('.')[0]  # getting filename from path without extension
-        record = get_record(filename)[0]
-        self.signals = record.p_signal[:, 0]
-        self.start = 0
-        self.figure = plot(self.signals, self.start, self.graphics)
-        self.text_logs.clear()
-        self.text_logs.append("Loaded data from record : %s" % filename)
+    def start_back_player(self):
+        self.play_active = True
+        self.back_player.start()
+
+    def change_start(self):
+        self.start = int(self.start_line.text())
+        update_plot(self.start, self.figure)
+
+    def load_plot_from_file(self, file_path):
+        filename = file_path.split('/')[-1].split('.')[0]  # getting filename from path without extension
+        record = get_record(filename)
+        signal = record[0].p_signal[:, 0]
+
+        figure = plot(signal, None, None, (10, 3.5))  # plotting without annotations
+        self.figure = figure
+        self.sig_len = len(signal)
+        self.start_line.setValidator(QIntValidator(0, self.sig_len - PLOT_WIDTH))
+        self.log("Loaded record: {}, signal length: {} samples".format(filename, self.sig_len))
+
+    def set_plot(self):
+        canvas = FigureCanvas(self.figure)
+        scene = QGraphicsScene()
+        scene.addWidget(canvas)
+        self.graphics.setScene(scene)
+        self.graphics.fitInView(0, 0, scene.width(), scene.height())
+        self.start_line.setText(str(self.start))
+        self.start_label.setText("Start at(max {}):" .format(self.sig_len-PLOT_WIDTH))
 
     def log(self, content):
         self.text_logs.append(content)
 
     def back_handler(self):
+        if self.play_active:
+            self.play_handler()
         self.manager.show_menu()
-
-
-class MyQGraphicsView(QGraphicsView):
-    def __init__(self, parent=None):
-        super(MyQGraphicsView, self).__init__(parent)
-
-    def resizeEvent(self, event):
-        self.fitInView(0, 0, self.scene().width(), self.scene().height())

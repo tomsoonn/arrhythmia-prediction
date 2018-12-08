@@ -50,3 +50,9 @@ class ViewManager(QStackedWidget):
 
     def show_explore(self):
         self.setCurrentWidget(self.explore.window)
+
+    def closeEvent(self, event):
+        self.explore.play_active = False
+        self.predict.play_active = False
+        self.explore.player.wait()
+        self.predict.player.wait()
