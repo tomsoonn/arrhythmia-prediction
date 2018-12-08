@@ -1,4 +1,6 @@
 import math
+import numpy as np
+from scipy import fftpack
 
 
 def linear_interpolation(input_data, target_size):
@@ -29,6 +31,7 @@ class TimeSeries:
     """
     Discrete list of values occurring at certain frequency.
     """
+
     def __init__(self, points, frequency):
         self.points = points
         self.frequency = frequency

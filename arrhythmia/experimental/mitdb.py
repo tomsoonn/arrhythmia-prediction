@@ -26,6 +26,8 @@ ds1 = ['101', '106', '108', '109', '112', '114', '115', '116', '118', '119', '12
 ds2 = ['100', '103', '105', '111', '113', '117', '121', '123', '200', '202', '210',
        '212', '213', '213', '219', '221', '222', '228', '231', '232', '233', '234']
 
+full_ds = ds1 + ds2
+
 
 def get_record(name):
     record = wfdb.rdrecord(data_dir + name)
@@ -44,7 +46,7 @@ def get_records(data_set):
 mapping = {BeatType('N', 'Normal beat'): {'N', 'L', 'R'},
            BeatType('SVEB', 'Supraventricular ectopic beat'): {'e', 'j', 'A', 'a', 'J', 'S'},
            BeatType('VEB', 'Ventricular ectopic beat'): {'V', 'E'},
-           BeatType('F','Fusion'): {'F'},
+           BeatType('F', 'Fusion'): {'F'},
            BeatType('Q', 'Unknown beat'): {'/', 'f', 'Q'}}
 
 
@@ -57,5 +59,3 @@ def mit_to_aami(symbol):
 
 if __name__ == '__main__':
     download_mitdb()
-
-
