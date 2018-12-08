@@ -12,6 +12,16 @@ class BeatType:
         self.symbol = symbol
         self.name = name
 
+    def __eq__(self, other):
+        if isinstance(other, BeatType):
+            return other.symbol == self.symbol
+        if isinstance(other, str):
+            return other == self.symbol
+        return False
+
+    def __hash__(self) -> int:
+        return hash(self.symbol)
+
 
 beat_types = [BeatType('N', 'Normal beat'), BeatType('SVEB', 'Supraventricular ectopic beat'),
               BeatType('VEB', 'Ventricular ectopic beat'), BeatType('F','Fusion'),

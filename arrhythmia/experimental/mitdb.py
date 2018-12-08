@@ -7,6 +7,7 @@ to download the data base (or use download_mitdb() function).
 
 import os
 import wfdb
+import numpy as np
 from ..model.helpers import BeatType
 
 # Little hacky - get the root directory of the project independent of cwd
@@ -35,7 +36,7 @@ def get_record(name):
     annotation = zip(annotation.sample, annotation.symbol)
     annotation = [(sample, mit_to_aami(symbol)) for sample, symbol in annotation if mit_to_aami(symbol)]
     samples, symbols = zip(*annotation)
-    return record, samples, symbols
+    return record.p_signal[:,0], np.array(samples), np.array(symbols)
 
 
 def get_records(data_set):
