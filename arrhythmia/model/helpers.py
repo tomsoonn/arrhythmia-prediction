@@ -77,6 +77,13 @@ class PipeObject:
             for next in self.next:
                 next.push_value(result)
 
+    def __call__(self, value):
+        """
+        Helper function providing functional API for PipeObject's.
+        Should work exactly the same as push_value(value).
+        """
+        self.push_value(value)
+
 
 class FunctionPipe(PipeObject):
     """
@@ -94,26 +101,30 @@ class FunctionPipe(PipeObject):
 
 
 class Pipeline(PipeObject):
-    def __init__(self, first=None):
+    def __init__(self, first, last):
         super().__init__()
         self.head = first
-        if first: self.set_next(first)
+        self.last = last
 
-    def compute(self, value):
-        return [value]
+    def set_next(self, pipe):
+        self.last.set_next(pipe)
+
+    def push_value(self, value):
+        self.head.push_value(value)
+
+
+class PipelineBuilder:
+    def __init__(self, pipes=None):
+        self.pipes = pipes if pipes is not None else []
 
     def append_one(self, pipe):
-        if not self.next:
-            self.set_next(pipe)
-            self.head = pipe
-        else:
-            self.head.set_next(pipe)
-            self.head = pipe
-        return self
+        self.pipes.append(pipe)
 
-    def split(self, pipes):
-        if not self.next:
-            self.set_next(pipes)
-        pipelines = [Pipeline(first=pipe) for pipe in pipes]
-        self.head.set_next(pipelines)
-        return pipelines
+    def build(self):
+        previous = self.pipes[0]
+        for pipe in self.pipes[1:]:
+            previous.set_next(pipe)
+            previous = pipe
+        first = self.pipes[0]
+        last = self.pipes[-1]
+        return Pipeline(first, last)

@@ -75,7 +75,6 @@ class IntervalSplitter(PipeObject):
     def find_trim(self):
         result = []
         # TODO Prettify this
-        print(self.series.points)
         while len(self.series) >= self.interval:
             found_series = self.series[:self.interval]
             self.series = self.series[self.padding:]

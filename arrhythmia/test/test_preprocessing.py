@@ -43,7 +43,9 @@ def test_interval():
     splitter.push_value(series2)
 
     # Then:
-    assert results == expected
+    assert len(results) == len(expected)
+    for result, expect in zip(results, expected):
+        assert np.all(result == expect)
 
 
 def test_standard_normalizer():

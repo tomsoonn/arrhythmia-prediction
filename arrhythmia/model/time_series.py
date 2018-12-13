@@ -33,7 +33,7 @@ class TimeSeries:
     """
 
     def __init__(self, points, frequency):
-        self.points = points
+        self.points = np.array(points) if isinstance(points, list) else points
         self.frequency = frequency
 
     def convert(self, target_frequency, interpolation):
@@ -61,7 +61,7 @@ class TimeSeries:
         if other.frequency != self.frequency:
             other_ = other.convert(self.frequency, interpolation)
 
-        self.points += other_.points
+        self.points = np.concatenate([self.points, other_.points])
         return self
 
     def __len__(self):
