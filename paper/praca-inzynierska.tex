@@ -7,6 +7,8 @@
 \usepackage{url}
 \usepackage{indentfirst}
 \usepackage{graphicx}
+\usepackage{float}
+
 
 \author{Konrad Dobro¶, Tomasz Nizio}
 
@@ -24,6 +26,9 @@
 
 \maketitle
 
+\tableofcontents
+\newpage
+
 \section{\SectionTitleProjectVision}
 \label{sec:cel-wizja}
 \subsection{Charakterystyka problemu}
@@ -37,7 +42,7 @@ Zbyt wolny rytm pracy serca, który wynosi poni¿ej 50 uderzeñ na minutê nazywany 
 % EKG
 Najczê¶ciej stosowan± metod± diagnozowania arytmii jest elektrokardiogram - zapis elektrycznej czynno¶ci serca. Pozwala on dok³adnie okre¶liæ rodzaj arytmii, a wiêc i jej szkodliwo¶æ oraz potencjalne przyczyny. W wypadku krótkotrwa³ych arytmii stosuje siê monitory holterowskie umo¿liwiaj±ce ca³odobowe monitorowanie pracy serca.
 
-W wypadku krótkotrwa³ych arytmii stosuje siê monitorowanie pracy serca przez ca³± dobê. Podej¶cie takie produkuje ogromn± ilo¶æ danych, do analizy której potrzebna jest specjalistyczna wiedza, a rêczne oznaczenie danych jest bardzo czasoch³onne. Obecnie w procesie tym wykorzystywane s± metody matematyczne, które wykorzystuj± w bardzo ogranicznonym zakresie wiedze dziedzinow± i wymagaj± bardzo uwa¿nego nadzorowania.
+W wypadku krótkotrwa³ych arytmii stosuje siê monitorowanie pracy serca przez ca³± dobê. Podej¶cie takie produkuje ogromn± ilo¶æ danych, do analizy której potrzebna jest specjalistyczna wiedza, a rêczne oznaczenie danych jest bardzo czasoch³onne. Obecnie w procesie tym wykorzystywane s± metody matematyczne, które wykorzystuj± w bardzo ograniczonym zakresie wiedzê dziedzinow± i wymagaj± bardzo uwa¿nego nadzorowania.
 
 % Jaka jest potrzeba
 Istnieje potrzeba zautomatyzowania procesu wykrywania arytmii w wiêkszym stopniu i za pomoc± bardziej niezawodnych metod, które wykorzystywa³yby wiedzê dziedzinow±. Proces ten dodatkowo mo¿e byæ usprawniony przez system predykcji wyst±pienia arytmii, który umo¿liwia³by wcze¶niejsze wykrywanie arytmii i reagowanie na jej potencjalne wyst±pienie z wyprzedzeniem. Umo¿liwi³oby to znaczne ograniczenie kosztownego czasu pracy lekarzy i mog³oby zwiêkszyæ jej efektywno¶æ. Poniewa¿ problem ten wymaga posiadania wiedzy dziedzinowej do rozwi±zania bardzo obiecuj±cym podej¶ciem jest wykorzystanie metod uczenia maszynowego. Metody te mog± "uczyæ"\ siê wiedzy specjalistycznej z oznaczonych danych. Jest to szczególnie przydatne, gdy wiedza ta jest ciê¿ka do reprezentacji za pomoc± klasycznych metod, ze wzglêdu na czynniki takie jak du¿a ilo¶æ danych wej¶ciowych, brak jasnych powi±zañ miêdzy danymi czy konieczno¶æ reprezentacji ludzkiego rozumowania.
@@ -59,18 +64,16 @@ Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i 
 
 Ze wzglêdu na konieczno¶æ posiadania wiedzy dziedzinowej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ"\ siê reprezentacji wiedzy dziedzinowej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
 
+Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjne modele organizacyjne, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci pozyskanych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia równie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
+
+Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwiaj±c elastyczniejsze podej¶cie do problemu.
+
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.9\linewidth]{mitdb.jpg}
 	\caption{Fragment oznaczonych danych EKG z bazy MIT-BIH}
 	\label{fig:mitdb}
 \end{figure}
-
-Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjny model organizacyji, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci pozyskanych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia rówie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
-
-Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwaj±c elastyczniejsze podej¶cie do problemu.
-
-% TODO Wkleiæ obrazki
 
 Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zestaw technologi Keras + Tensorflow. Umo¿liwia on bardzo ³atwe tworzenie sieci neuronowych, co jeszcze bardziej zmniejsza czas potrzebny na przetestowanie ró¿nych architektur sieci. S± to aktywnie rozwijane technologie posiadaj±ce bardzo rozleg³e mo¿liwo¶ci, a przy tym posiadaj± szczegó³owe dokumentacje. Dodatkowo biblioteki te s± szeroko wykorzystywane w profesjonalnych rozwi±zaniach co prowadzi do du¿ej liczby dostêpnych informacji i aktywnego wsparcia.
 
@@ -81,17 +84,16 @@ Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zest
 	\label{fig:kt}
 \end{figure}
 
-
-Jako technolgiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zosta³a biblioteka PySide2, dostarczaj±ca interfejs dla jêzyka Python do biblioteki Qt. Dziêki temu dostêpna jest rozleg³a dokumentacja, której brakuje w innych rozwa¿anych bibliotekach dla jêyka Python. Dodatkowo jest to biblioteka aktywnie rozwijana w przeciwieñstwie do przestarza³ej biblioteki dostêpnej domy¶lnie w jêzyku Python - Tkinter. Inn± rozwa¿an± opcj± by³a biblioteka PyQt, jednak nie zosta³a ona finalnie wybrana, gdy¿ posiada zbyt restrykcyjn± licencjê GPL.
+Jako technologiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zosta³a biblioteka PySide2, dostarczaj±ca interfejs dla jêzyka Python do biblioteki Qt. Dziêki temu dostêpna jest rozleg³a dokumentacja, której brakuje w innych rozwa¿anych bibliotekach dla jêzyka Python. Dodatkowo jest to biblioteka aktywnie rozwijana w przeciwieñstwie do przestarza³ej biblioteki dostêpnej domy¶lnie w jêzyku Python - Tkinter. Inn± rozwa¿an± opcj± by³a biblioteka PyQt, jednak nie zosta³a ona finalnie wybrana, gdy¿ posiada zbyt restrykcyjn± licencjê GPL.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\linewidth]{pyside.jpg}
-	\caption{Biblioteka do interfejsu grafisznego}
+	\caption{Biblioteka do interfejsu graficznego}
 	\label{fig:pyside}
 \end{figure}
 
-Podsumowj±c projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
+Podsumowuj±c projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
 
 \subsection{Analiza zagro¿eñ}
 
@@ -122,7 +124,7 @@ Wymagania funkcjonalne zosta³y przedstawione za pomoc± historyjek u¿ytkownika (a
 
 \begin{itemize}
 	\item Chcê wy¶wietliæ zapisany wykres EKG ¿eby go przeanalizowaæ
-	\item Chcê zobaczyæ wykres EKG aktualizowny w czasie rzeczywistym ¿eby na bierz±co widzieæ jego zmiany i wyniki analizy
+	\item Chcê zobaczyæ wykres EKG aktualizowany w czasie rzeczywistym ¿eby na bie¿±co widzieæ jego zmiany i wyniki analizy
 	\item Chcê zobaczyæ oznaczenia poszczególnych uderzeñ serca ¿eby lepiej zorientowaæ siê w wykresie i ³atwiej odnale¼æ interesuj±ce fragmenty
 	\item Chcê zobaczyæ oznaczenia wykrytej arytmii serca ¿eby zlokalizowaæ poszczególne epizody oraz móc ³atwiej je przeanalizowaæ
 	\item Chcê zobaczyæ podstawowe informacjê o poszczególnych arytmiach ¿eby lepiej zrozumieæ wyniki analizy i odpowiednio na nie zareagowaæ
@@ -152,6 +154,114 @@ Wymagania technologiczne:
   wykorzystane rozwi±zania technologiczne wraz z uzasadnieniem
   ich wyboru, istotne mechanizmy i zastosowane algorytmy.} % niniejsza linijka to tylko komentarz, który nale¿y usun±æ
 
+Projekt zosta³ podzielony na 3 g³ówne modu³y : 
+
+\begin{itemize}
+	\item interface - jest w pe³ni odpowiedzialny za interfejs graficzny
+	\item model - zawiera wszystkie elementy dotycz±ce przetwarzania danych oraz predykcji
+	\item experimental - znajduje siê w nim kod odpowiedzialny za testowanie i trenowanie ró¿nych konfiguracji sieci neuronowych
+\end{itemize}
+
+\subsection{Interfejs}
+
+Interfejs graficzny sk³ada siê na 5 widoków: g³ówne menu, okno predykcji, okno logów predykcji, okno do przegl±dania wykresów EKG oraz okno z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{manager_code.jpg}
+	\caption{Kod klasy managera widoków}
+	\label{fig:manager_code}
+\end{figure}
+
+<<diagram klas modu³u interface???>>
+<<przyk³adowy plik .ui???>>
+<<wygl±d qt Designer???>>
+
+\subsubsection{G³ówne menu}
+
+Menu jest bardzo proste. Zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g³ównymi widokami. Ka¿dy z tych widoków umo¿liwia powrót do g³ównego menu.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{menu.jpg}
+	\caption{G³ówne menu programu}
+	\label{fig:menu}
+\end{figure}
+
+\subsubsection{Okno predykcji}
+
+Podstawowe i najwa¿niejsze okno w programie. Umo¿liwia ono wczytanie danych EKG z pliku w formacie .dat(domy¶lny format bazy MIT-BIH z której korzystamy). Na podstawie wczytanych danych generowany jest wykres podgl±du. Wykres jest skalowany do aktualnie wy¶wietlanych danych, tak aby by³y one dobrze widoczne. Nad nim znajduje siê pasek nawigacyjny umo¿liwiaj±cy: przeskok do wybranego fragmentu poprzez wpisanie warto¶ci pocz±tkowej wykresu, przewijanie wstecz lub do przodu oraz odtwarzanie danych w przód co pozwala symulowaæ dzia³anie w czasie rzeczywistym.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{navigation.jpg}
+	\caption{Pasek do nawigacji po wykresie}
+	\label{fig:navigation}
+\end{figure}
+
+Poni¿ej wykresu znajduje siê pasek wy¶wietlaj±cy warto¶ci, które na wyj¶ciu daje model predykcji dla aktualnych danych. Rozwa¿amy 4 typy arytmii o oznaczeniach: SVEB, VEB, F oraz Q.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{prediction.jpg}
+	\caption{Widok okna predykcji}
+	\label{fig:prediction}
+\end{figure}
+
+Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawieraj±ce logi wszystkiego co siê do tej pory dzia³o w zak³adce dotycz±cej predykcji. Dodatkowo w oknie mamy mo¿liwo¶æ wyczyszczenia dotychczasowej historii oraz zapisania jej do pliku tekstowego.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{logs.jpg}
+	\caption{Okno wy¶wietlaj±ce logi programu}
+	\label{fig:logs}
+\end{figure}
+
+\subsubsection{Przegl±danie danych}
+
+W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia wczytanie danych z plików wraz z informacjami na temat poszczególnych uderzeñ. Na podstawie danych generowany jest wykres na którym ka¿de uderzenie jest oznaczone w odpowiedni sposób. Pasek nawigacyjny dzia³a w taki sam sposób jak w oknie dotycz±cym predykcji i umo¿liwia swobodne przegl±danie danych.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{explore.jpg}
+	\caption{Okno do przegl±dania oznaczonych danych}
+	\label{fig:explore}
+\end{figure}
+
+\subsubsection{Dodatkowe informacje}
+
+Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytmii. Z lewej strony mamy listê zawieraj±c± rodzaje nieprawid³owo¶ci. Po wybraniu elementu z listy po prawej stronie zostan± wy¶wietlone odpowiednie informacje. Dane wczytywane s± z plików tekstowych.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{types.jpg}
+	\caption{Okno z informacjami na temat ró¿nych typów arytmii}
+	\label{fig:types}
+\end{figure}
+
+\subsection{Model}
+
+\subsection{Trenowanie}
+
+\subsubsection{Baza treningowa}
+
+Jako bazê treningow± wykorzystali¶my ogólnodostêpn± bazê danych EKG z oznaczonymi danymi - MIT-BIH Arrhythmia Database. Baza ta zawiera 48 pó³-godzinnych, 2 kana³owych zapisów EKG. 23 rekordy zosta³y wybrane losowo ze zbioru 4000 24-godzinnych nagrañ. Pozosta³e 25 rekordów zosta³ wybranych z tego samego zbioru, jednak zawieraj±cych rzadsze, ale równie¿ klinicznie istotne przypadki arytmii.
+
+Rekordy zosta³y zapisane z czêstotliwo¶ci± 360 próbek na sekundê, dla ka¿dego z kana³ów z 11 bitow± rozdzielczo¶ci± w zakresie 10mV. Ka¿de nagranie zosta³o niezale¿nie oznaczone przez 2 lub wiêcej kardiologów. Sprzeczno¶ci zosta³y rozwi±zane w taki sposób aby uzyskaæ czytelne komputerowo referencje dla ka¿dego uderzenia znajduj±cego siê w bazie. W przybli¿eniu jest to 110,00 oznaczeñ w ca³ej bazie.
+
+Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
+
+\begin{itemize}
+	\item plik .dat zawieraj±cy warto¶ci kolejnych próbek
+	\item plik .atr zawieraj±cy oznaczenie typu arytmii oraz miejsce jej wyst±pienia na przebiegu EKG
+	\item plik .hea zawieraj±cy nag³ówek opisuj±cy format danych
+\end{itemize}
+
+Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêzyku Python, która umo¿liwia w bardzo prosty sposób pobranie ca³ej bazy.
+
+\subsubsection{Podzia³ danych}
+
+
 \section{\SectionTitleWorkOrganization}
 \label{sec:organizacja-pracy}
 \emph{Struktura zespo³u (role poszczególnych osób), krótki opis i
@@ -159,6 +269,17 @@ Wymagania technologiczne:
   zrealizowane etapy prac ze wskazaniem udzia³u poszczególnych
   cz³onków zespo³u, wykorzystane praktyki i narzêdzia w zarz±dzaniu
   projektem.}  % niniejsza linijka to tylko komentarz, który nale¿y usun±æ
+
+\subsection{Charakterystyka projektu}
+\subsection{Struktura zespo³u i role}
+\subsection{Etapy przebiegu pracy}
+\subsection{Wykorzystane narzêdzia}
+
+Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach na repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
+
+Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}.
+
+<<notebook, pycharm ???>>
 
 \section{\SectionTitleResults}
 \label{sec:wyniki-projektu}
