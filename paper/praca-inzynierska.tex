@@ -8,7 +8,26 @@
 \usepackage{indentfirst}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{listings}
+\usepackage{color}
 
+%\renewcommand{\arraystretch}{1.2}
+\renewcommand{\lstlistingname}{Fragment}
+
+\lstdefinestyle{custompy}{
+	language=python,
+	tabsize=4,
+	basicstyle=\footnotesize,
+	keywordstyle=\color{blue},
+	breaklines=true,
+	frame=single,
+	showstringspaces=false,
+	breakatwhitespace=true,
+	xleftmargin=\parindent,
+	belowskip=\baselineskip
+}
+
+\lstset{captionpos=b, style=custompy}
 
 \author{Konrad Dobro¶, Tomasz Nizio}
 
@@ -168,15 +187,51 @@ Projekt zosta³ podzielony na 3 g³ówne modu³y :
 
 Interfejs graficzny sk³ada siê na 5 widoków: g³ówne menu, okno predykcji, okno logów predykcji, okno do przegl±dania wykresów EKG oraz okno z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\linewidth]{manager_code.jpg}
-	\caption{Kod klasy managera widoków}
-	\label{fig:manager_code}
+	\includegraphics[width=0.8\linewidth]{interface_class_diagram.png}
+	\caption{Diagram klas modu³u interface}
+	\label{fig:interface_diagram_class}
 \end{figure}
 
-%TODO dodac diagram klas modu³u interface
-% mo¿na te¿ ewentualnie dodaæ przk³adowy plik .ui czy screena z QtDesigner
+\begin{lstlisting}[caption={Kod managera widoków}]
+class ViewManager(QStackedWidget):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
+        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'))
+        self.types = TypesWindow(self, load_ui('resources/types.ui'))
+        self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
+
+        self.addWidget(self.menu.window)
+        self.addWidget(self.predict.window)
+        self.addWidget(self.types.window)
+        self.addWidget(self.explore.window)
+
+        self.resize(1100, 700)
+        self.setWindowTitle("Arrhythmia prediction")
+        self.show()
+
+    def show_menu(self):
+        self.setCurrentWidget(self.menu.window)
+
+    def show_predict(self):
+        self.setCurrentWidget(self.predict.window)
+
+    def show_types(self):
+        self.setCurrentWidget(self.types.window)
+
+    def show_explore(self):
+        self.setCurrentWidget(self.explore.window)
+
+    def closeEvent(self, event):
+        self.explore.closeEvent()
+        self.predict.closeEvent()
+        
+\end{lstlisting}
+
+% mo¿na ewentualnie dodaæ przk³adowy plik .ui czy screena z QtDesigner
 
 \subsubsection{G³ówne menu}
 
@@ -244,7 +299,7 @@ Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytm
 
 %TODO
 
-\subsection{Trenowanie}
+\subsection{Eksperymenty}
 
 \subsubsection{Baza treningowa}
 
@@ -264,7 +319,64 @@ Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
 Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêzyku Python, która umo¿liwia w bardzo prosty sposób pobranie ca³ej bazy.
 
 \subsubsection{Typy arytmii}
+
+Baza MIT-BIH zawiera dane z oznaczeniami 15 ró¿nych typów uderzeñ serca. Jest to zbyt du¿a ilo¶æ, aby uwzglêdniaæ je wszystkie. Postanowili¶my wiêc zastosowaæ standard AAMI i przekszta³ciæ dane w odpowiedni sposób.
+
+Zawêzi³o to zbiór typów uderzeñ do 5:
+
+\begin{itemize}
+	\item N - Normal beat
+	\item SVEB- Supraventricular ectopic beat
+	\item VEB - Ventricular ectopic beat
+	\item F - Fusion
+	\item Q - Unknown beat
+\end{itemize}
+
+\begin{lstlisting}[caption={Kod mapuj±cy oznaczenia z bazy MIT-BIH do standardu AAMI}]
+mapping = {
+	BeatType('N', 'Normal beat'): {'N', 'L', 'R'},
+	BeatType('SVEB', 'Supraventricular ectopic beat'): {'e', 'j', 'A', 'a', 'J', 'S'},
+	BeatType('VEB', 'Ventricular ectopic beat'): {'V', 'E'},
+	BeatType('F', 'Fusion'): {'F'},
+	BeatType('Q', 'Unknown beat'): {'/', 'f', 'Q'}
+	}
+
+def mit_to_aami(symbol):
+	for key, value in mapping.items():
+		if symbol in value:
+			return key
+	return None
+	
+\end{lstlisting}
+ 
 \subsubsection{Podzia³ danych}
+
+Aby w pe³ni wykorzystaæ dane znajduj±ce siê w bazie, ka¿dy rekord jest dzielony na fragmenty o okre¶lonej d³ugo¶ci, wybierane co okre¶lony krok czasowy. W ten sposób otrzymujemy wiele unikalnych fragmentów stanowi±cych podci±gi ca³ego rekordu
+
+\begin{lstlisting}[caption={Funkcja dziel±cy rekordy na fragmenty}]
+def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True):
+    for record in records:
+        for start in range(0, len(record[0]) - pred_len - post_len, increment):
+            pred_end = start + pred_len
+            post_end = pred_end + post_len
+             pred = record[0][start:pred_end]
+            post = record[0][pred_end:post_end]
+             pred_inds = np.logical_and(start <= record[1], record[1] < pred_end)
+            post_inds = np.logical_and(pred_end <= record[1], record[1] < post_end)
+            if check_pred:
+                pred_labels = record[2][pred_inds]
+                if np.all(pred_labels == 'N'):
+                    pred_result = pred, record[1][pred_inds], pred_labels
+                    post_result = post, record[1][post_inds], record[2][post_inds]
+                    yield pred_result, post_result
+            else:
+                pred_result = pred, record[1][pred_inds], record[2][pred_inds]
+                post_result = post, record[1][post_inds], record[2][post_inds]
+                yield pred_result, post_result
+
+\end{lstlisting}
+
+%TODO KD Kfold
 
 \subsection{Testy}
 
