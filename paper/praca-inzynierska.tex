@@ -29,6 +29,8 @@
 \tableofcontents
 \newpage
 
+%TODO streszczenie
+
 \section{\SectionTitleProjectVision}
 \label{sec:cel-wizja}
 \subsection{Charakterystyka problemu}
@@ -173,9 +175,8 @@ Interfejs graficzny sk³ada siê na 5 widoków: g³ówne menu, okno predykcji, okno l
 	\label{fig:manager_code}
 \end{figure}
 
-<<diagram klas modu³u interface???>>
-<<przyk³adowy plik .ui???>>
-<<wygl±d qt Designer???>>
+%TODO dodac diagram klas modu³u interface
+% mo¿na te¿ ewentualnie dodaæ przk³adowy plik .ui czy screena z QtDesigner
 
 \subsubsection{G³ówne menu}
 
@@ -241,6 +242,8 @@ Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytm
 
 \subsection{Model}
 
+%TODO
+
 \subsection{Trenowanie}
 
 \subsubsection{Baza treningowa}
@@ -248,6 +251,7 @@ Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytm
 Jako bazê treningow± wykorzystali¶my ogólnodostêpn± bazê danych EKG z oznaczonymi danymi - MIT-BIH Arrhythmia Database. Baza ta zawiera 48 pó³-godzinnych, 2 kana³owych zapisów EKG. 23 rekordy zosta³y wybrane losowo ze zbioru 4000 24-godzinnych nagrañ. Pozosta³e 25 rekordów zosta³ wybranych z tego samego zbioru, jednak zawieraj±cych rzadsze, ale równie¿ klinicznie istotne przypadki arytmii.
 
 Rekordy zosta³y zapisane z czêstotliwo¶ci± 360 próbek na sekundê, dla ka¿dego z kana³ów z 11 bitow± rozdzielczo¶ci± w zakresie 10mV. Ka¿de nagranie zosta³o niezale¿nie oznaczone przez 2 lub wiêcej kardiologów. Sprzeczno¶ci zosta³y rozwi±zane w taki sposób aby uzyskaæ czytelne komputerowo referencje dla ka¿dego uderzenia znajduj±cego siê w bazie. W przybli¿eniu jest to 110,00 oznaczeñ w ca³ej bazie.
+%TODO ¼ród³o: MIT-BIH
 
 Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
 
@@ -259,8 +263,12 @@ Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
 
 Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêzyku Python, która umo¿liwia w bardzo prosty sposób pobranie ca³ej bazy.
 
+\subsubsection{Typy arytmii}
 \subsubsection{Podzia³ danych}
 
+\subsection{Testy}
+
+%TODO
 
 \section{\SectionTitleWorkOrganization}
 \label{sec:organizacja-pracy}
@@ -271,15 +279,126 @@ Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêz
   projektem.}  % niniejsza linijka to tylko komentarz, który nale¿y usun±æ
 
 \subsection{Charakterystyka projektu}
+
+Zaproponowany temat projektu obejmowa³ zagadnieniami z dziedziny nie powi±zanej z naszym kierunkiem studiów. Praca ma te¿ w pewnym stopniu charakter eksperymentalny, gdy¿ nie jest udokumentowane w jakim stopniu metody uczenia maszynowego maj± zastosowanie w predykcji arytmii serca na podstawie samego wykresu EKG. Wiele czasu po¶wiêcili¶my na testowanie skuteczno¶ci predykcji ró¿nych modeli sieci. Dodatkowo musieli¶my te¿ zbadaæ wp³yw parametrów danych wej¶ciowych, takich jak d³ugo¶æ fragmentu EKG na wej¶ciu, okres w którym staramy siê przewidzieæ wyst±pienie arytmii, jak i stopieñ redukcji szumów czy interpolacja danych do mniejszych czêstotliwo¶ci. 
+
+Dodatkowo aby predykcja by³a mo¿liwa musimy mieæ oznaczone dane treningowe, na których bêdziemy mogli trenowaæ nasz± sieæ. Jednak ciê¿ko znale¼æ ogólnodostêpne dane, które spe³nia³yby to wymaganie. Wykorzystali¶my bazê, któr± zaproponowa³ nam promotor. Ze wzglêdu na niedu¿y rozmiar danych, starali¶my siê w pe³ni wykorzystaæ u¿ywan± przez nas bazê danych.
+
 \subsection{Struktura zespo³u i role}
+
+W sk³ad zespo³u wchodzi³o 2 studentów Informatyki. Starali¶my siê w miarê równo podzieliæ siê zadaniami. 
+% TODO dodaæ uzasadnienie
+\begin{itemize}
+	\item \textbf{Tomasz Nizio}	
+	
+	Implementacja redukcja szumów o niskich czêstotliwo¶ciach przy pomocy FFT, projekt ca³ego interfejsu graficznego, prze³±czanie pomiêdzy widokami, rysowanie wykresu EKG oraz nawigacja po nim, wy¶wietlanie wyników oraz logów predykcji
+	\item  \textbf{Konrad Dobro¶}
+	
+	Implementacja pobierania bazy z sieci, wczytywania, interpolacji oraz normalizacji danych, podzia³ danych na treningowe i testowe, struktura silnika predykcji, testowanie ró¿nych modeli siec neuronowych, dobór parametrów wej¶cia
+	
+\end{itemize}
+
+Wspólnie zajmowali¶my siê wyszukiwaniem informacji przydatnych w rozwoju projektu, tworzeniem prymitywnego prototypu, pisaniem testów dla elementów które stworzyli¶my, a tak¿e tworzeniem dokumentacji.
+Dodatkowo za ka¿dym razem recenzowali¶my siê nawzajem w sprawie wprowadzanych zmian.
+
 \subsection{Etapy przebiegu pracy}
+
+Prace nad projektem przebiega³y dosyæ nieregularnie. Pod koniec semestru letniego uda³o siê uzyskaæ prototyp o minimalnej funkcjonalno¶ci. W trakcie przerwy semestralnej prace nad projektem spowolni³y. Najwiêksza czê¶æ projektu powsta³a w trakcie semestru zimowego. 
+
+Wyszczególniæ mo¿emy nastêpuj±ce etapy prac:
+
+
+\subsubsection{Zapoznanie z tematyk± projektu oraz konfiguracja ¶rodowiska}
+
+Czas trwania: 03.2018 - 04.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item zapoznanie siê z pojêciem arytmii, na czym polega, jak mo¿na j± wykrywaæ
+	\item zapoznanie siê z postaci± wykresu EKG, co dok³adnie przedstawia
+	\item zapoznanie siê z dzia³aniem sieci neuronowych oraz jak mo¿na j± wykorzystaæ do przewidywania wyst±pienia arytmii
+	\item utworzenie ¶rodowiska - repozytorium, CI, narzêdzia organizacji pracy
+	\item research technologii
+\end{itemize}
+
+\subsubsection{Zintegrowanie bazy danych}
+
+Czas trwania: 04.2018 - 05.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item zapoznanie siê ze struktur± wykorzystywanej bazy EKG
+	\item pobranie bazy danych
+	\item wyodrêbnienie wymaganych danych z bazy
+\end{itemize}
+
+\subsubsection{Stworzenie prototypu}
+
+Czas trwania: 05.2018 - 06.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item stworzenie prostego modelu sieci
+	\item okre¶lenie formatu danych na wej¶ciu sieci neuronowej
+	\item implementacja podstawowych operacji na danych
+	\item przygotowanie danych dla takiego modelu
+	\item przetestowanie dzia³ania przygotowanej sieci
+\end{itemize}
+
+\subsubsection{Struktura projektu oraz interfejsu}
+
+Czas trwania: 07.2018 - 09.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item wyodrêbnienie w projekcie poszczególnych modu³ów
+	\item okre¶lenie architektury modelu predykcji
+	\item wstêpny projekt interfejsu graficznego
+\end{itemize}
+
+\subsubsection{Implementacja interfejsu oraz testy innych modeli sieci}
+
+Czas trwania: 09.2018 - 10.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item implementacja podstawowego interfejsu graficznego
+	\item redukcja szumów o niskich czêstotliwo¶ciach na przebiegu EKG
+	\item stworzenie bardziej rozbudowanego modelu sieci neuronowej
+	\item testy skuteczno¶ci predykcji z ró¿nymi parametrami
+\end{itemize}
+
+\subsubsection{Po³±czenie interfejsu z silnikiem predykcji}
+
+Czas trwania: 10.2018 - 11.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item integracja modelu z interfejsem
+	\item wytrenowanie ostatecznych sieci neuronowych
+	\item dodanie informacji o arytmiach
+\end{itemize}
+
+\subsubsection{Poprawki oraz dokumentacja}
+
+Czas trwania: 11.2018 - 12.2018
+\newline
+Osi±gniête cele:
+\begin{itemize}
+	\item poprawki interfejsu
+	\item poprawki modelu
+	\item stworzenie dokumentacji
+\end{itemize}
+
 \subsection{Wykorzystane narzêdzia}
 
 Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach na repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
 
-Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}.
+Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}. Do jego tworzenia wykorzystywali¶my miêdzy innymi takie narzêdzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, którego pliki zosta³y zaimportowane do projektu.
 
-<<notebook, pycharm ???>>
+%TODO KD dopisz tu co¶ dlaczego korzysta³e¶ z Jupytera(³adnie wygl±da itd.) oraz inne istotne narzêdzia(proste edytory tekstu chyba nie s± istotne)
+
+Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}
 
 \section{\SectionTitleResults}
 \label{sec:wyniki-projektu}
