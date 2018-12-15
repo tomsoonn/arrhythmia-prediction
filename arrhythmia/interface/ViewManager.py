@@ -26,7 +26,7 @@ class ViewManager(QStackedWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
-        self.predict = PredictWindow(self, load_ui('resources/predict.ui'))
+        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'))
         self.types = TypesWindow(self, load_ui('resources/types.ui'))
         self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
 
@@ -35,7 +35,7 @@ class ViewManager(QStackedWidget):
         self.addWidget(self.types.window)
         self.addWidget(self.explore.window)
 
-        self.resize(1000, 700)
+        self.resize(1100, 700)
         self.setWindowTitle("Arrhythmia prediction")
         self.show()
 
@@ -52,7 +52,5 @@ class ViewManager(QStackedWidget):
         self.setCurrentWidget(self.explore.window)
 
     def closeEvent(self, event):
-        self.explore.play_active = False
-        self.predict.play_active = False
-        self.explore.player.wait()
-        self.predict.player.wait()
+        self.explore.closeEvent()
+        self.predict.closeEvent()

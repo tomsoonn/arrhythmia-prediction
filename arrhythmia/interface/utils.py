@@ -5,10 +5,12 @@ import numpy as np
 from PySide2.QtCore import QThread, Signal
 from PySide2.QtWidgets import QFileDialog, QGraphicsView
 
+from arrhythmia.experimental.mitdb import data_dir
 from arrhythmia.interface.wfdb_plot_patched import plot_items
 
-STEP = 36  # step for '<' and '>' buttons
-PLOT_WIDTH = 36 * 60  # length of shown plot
+PLOT_WIDTH = 6  # length of shown plot, in seconds
+FREQUENCY = 360
+TIME_UNITS = 'seconds'
 
 
 def update_plot(start, figure):
@@ -21,12 +23,13 @@ def update_plot(start, figure):
 
 def plot(signal, samples, symbols, figsize=(10, 6)):
     figure = plot_items(signal=signal, ann_samp=samples, ann_sym=symbols,
-                        sig_units=['mV'], figsize=figsize, fs=360,
+                        sig_units=['mV'], time_units=TIME_UNITS, figsize=figsize, fs=360,
                         # ecg_grids='all', # not working on this big data
                         return_fig=True)
     figure.tight_layout()
     ax = figure.axes[0]
     ax.set_ylabel("")
+    ax.set_xlabel("time[{}]".format(TIME_UNITS))
     ax.set_xlim(0, PLOT_WIDTH)
     # ax.autoscale(enable=True, axis='y', tight=True)
     autoscale_y(ax, 0.1)
@@ -64,12 +67,7 @@ def autoscale_y(ax, margin=0.1):
 
 
 def load_datafile_name(window):
-    actual_dir = os.path.dirname(os.path.realpath(__file__))
-    # getting main project directory as '.../download/mitdb' is not working
-    # so as for now
-    project_dir = os.path.join(actual_dir, '../download/mitdb')
-    file_path = QFileDialog.getOpenFileName(window, 'Load file', project_dir, '*.dat')[0]
-
+    file_path = QFileDialog.getOpenFileName(window, 'Load file', data_dir, '*.dat')[0]
     return file_path
 
 
@@ -84,11 +82,12 @@ class MyQGraphicsView(QGraphicsView):
 class Player(QThread):
     updated = Signal()
 
-    def __init__(self, window, parent=None):
+    def __init__(self, window, refresh_interval=0.5, parent=None):
         super(Player, self).__init__(parent)
         self.window = window
+        self.interval = refresh_interval
 
     def run(self):
         while self.window.play_active:
             self.updated.emit()
-            sleep(0.5)
+            sleep(self.interval)
