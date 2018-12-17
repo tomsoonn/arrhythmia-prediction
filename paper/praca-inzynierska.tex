@@ -10,6 +10,7 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{siunitx}
 
 %\renewcommand{\arraystretch}{1.2}
 \renewcommand{\lstlistingname}{Fragment}
@@ -297,7 +298,48 @@ Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytm
 
 \subsection{Model}
 
-%TODO
+Modu³ modelu odpowiada za dostarczenie dla systemu silnika dokonuj±cego predykcjê arytmii. Wykonuje on przetwarzania danych wej¶ciowych, takiego jak likwidacja szumów i normalizacja, oraz wykonuje predykcje zwracaj±c przewidywane szansê na wyst±pienie poszczególnych rodzajów arytmii. Jest to wiêc problem klasyfikacji wieloklasowej.
+
+Poniewa¿ jak zosta³o wspomniane projekt wymaga przetestowania du¿ej ilo¶ci sposobów dokonywania klasyfikacji, modu³ modelu musi dostarczaæ mo¿liwo¶æ stworzenia ró¿nych silników predykcji.
+W tym celu przyjêta zosta³a architektura warstwowa umo¿liwiaj±ca ponowne wykorzystywanie istniej±cych warstw w celu tworzenia nowych silników.
+
+Poni¿ej przedstawiony zosta³ przyk³adowy schemat silnika predykcji ilustruj±cy przep³yw danych przez niego wraz z opisem poszczególnych warstw.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.4\linewidth]{model_example_flow.png}
+	\caption{Schemat warstw w przyk³adowym silniku arytmii}
+	\label{fig:model_example_flow}
+\end{figure}
+
+\begin{description}
+	\item[Fragmentacja danych] - z wej¶ciowych danych zostaje wydzielony fragment u¿ywany do predykcji. Rozmiar tego fragmentu odpowiada oknu na podstawie, którego wykonywana predykcja.
+	\item[Zmniejszenie rozdzielczo¶ci] - czêstotliwo¶æ próbek zmniejszona jest w celu redukcji ilo¶ci cech i likwidacji szumów wysokich czêstotliwo¶ci. Przyk³adowo czêstotliwo¶æ mo¿e zostaæ zmniejszona z \SI{360}{\hertz} do \SI{60}{\hertz}, a nowe warto¶ci byæ wyznaczone jako liniowa interpolacja oryginalnych warto¶ci.
+	\item[Usuwanie niskich czêstotliwo¶ci] - za pomoc± transformaty Fouriera i jej odwrócenia likwidowane s± niskie czêstotliwo¶ci spowodowane miêdzy innymi przez oddech pacjenta. Przyk³adowo zlikwidowane mog± zostaæ czêstotliwo¶ci poni¿ej \SI{0.3}{\hertz} poprzez wyzerowanie odpowiednich warto¶ci po zastosowaniu szybkiej transformaty Fouriera.
+	\item [Normalizacja danych] - przed wprowadzeniem danych do sieci neuronowej dane musz± zostaæ znormalizowane zgodnie z oczekiwan± normalizacj± dla sieci. Przyk³adowa funkcja normalizuj±ca to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to ¶rednia warto¶ci $x$, a $x_{\sigma}$ to ich odchylenie standardowe.
+	\item [Klasyfikacja] - sieæ neuronowa dokonuje klasyfikacji wieloklasowej i jako rezultat otrzymywane s± przewidywane szansê na wyst±pienie danej arytmii w przewidywanym oknie, okre¶lonym w trakcie trenowania sieci.
+\end{description}
+
+W celu umo¿liwienia takiej modu³owo¶ci dla budowy silników predykcji zdefiniowany zosta³ wspólny interfejs dla wszystkich warstw i zrealizowany jako abstrakcyjna klasa \emph{PipeObject}. Jej podstawowym za³o¿eniem jest przetwarzanie danych i przekazywanie ich do nastêpnych obiektów w ci±gu. W tym celu posiada ona nastêpuj±ce metody:
+\begin{itemize}
+	\itemsep0em
+	\item[] \emph{set\_next(PipeObject)} - ustawia nastêpny obiekt w silniku, do którego przekazywane bêd± wyniki obliczeñ
+	\item[] \emph{push\_value(Object)} - dostarcza obiekt na którym wykonane zostan± obliczenia, a ich wynik zostanie przekazany dalej
+	\item[] \emph{compute(Object): Object} - abstrakcyjna metoda, która w klasach dziedzicz±cych powinna wykonywaæ zadane obliczenie i zwracaæ wynik
+\end{itemize}
+
+Dodatkowo zdefiniowana zosta³a klasa \emph{TimeSeries} reprezentuj±ca ci±g danych w czasie w celu dostarczenia jednolitego interfejsu do obliczeñ wewn±trz modelu.
+Rysunek \ref{fig:pipes_uml} zawiera diagram klas przedstawiaj±cy relacjê miêdzy klasami implementuj±cymi przyk³adowe warstwy.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{pipes_uml.png}
+	\caption{Diagram klas dla przyk³adowych warstw modelu}
+	\label{fig:pipes_uml}
+\end{figure}
+
+% TODO KD Interfejs
+
 
 \subsection{Eksperymenty}
 
