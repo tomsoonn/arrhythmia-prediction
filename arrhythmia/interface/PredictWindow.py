@@ -1,16 +1,27 @@
+from random import randint
+
 from PySide2.QtGui import QIntValidator
+from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QLineEdit, QLabel, QLCDNumber
+from PySide2.QtCore import QObject
 from matplotlib.backends.backend_qt5agg import FigureCanvas
 
 from arrhythmia.experimental.mitdb import get_record
-
-from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QTextEdit, QLineEdit, QLabel, QLCDNumber
-from PySide2.QtCore import QObject
-
 from arrhythmia.interface.LogWindow import LogWindow
 from arrhythmia.interface.utils import MyQGraphicsView, update_plot, PLOT_WIDTH, Player, load_datafile_name, plot, \
     FREQUENCY
 
 STEP = 0.05  # step for '<', '>' buttons and player
+MINI_PLOT_WIDTH = 10
+
+def update_mini_plot(fig, values):
+    ax = fig.axes[1]
+    ax.clear()
+    ax.set_ylim(0, 100)
+    ax.set_xlim(0, MINI_PLOT_WIDTH)
+    ax.set_yticks([50, 100])
+    #ax.set_yticklabels(["0","50","100"])
+    lines = ax.plot(values)
+    lines[0].set_color("r")
 
 
 class PredictWindow(QObject):
@@ -23,14 +34,17 @@ class PredictWindow(QObject):
         self.play_active = False
         self.start = 0
         self.sig_len = 0
+        self.out_hist = []
         self.player = Player(self, refresh_interval=0.05)
         self.back_player = Player(self, refresh_interval=0.05)
+        self.output_updater = Player(self, refresh_interval=1)
         self.figure = None
         self.graphics = MyQGraphicsView()
 
         self.graphics.setScene(QGraphicsScene())
         self.player.updated.connect(self.plot_next)
         self.back_player.updated.connect(self.plot_prev)
+        self.output_updater.updated.connect(self.update_output)
 
         # loading components of ui
         layout = self.window.findChild(QGridLayout, 'gridLayout')
@@ -61,6 +75,9 @@ class PredictWindow(QObject):
         self.play_button.clicked.connect(self.play_button_handler)
         self.start_line.returnPressed.connect(self.set_start_from_text_line)
 
+    def update_output(self):
+        self.set_output(randint(0, 100), randint(0, 100), randint(0, 100))
+
     def logs_handler(self):
         self.log_window.show()
 
@@ -75,11 +92,13 @@ class PredictWindow(QObject):
         record = get_record(filename)
         signal = record[0]
 
-        figure = plot(signal, None, None, (10, 4))  # plotting without annotations
+        figure = plot(signal, None, None, fig_size=(10.8, 5.4))  # plotting without annotations
+        figure.add_axes([.8, .0, .2, .2])  # place for mini plot [left,down,width,height]
         self.figure = figure
-        self.sig_len = len(signal)//FREQUENCY
+        self.sig_len = len(signal) // FREQUENCY
 
         self.log_window.log("Loaded record: {}, signal length: {} seconds".format(filename, self.sig_len))
+        update_mini_plot(self.figure, [20])
 
     def set_plot(self):
         canvas = FigureCanvas(self.figure)
@@ -126,6 +145,7 @@ class PredictWindow(QObject):
     def start_player(self):
         self.play_active = True
         self.player.start()
+        self.output_updater.start()
 
     def start_back_player(self):
         self.play_active = True
@@ -145,6 +165,13 @@ class PredictWindow(QObject):
         self.sveb_lcdnumber.display(sveb)
         self.veb_lcdnumber.display(veb)
         self.f_lcdnumber.display(f)
+        self.log_window.log("SVEB: {} %, VEB: {} %, F: {} %".format(sveb, veb, f))
+        if len(self.out_hist) > MINI_PLOT_WIDTH:
+            self.out_hist = self.out_hist[1:] + [(sveb, veb, f)]
+        else:
+            self.out_hist = self.out_hist + [(sveb, veb, f)]
+
+        update_mini_plot(self.figure, self.out_hist)
 
     def closeEvent(self):
         self.stop_player()

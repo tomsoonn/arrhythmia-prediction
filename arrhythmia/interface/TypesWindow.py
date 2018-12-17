@@ -1,5 +1,7 @@
+import os
+
 from PySide2.QtWidgets import QPushButton, QListView, QTextEdit
-from PySide2.QtCore import QObject, QStringListModel
+from PySide2.QtCore import QObject, QStringListModel, QFile
 
 from arrhythmia.model.helpers import beat_types
 
@@ -12,8 +14,21 @@ def init_types_list(types_list):
 
 
 def get_type_info(type_name):
-    # TODO load and return info
-    return type_name
+    type_symbol = type_name.split("]")[0]
+    type_symbol = type_symbol.split("[")[1]
+    type_symbol = type_symbol.lower()
+
+    dir = os.path.dirname(os.path.realpath(__file__))
+    filepath = os.path.join(dir, "resources", type_symbol + '.txt')
+
+    description = ""
+    if os.path.isfile(filepath):
+        with open(filepath) as f:
+            for x in f:
+                description += x
+    else:
+        description = "No data"
+    return description
 
 
 class TypesWindow(QObject):

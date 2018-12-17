@@ -324,7 +324,7 @@ def label_figure(axes, n_subplots, time_units, sig_name, sig_units, ylabel,
             ylabel = ylabel + ['ch_%d/NU' % i for i in range(len(ylabel),
                                                              n_subplots)]
 
-    for ch in range(n_subplots):
-        axes[ch].set_ylabel(ylabel[ch])
+    #for ch in range(n_subplots):
+        #axes[ch].set_ylabel(ylabel[ch])
 
     axes[-1].set_xlabel('/'.join(['time', time_units[:-1]]))

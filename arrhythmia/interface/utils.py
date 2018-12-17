@@ -21,14 +21,13 @@ def update_plot(start, figure):
     figure.canvas.draw_idle()
 
 
-def plot(signal, samples, symbols, figsize=(10, 6)):
+def plot(signal, samples, symbols, fig_size=(10, 6)):
     figure = plot_items(signal=signal, ann_samp=samples, ann_sym=symbols,
-                        sig_units=['mV'], time_units=TIME_UNITS, figsize=figsize, fs=360,
+                        sig_units=['mV'], time_units=TIME_UNITS, figsize=fig_size, fs=360,
                         # ecg_grids='all', # not working on this big data
                         return_fig=True)
     figure.tight_layout()
     ax = figure.axes[0]
-    ax.set_ylabel("")
     ax.set_xlabel("time[{}]".format(TIME_UNITS))
     ax.set_xlim(0, PLOT_WIDTH)
     # ax.autoscale(enable=True, axis='y', tight=True)
