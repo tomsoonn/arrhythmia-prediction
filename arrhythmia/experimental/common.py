@@ -103,7 +103,7 @@ class ModelTester:
             scores = model.evaluate(self.input_data[test], self.targets[test], verbose=0)
             self.print_metrics(model.metrics_names, scores)
             cvscores.append(scores)
-            if not best_acc or scores[1] < best_acc:
+            if not best_acc or scores[1] > best_acc:
                 best_acc = scores[1]
                 best_model = model
                 bests_history = history

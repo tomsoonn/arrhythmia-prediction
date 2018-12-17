@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import fftpack
+from scipy.signal import decimate
 
 from .helpers import PipeObject
 from .time_series import TimeSeries
@@ -70,7 +71,7 @@ class IntervalSplitter(PipeObject):
         self.series = TimeSeries([], frequency)
 
     def extend(self, series):
-        self.series.append(series, None)
+        self.series.append(series)
 
     def find_trim(self):
         result = []
@@ -138,3 +139,19 @@ class NoiseRemover(PipeObject):
         points = value.points
         filtered = self.remove_noise(points)
         return [TimeSeries(filtered, value.frequency)]
+
+
+def downsample(values, ratio):
+    return decimate(values, ratio)
+
+
+class Downsampler(PipeObject):
+    def __init__(self, target_frequency):
+        super().__init__()
+        self.target_frequency = target_frequency
+
+    def compute(self, value):
+        points = value.points
+        ratio = value.frequency // self.target_frequency
+        downsampled = downsample(points, ratio)
+        return [TimeSeries(downsampled, self.target_frequency)]

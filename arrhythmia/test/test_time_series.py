@@ -2,7 +2,8 @@ import math
 
 import pytest
 
-from ..model.time_series import TimeSeries, linear_interpolation
+from arrhythmia.model.preprocessing import downsample
+from ..model.time_series import TimeSeries
 import numpy as np
 
 
@@ -19,34 +20,17 @@ def sinus_ts(request):
 
 def test_linear_size(sinus_ts):
     """
-    Test that linear interpolation doubling the frequency also doubles the number of data points.
+    Test that linear interpolation halving the frequency also doubles the number of data points.
     """
     # Given
-    frequency_multiple = 2
-    target_frequency = sinus_ts.frequency * frequency_multiple
+    frequency_divide = 2
+    target_frequency = sinus_ts.frequency // frequency_divide
 
     # When
-    result = sinus_ts.convert(target_frequency, linear_interpolation)
+    result = downsample(sinus_ts.points, frequency_divide)
 
     # Then
     assert(len(result) == target_frequency / sinus_ts.frequency * len(sinus_ts))
-
-
-def test_linear_back(sinus_ts):
-    """
-    Test that linear interpolation is reversible.
-    """
-    # Given
-    frequency_multiple = 2
-    target_frequency = sinus_ts.frequency * frequency_multiple
-
-    # When
-    result = sinus_ts.convert(target_frequency, linear_interpolation)
-    result = result.convert(sinus_ts.frequency, linear_interpolation)
-
-    # Then
-    assert(len(result) == len(sinus_ts))
-    assert(np.all(result.points == sinus_ts.points))
 
 
 def test_slicing():
