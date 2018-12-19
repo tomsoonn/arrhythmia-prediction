@@ -6,9 +6,8 @@ class TimeSeries:
     Discrete list of values occurring at certain frequency.
     """
 
-    def __init__(self, points, frequency):
+    def __init__(self, points):
         self.points = np.array(points) if isinstance(points, list) else points
-        self.frequency = frequency
 
     def append(self, other):
         """
@@ -24,4 +23,4 @@ class TimeSeries:
         return len(self.points)
 
     def __getitem__(self, i):
-        return TimeSeries(self.points[i], self.frequency)
+        return TimeSeries(self.points[i])

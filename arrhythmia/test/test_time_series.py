@@ -15,7 +15,7 @@ def sinus_ts(request):
     for i in range(points_n):
         data.append(math.sin(i / frequency))
 
-    return TimeSeries(data, frequency)
+    return TimeSeries(data)
 
 
 def test_linear_size(sinus_ts):
@@ -24,19 +24,18 @@ def test_linear_size(sinus_ts):
     """
     # Given
     frequency_divide = 2
-    target_frequency = sinus_ts.frequency // frequency_divide
 
     # When
     result = downsample(sinus_ts.points, frequency_divide)
 
     # Then
-    assert(len(result) == target_frequency / sinus_ts.frequency * len(sinus_ts))
+    assert(len(result) == len(sinus_ts) // frequency_divide)
 
 
 def test_slicing():
     """
     Test slicing operator for TimeSeries.
     """
-    ts = TimeSeries([1, 2, 3], 1)
+    ts = TimeSeries([1, 2, 3])
     ts2 = ts[:2]
     assert np.all(ts2.points == [1, 2])

@@ -18,7 +18,7 @@ class BeatFinder(PipeObject):
         :param beat_len: length of produced TimeSeries representing beats
         """
         super().__init__()
-        self.series = TimeSeries([], frequency)
+        self.series = TimeSeries([])
 
     def extend(self, series):
         """
@@ -27,8 +27,7 @@ class BeatFinder(PipeObject):
         :param series: TimeSeries to extend.
         :return: length of current time series
         """
-        # TODO Resolve interpolation issues
-        self.series.append(series, None)
+        self.series.append(series)
 
     def find(self):
         """
@@ -58,28 +57,26 @@ class IntervalSplitter(PipeObject):
     Cuts general TimeSeries into intervals with constant duration.
     """
 
-    def __init__(self, frequency, interval, padding):
+    def __init__(self, interval, padding):
         """
 
-        :param frequency: Frequency of produced intervals.
         :param interval: Length of produced intervals.
         :param padding: Distance between starts of produced intervals.
         """
         super().__init__()
         self.interval = interval
         self.padding = padding
-        self.series = TimeSeries([], frequency)
+        self.series = TimeSeries([])
 
     def extend(self, series):
         self.series.append(series)
 
     def find_trim(self):
         result = []
-        # TODO Prettify this
-        while len(self.series) >= self.interval:
-            found_series = self.series[:self.interval]
-            self.series = self.series[self.padding:]
+        if len(self.series) >= self.interval:
+            found_series = self.series[len(self.series) - self.interval:]
             result.append(found_series)
+        self.series = TimeSeries([])
         return result
 
     def compute(self, value):
@@ -108,7 +105,7 @@ class StandardNormalizer(PipeObject):
     def compute(self, value):
         points = value.points
         normalized = self.normalize(points)
-        return [TimeSeries(normalized, value.frequency)]
+        return [TimeSeries(normalized)]
 
 
 class NoiseRemover(PipeObject):
@@ -117,28 +114,29 @@ class NoiseRemover(PipeObject):
     removing low frequencies and restore signal with inverse FFT
     """
 
-    def __init__(self, frequency):
+    def __init__(self, frequency, lower_bound):
         """
 
         :param frequency: frequency below which frequencies will bye removed
         """
         super().__init__()
         self.frequency = frequency
+        self.lower_bound = lower_bound
 
     def remove_noise(self, values):
         sig = values
-        sig_fft = fftpack.fft(sig)
-        sample_freq = fftpack.fftfreq(sig.size, d=1)
+        sig_fft = fftpack.rfft(sig)
+        sample_freq = fftpack.fftfreq(sig.size, d=(1 / self.frequency))
 
         high_freq_fft = sig_fft.copy()
-        high_freq_fft[np.abs(sample_freq) < self.frequency] = 0
-        filtered_sig = fftpack.ifft(high_freq_fft)
+        high_freq_fft[np.abs(sample_freq) < self.lower_bound] = 0
+        filtered_sig = fftpack.irfft(high_freq_fft).real
         return filtered_sig
 
     def compute(self, value):
         points = value.points
         filtered = self.remove_noise(points)
-        return [TimeSeries(filtered, value.frequency)]
+        return [TimeSeries(filtered)]
 
 
 def downsample(values, ratio):
@@ -146,12 +144,15 @@ def downsample(values, ratio):
 
 
 class Downsampler(PipeObject):
-    def __init__(self, target_frequency):
+    def __init__(self, original_frequency, target_frequency):
         super().__init__()
+        self.original_frequency = original_frequency
         self.target_frequency = target_frequency
 
     def compute(self, value):
         points = value.points
-        ratio = value.frequency // self.target_frequency
+        # print('Before downsampling: ', points)
+        ratio = self.original_frequency // self.target_frequency
         downsampled = downsample(points, ratio)
-        return [TimeSeries(downsampled, self.target_frequency)]
+        # print('After downsampling: ', downsampled)
+        return [TimeSeries(downsampled)]

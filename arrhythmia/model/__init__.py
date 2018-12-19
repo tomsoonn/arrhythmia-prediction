@@ -5,3 +5,5 @@ from .prediction_engine import create_model, models
 
 # Additional helper classes for integrating models into other modules
 from .helpers import FunctionPipe, PipeObject, Pipeline
+
+from .time_series import TimeSeries

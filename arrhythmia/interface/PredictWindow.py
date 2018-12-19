@@ -10,6 +10,8 @@ from arrhythmia.interface.LogWindow import LogWindow
 from arrhythmia.interface.utils import MyQGraphicsView, update_plot, PLOT_WIDTH, Player, load_datafile_name, plot, \
     FREQUENCY
 
+from arrhythmia.model import create_model, models, FunctionPipe, TimeSeries
+
 STEP = 0.05  # step for '<', '>' buttons and player
 MINI_PLOT_WIDTH = 10
 
@@ -64,6 +66,13 @@ class PredictWindow(QObject):
         layout.addWidget(self.graphics, 5, 0, 1, 15)  # put in layout
         self.start_line.setValidator(QIntValidator(0, 0))
 
+        # Model integration
+        self.model = create_model(models[0])
+
+        def extract_output(value):
+            self.set_output(value[0] * 100, value[1] * 100, value[2] * 100)
+        self.model.set_next(FunctionPipe(extract_output))
+
         # handlers
         next_button.pressed.connect(self.start_player)
         next_button.released.connect(self.stop_player)
@@ -76,7 +85,8 @@ class PredictWindow(QObject):
         self.start_line.returnPressed.connect(self.set_start_from_text_line)
 
     def update_output(self):
-        self.set_output(randint(0, 100), randint(0, 100), randint(0, 100))
+        self.model(TimeSeries(self.signal[:int(self.start * FREQUENCY)]))
+        # self.set_output(randint(0, 100), randint(0, 100), randint(0, 100))
 
     def logs_handler(self):
         self.log_window.show()
@@ -91,6 +101,7 @@ class PredictWindow(QObject):
         filename = file_path.split('/')[-1].split('.')[0]  # getting filename from path without extension
         record = get_record(filename)
         signal = record[0]
+        self.signal = signal
 
         figure = plot(signal, None, None, fig_size=(10.8, 5.4))  # plotting without annotations
         figure.add_axes([.8, .0, .2, .2])  # place for mini plot [left,down,width,height]

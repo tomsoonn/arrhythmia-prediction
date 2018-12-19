@@ -1,7 +1,13 @@
 import numpy as np
 
+import os
+
+import keras.backend as K
+
+from keras.models import load_model
+
 from arrhythmia.model.helpers import PipeObject, PipelineBuilder
-from arrhythmia.model.preprocessing import IntervalSplitter, StandardNormalizer
+from arrhythmia.model.preprocessing import IntervalSplitter, StandardNormalizer, Downsampler, NoiseRemover
 
 
 class NNPipe(PipeObject):
@@ -11,8 +17,61 @@ class NNPipe(PipeObject):
 
     def compute(self, value):
         nn_input = value.points
-        nn_input = np.expand_dims(nn_input, axis=1)
-        return [self.network.predict(nn_input)]
+        nn_input = np.expand_dims(nn_input, axis=0)
+        return [self.network.predict(nn_input)[0]]
+
+
+def precision(y_true, y_pred):
+    '''Calculates the precision, a metric for multi-label classification of
+    how many selected items are relevant.
+    '''
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
+    return precision
+
+
+def recall(y_true, y_pred):
+    '''Calculates the recall, a metric for multi-label classification of
+    how many relevant items are selected.
+    '''
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    recall = true_positives / (possible_positives + K.epsilon())
+    return recall
+
+
+def fbeta_score(y_true, y_pred, beta=1):
+    '''Calculates the F score, the weighted harmonic mean of precision and recall.
+    This is useful for multi-label classification, where input samples can be
+    classified as sets of labels. By only using accuracy (precision) a model
+    would achieve a perfect score by simply assigning every class to every
+    input. In order to avoid this, a metric should penalize incorrect class
+    assignments as well (recall). The F-beta score (ranged from 0.0 to 1.0)
+    computes this, as a weighted mean of the proportion of correct class
+    assignments vs. the proportion of incorrect class assignments.
+    With beta = 1, this is equivalent to a F-measure. With beta < 1, assigning
+    correct classes becomes more important, and with beta > 1 the metric is
+    instead weighted towards penalizing incorrect class assignments.
+    '''
+    if beta < 0:
+        raise ValueError('The lowest choosable beta is zero (only precision).')
+
+    # If there are no true positives, fix the F score at 0 like sklearn.
+    if K.sum(K.round(K.clip(y_true, 0, 1))) == 0:
+        return 0
+
+    p = precision(y_true, y_pred)
+    r = recall(y_true, y_pred)
+    bb = beta ** 2
+    fbeta_score = (1 + bb) * (p * r) / (bb * p + r + K.epsilon())
+    return fbeta_score
+
+
+def fmeasure(y_true, y_pred):
+    '''Calculates the f-measure, the harmonic mean of precision and recall.
+    '''
+    return fbeta_score(y_true, y_pred, beta=1)
 
 
 class NNetwork:
@@ -22,33 +81,37 @@ class NNetwork:
         self.desc = desc
 
     def load(self):
-        # TODO Implement after adding any network
-        pass
+        path = os.path.join(os.path.dirname(__file__), 'nn_files', self.filename)
+        k_model = load_model(path, custom_objects={'precision': precision, 'recall': recall, 'fmeasure': fmeasure})
+        return NNPipe(k_model)
 
 
 # List of available neural networks
-networks = []
+networks = [NNetwork('', 'mlp_conv_1_window5_2.hdf5', '')]
+
+
+class PredictionModel:
+    def __init__(self, name, layers):
+        self.name = name
+        self.layers = layers
+
+    def build(self):
+        builder = PipelineBuilder()
+        for l in self.layers:
+            builder.append_one(l)
+        return builder.build()
+
 
 # List of available models
-models = []
-
-
-def create_layer(layer):
-    layer_type = layer['type']
-
-    if layer_type == 'splitter':
-        return IntervalSplitter(**layer['desc'])
-
-    if layer_type == 'normalize':
-        return StandardNormalizer()
-
-    # FIXME Throw exception if layer type is not recognized
-    return None
+models = [
+    PredictionModel('convolutional', [
+        IntervalSplitter(360*60*5, 360),
+        Downsampler(360, 60),
+        NoiseRemover(60, 0.5),
+        StandardNormalizer(),
+        networks[0].load()])
+]
 
 
 def create_model(model_description):
-    builder = PipelineBuilder()
-    for layer in model_description:
-        builder.append_one(create_layer(layer))
-
-    return builder.build()
+    return model_description.build()
