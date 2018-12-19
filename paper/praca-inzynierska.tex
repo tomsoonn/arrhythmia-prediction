@@ -11,8 +11,9 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{siunitx}
+\usepackage{caption}
 
-%\renewcommand{\arraystretch}{1.2}
+\renewcommand{\arraystretch}{1.3}
 \renewcommand{\lstlistingname}{Fragment}
 
 \lstdefinestyle{custompy}{
@@ -333,50 +334,222 @@ Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytm
 
 \subsection{Model}
 
-Modu³ modelu odpowiada za dostarczenie dla systemu silnika dokonuj±cego predykcjê arytmii. Wykonuje on przetwarzania danych wej¶ciowych, takiego jak likwidacja szumów i normalizacja, oraz wykonuje predykcje zwracaj±c przewidywane szansê na wyst±pienie poszczególnych rodzajów arytmii. Jest to wiêc problem klasyfikacji wieloklasowej.
+G³ównym zadaniem modu³u modelu w systemie jest dostarczenie funkcjonalno¶ci umo¿liwiaj±cej dokonywanie predykcji na podstawie wykresu EKG. W tym celu zdefiniowane zosta³o pojêcie silnika predykcji jako elementu dostarczaj±cego tak± funkcjonalno¶æ. Musi on dokonywaæ przetwarzania danych wej¶ciowych, takiego jak likwidacja szumów i normalizacja, oraz wykonywaæ predykcji. Predykcj± zwrócon± przez silnik bêdzie ci±g warto¶ci z przedzia³u od zera do jeden, o liczebno¶ci takiej samej jak ilo¶æ przewidywanych rodzajów arytmii. Ka¿da warto¶æ okre¶laæ bêdzie szansê na wyst±pienie danego rodzaju arytmii.
 
-Poniewa¿ jak zosta³o wspomniane projekt wymaga przetestowania du¿ej ilo¶ci sposobów dokonywania klasyfikacji, modu³ modelu musi dostarczaæ mo¿liwo¶æ stworzenia ró¿nych silników predykcji.
-W tym celu przyjêta zosta³a architektura warstwowa umo¿liwiaj±ca ponowne wykorzystywanie istniej±cych warstw w celu tworzenia nowych silników.
+% FIXME Nie lubiê tego "jak zosta³o wspomniane" vv
+Poniewa¿ jak wynik³o z analizy wykonalno¶ci projekt wymaga przetestowania du¿ej ilo¶ci sposobów dokonywania klasyfikacji, modu³ modelu musi dostarczaæ mo¿liwo¶æ stworzenia ró¿nych silników predykcji. W tym celu konieczna jest funkcjonalno¶æ do ³atwego tworzenia nowych silników. Dodatkowo model musi udostêpniaæ reszcie systemu mo¿liwo¶æ wyboru spo¶ród dostêpnych silników za pomoc± jednolitego interfejsu.
 
-Poni¿ej przedstawiony zosta³ przyk³adowy schemat silnika predykcji ilustruj±cy przep³yw danych przez niego wraz z opisem poszczególnych warstw.
+\subsubsection{Zasada dzia³ania}
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.4\linewidth]{model_example_flow.png}
-	\caption{Schemat warstw w przyk³adowym silniku arytmii}
-	\label{fig:model_example_flow}
-\end{figure}
+W celu zrealizowania za³o¿onych wymagañ podjêta zosta³a decyzja o warstwowej budowie silnika predykcji. Przy takim za³o¿eniu modu³ modelu dostarcza gotowych warstw, z których zbudowane mog± zostaæ ró¿nego rodzaju silniki.  Na rysunku \ref{fig:model_example_flow}. przedstawiony zosta³ przyk³adowy schemat silnika predykcji ilustruj±cy przep³yw danych. Znajduj±ce siê na nim warstwy podane jako przyk³ad to:
 
 \begin{description}
-	\item[Fragmentacja danych] - z wej¶ciowych danych zostaje wydzielony fragment u¿ywany do predykcji. Rozmiar tego fragmentu odpowiada oknu na podstawie, którego wykonywana predykcja.
-	\item[Zmniejszenie rozdzielczo¶ci] - czêstotliwo¶æ próbek zmniejszona jest w celu redukcji ilo¶ci cech i likwidacji szumów wysokich czêstotliwo¶ci. Przyk³adowo czêstotliwo¶æ mo¿e zostaæ zmniejszona z \SI{360}{\hertz} do \SI{60}{\hertz}, a nowe warto¶ci byæ wyznaczone jako liniowa interpolacja oryginalnych warto¶ci.
+	\item[Fragmentacja danych] - z wej¶ciowych danych zostaje wydzielony fragment u¿ywany do predykcji. Rozmiar tego fragmentu odpowiada oknu na podstawie, którego wykonywana jest predykcja.
+	\item[Zmniejszenie rozdzielczo¶ci] - czêstotliwo¶æ próbek zmniejszona jest w celu redukcji ilo¶ci cech i likwidacji szumów wysokich czêstotliwo¶ci. Przyk³adowo czêstotliwo¶æ mo¿e zostaæ zmniejszona z \SI{360}{\hertz} do \SI{60}{\hertz} przez usuniêcie wszystkich poza  co szóst± warto¶ci±.
 	\item[Usuwanie niskich czêstotliwo¶ci] - za pomoc± transformaty Fouriera i jej odwrócenia likwidowane s± niskie czêstotliwo¶ci spowodowane miêdzy innymi przez oddech pacjenta. Przyk³adowo zlikwidowane mog± zostaæ czêstotliwo¶ci poni¿ej \SI{0.3}{\hertz} poprzez wyzerowanie odpowiednich warto¶ci po zastosowaniu szybkiej transformaty Fouriera.
 	\item [Normalizacja danych] - przed wprowadzeniem danych do sieci neuronowej dane musz± zostaæ znormalizowane zgodnie z oczekiwan± normalizacj± dla sieci. Przyk³adowa funkcja normalizuj±ca to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to ¶rednia warto¶ci $x$, a $x_{\sigma}$ to ich odchylenie standardowe.
 	\item [Klasyfikacja] - sieæ neuronowa dokonuje klasyfikacji wieloklasowej i jako rezultat otrzymywane s± przewidywane szansê na wyst±pienie danej arytmii w przewidywanym oknie, okre¶lonym w trakcie trenowania sieci.
 \end{description}
 
-W celu umo¿liwienia takiej modu³owo¶ci dla budowy silników predykcji zdefiniowany zosta³ wspólny interfejs dla wszystkich warstw i zrealizowany jako abstrakcyjna klasa \emph{PipeObject}. Jej podstawowym za³o¿eniem jest przetwarzanie danych i przekazywanie ich do nastêpnych obiektów w ci±gu. W tym celu posiada ona nastêpuj±ce metody:
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.4\linewidth]{model_example_flow.png}
+	\caption{Schemat warstw w przyk³adowym silniku predykcji}
+	\label{fig:model_example_flow}
+\end{figure}
+
+W celu umo¿liwienia takiej modu³owo¶ci dla budowy silników predykcji zdefiniowany zosta³ wspólny interfejs dla wszystkich warstw i zrealizowany jako abstrakcyjna klasa \emph{Layer}. Jej podstawowym za³o¿eniem jest przetwarzanie danych i przekazywanie ich do nastêpnych warstw w ci±gu. W tym celu posiada ona nastêpuj±ce metody:
+
 \begin{itemize}
 	\itemsep0em
-	\item[] \emph{set\_next(PipeObject)} - ustawia nastêpny obiekt w silniku, do którego przekazywane bêd± wyniki obliczeñ
-	\item[] \emph{push\_value(Object)} - dostarcza obiekt na którym wykonane zostan± obliczenia, a ich wynik zostanie przekazany dalej
-	\item[] \emph{compute(Object): Object} - abstrakcyjna metoda, która w klasach dziedzicz±cych powinna wykonywaæ zadane obliczenie i zwracaæ wynik
+	\item[] \emph{set\_next(Layer)} - ustawia nastêpny obiekt w silniku, do którego przekazywane bêd± wyniki obliczeñ
+	\item[] \emph{push\_value(Numpy array)} - dostarcza obiekt na którym wykonane zostan± obliczenia, a ich wynik zostanie przekazany dalej
+	\item[] \emph{compute(Numpy array): Numpy array} - abstrakcyjna metoda, która w klasach dziedzicz±cych powinna wykonywaæ zadane obliczenie i zwracaæ wynik
 \end{itemize}
 
-Dodatkowo zdefiniowana zosta³a klasa \emph{TimeSeries} reprezentuj±ca ci±g danych w czasie w celu dostarczenia jednolitego interfejsu do obliczeñ wewn±trz modelu.
-Rysunek \ref{fig:pipes_uml} zawiera diagram klas przedstawiaj±cy relacjê miêdzy klasami implementuj±cymi przyk³adowe warstwy.
+W trakcie tworzenia nowych silników predykcji stworzone zosta³y odpowiednie warstwy wewn±trz modelu, umo¿liwiaj±c ich ponowne wykorzystanie. Rysunek \ref{fig:pipes_uml} zawiera diagram klas przedstawiaj±cy relacjê miêdzy klasami implementuj±cymi  warstwy wewn±trz modelu, za¶ poni¿ej znajduj± siê ich szczegó³owe opisy.
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=\linewidth]{pipes_uml.png}
-	\caption{Diagram klas dla przyk³adowych warstw modelu}
+	\includegraphics[width=0.8\linewidth]{pipes_uml.png}
+	\caption{Diagram klas dla warstw modelu}
 	\label{fig:pipes_uml}
 \end{figure}
 
-% TODO KD Interfejs
+\paragraph{IntervalSplitter} Pocz±tkowa warstwa, dokonuj±ca wyciêcia z wej¶ciowych danych okna zadanego rozmiaru. Na wej¶ciu otrzymuje ona ca³y dotychczasowy wykres EKG, z którego przekazywany dalej zostaje tylko ostatni fragment o rozmiarze oczekiwanym przez nastêpne warstwy i klasyfikator.
+
+\paragraph{StandardNormalizer} Jest to warstwa dokonuj±ca normalizacji danych za pomoc± tzw. \emph{standaryzacji Z}. Wzór okre¶laj±cy ten rodzaj normalizacji to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to warto¶æ ¶rednia, za¶ $x_\sigma$ to odchylenie standardowe. Dziêki zastosowaniu takiej normalizacji wyj¶ciowe warto¶ci posiadaj± ¶redni± równ± zero, za¶ odchylenie standardowe równe jeden. Ten rodzaj normalizacji jest szczególnie przydatny przy przetwarzaniu danych dla sieci neuronowych z warstwami zawieraj±cymi jako aktywacje funkcjê \emph{ReLU - Rectified Linear Unit}.
+
+% TODO Wstawiæ rysunek prezentuj±cy dzia³anie i mo¿e kod
+
+\paragraph{Downsampler} Warstwa odpowiadaj±ca za redukcjê czêstotliwo¶ci. Dziêki jej zastosowaniu jeste¶my w stanie znacz±co przy¶pieszyæ dzia³anie sieci neuronowej oraz zmniejszyæ wymiarowo¶æ danych. Oba te efekty pomagaj± zredukowaæ wp³yw \emph{przekleñstwa wymiaru} spowodowanego ogromn± ilo¶ci± cech w wej¶ciowym fragmencie EKG. Dodatkowo zmniejszenie ilo¶ci próbek pozwala usun±æ szum w wysokich czêstotliwo¶ciach spowodowany przez zak³ócenia elektroniczne lub niedoskona³o¶ci w trakcie analogowego zapisu i pó¼niejszej digitalizacji.
+Rysunek \ref{fig:downsampling} prezentuje efekt redukcji czêstotliwo¶ci na przyk³adzie piêciosekundowego wycinka wykresu.
+
+% TODO Wykonaæ wykres z wiêksz± rozdzielczo¶ci±, poprawiæ tytu³ i oznaczenia osi x.
+\begin{figure}[h!]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.6\linewidth]{downsampling.png}
+	\caption{Redukcja czêstotliwo¶ci z \SI{360}{\hertz} (niebieski wykres) do \SI{60}{\hertz} (pomarañczowy wykres)}
+	\label{fig:downsampling}
+\end{figure}
+
+\paragraph{NoiseRemover} Jest to warstwa usuwaj±ca szum niskich czêstotliwo¶ci, który spowodowany jest oddechem pacjenta, zmian± po³o¿enia i czynnikami zewnêtrznymi obecnymi w trakcie nagrywania zapisu. Operacja ta zosta³a zaimplementowana za pomoc± transformaty Fouriera. W pierwszej kolejno¶ci wej¶ciowy fragment przekszta³cany jest do domeny czêstotliwo¶ci, nastêpnie zerowane s± warto¶ci poni¿ej wybranej granicznej czêstotliwo¶ci. Po usuniêciu odpowiedniego przedzia³u wykonywana zostaje odwrotna transformata Fouriera, przywracaj±ca fragment do domeny czasu. Na rysunku \ref{fig:fft} widoczne jest dzia³anie tej warstwy na przyk³adzie fragmentu EKG, za¶ rysunek \ref{fig:fft_f} przedstawia ten sam fragment przedstawiony w dziedzinie czêstotliwo¶ci po zastosowaniu transformaty.
+
+\begin{figure}[h!]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.6\linewidth]{noise_remove.png}
+	\caption{Usuniêcie czêstotliwo¶ci poni¿ej \SI{0,5}{\hertz} za pomoc± transformaty Fouriera. Kolor niebieski - oryginalny fragment, kolor pomarañczowy - po wyciêciu niskich czêstotliwo¶ci.}
+	\label{fig:fft}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.6\linewidth]{fft_fdomain.png}
+	\caption{Widok fragmentu wykresu EKG w dziedzinie czêstotliwo¶ci}
+	\label{fig:fft_f}
+\end{figure}
+
+\paragraph{NNPredictor} Warstwa zawieraj±ca klasyfikator w postaci sieci neuronowej. Odpowiada ona za integracjê z bibliotek± Keras, w tym celu dokonuje zmiany kszta³tu danych wej¶ciowych do tego oczekiwanego przez sieæ. Wszystkie sieci u¿ywane w modelu s± wcze¶niej wytrenowane w module eksperymentów, warstwa ta wiêc wczytuje budowê sieci oraz wagi z pliku w formacie \emph{HDF5}. % TODO Dodaæ odno¶nik do opisu formatu %
+
+\paragraph{FunctionLayer} Pomocnicza warstwa s³u¿±ca jedynie do integracji z pozosta³ymi elementami systemu. Nie przekszta³ca ona danych, a jej jedyn± funkcjonalno¶ci± jest wywo³anie zewnêtrznej funkcji, przekazuj±c jako argument rezultat poprzednich warstw.
+
+\paragraph{Sequence} Pomocnicza warstwa tworz±ca abstrakcjê nad grup± innych warstw. W jej wypadku wykonanie obliczeñ jest równoznaczne wykonaniu obliczeñ przez wszystkie warstwy które w sobie zawiera. Dziêki jej zastosowaniu interfejs dla sekwencji warstw jest taki sam jak dla pojedynczej warstwy. Jest to przydatne poniewa¿ silnik wewn±trz modelu zdefiniowany jest jako ci±g warstw, dziêki takiej abstrakcji silnik wykorzystuje istniej±cy interfejs, co zwiêksza czytelno¶æ kodu i pomaga w integracji z reszt± systemu.
+
+Dla pozosta³ych modu³ów wyznaczony zosta³ interfejs s³u¿±cy do wy¶wietlenia dostêpnych silników, stworzenia ¿±danego silnika oraz integracji jego funkcjonalno¶ci z obecn± struktur±. Poni¿ej znajduje siê szczegó³owy opis elementów tego interfejsu, za¶ na fragmencie 2. widoczny jest kod definiuj±cy interfejs oraz przyk³adowy silnik predykcji.
+
+\begin{itemize}
+	\itemsep0em
+	\item[] \emph{PredictionEngine} - klasa definiuj±ca silnik predykcji, zawiera jego nazwê, opis i warstwy z których siê sk³ada
+	\item[] \emph{engines} - lista dostêpnych silników predykcji
+	\item[] \emph{create\_prediction\_engine(PredictionEngine)} - pomocnicza funkcja buduj±ca silnik, wczytuje klasyfikator oraz ³±czy ze sob± warstwy
+	\item[] \emph{FunctionLayer} - klasa umo¿liwiaj±ca do³±czenie na koñcu silnika wywo³ania funkcji z wynikiem predykcji
+\end{itemize}
+
+\begin{lstlisting}[float=h, style=custompy, caption=Interfejsu modelu i przyk³ad wykorzystania]
+# Przyk³ad definicji silnika:
+engines = [
+    PredictionEngine('convolutional', [
+        IntervalSplitter(360*60*5, 360),
+        Downsampler(360, 60),
+        NoiseRemover(60, 0.5),
+        StandardNormalizer(),
+        networks[0].load()]),
+    # ...
+]
 
 
-\subsection{Eksperymenty}
+def create_prediction_engine(engine):
+    return engine.build()
+
+# Stworzenie silnika predykcji:
+p_engine = create_prediction_engine(engines[0])
+
+# Przyk³ad integracji - tutaj wypisanie wyników
+p_engine.set_next(FunctionLayer(print))
+
+values = # Warto¶ci fragmentu EKG
+
+# Wywo³anie obliczeñ:
+p_engine.push_value(values)
+\end{lstlisting}
+
+\subsubsection{Silniki predykcji}
+
+Model udostêpnia ró¿ne silniki predykcji ró¿ni±ce siê struktur±, algorytmem, rozmiarami przedzia³ów danych i skuteczno¶ci±. Silniki zosta³y podzielone na dwie grupy w zale¿no¶ci od budowy sieci neuronowej, któr± wykorzystuj±. S± to silniki gêste i konwolucyjne. Poni¿ej znajduj± siê ogólne opisy ka¿dej grupy, budowa udostêpnianych silników, wykorzystywanych sieci oraz ich skuteczno¶æ. Opis metodologii testowania, dok³adniejsze rezultaty testów oraz wszystkie wypróbowane architektury znajduj± siê w dziale \ref{sec:experimental} - Eksperymenty.
+
+\paragraph{Gêste}
+
+Jako pierwsze utworzone zosta³y silniki predykcji oparte na sieciach neuronowych zbudowanych z gêstych warstw (ang. \emph{dense}). W warstwach tych wszystkie warto¶ci wyj¶ciowe obliczane s± na podstawie wszystkich danych wej¶ciowych. Matematycznie warstwa gêsta zdefiniowana jest jako:
+$$
+out = f_a(A \cdot in + bias)
+$$
+, gdzie $f_a$ to funkcja aktywacji, $A, bias$ to wewnêtrzne warto¶ci warstwy aktualizowane w trakcie uczenia, $in, out$ to kolejno wej¶cie i wyj¶cie gêstej warstwy. 
+
+W warstwie gêstej neurony \emph{³±cz±} ka¿d± warto¶æ wej¶ciow± z ka¿d± warto¶ci± wyj¶ciow±, z tego powodu ilo¶æ parametrów w sieci zbudowanej z takich warstw ro¶nie bardzo szybko wraz ze wzrostem z³o¿ono¶ci i wymiarowo¶ci danych. Z tego powodu sieæ taka jest bardzo podatna na przetrenowania, to znaczy wyuczenie siê zbioru treningowego zamiast zale¿no¶ci jakie reprezentuje. Dodatkowo sieæ taka traktuje w ten sam sposób zale¿no¶æ miêdzy odleg³ymi warto¶ciami w danych wej¶ciowych, a warto¶ciami s±siednimi. Z tego powodu sieæ ta niezbyt dobrze nadaje siê do klasyfikacji wykresów zale¿nych od czasu tak jak w naszym przypadku.
+
+Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu model udostêpnia tylko jeden silnik predykcji oparte o nie.
+
+\begin{table}[h]
+	\centering
+\begin{tabular}{l|lllll}
+	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
+	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{0.5}{\hertz} & \SI{68,81}{\percent}
+\end{tabular}
+\caption{Silniki predykcji oparte o gêste sieci neuronowe}
+\label{tab:dense_engines}
+\end{table}
+
+\begin{table}[h]
+	\centering
+\begin{tabular}{l|lll}
+	Warstwa      & Rozmiar wyj¶cia & Parametry             & Aktywacja \\ \hline
+	Dense        & (100, 1)        & units = 100           & relu         \\
+	Dense        & (200, 1)        & units = 200           & relu         \\
+	Dense        & (100, 1)        & units = 100           & relu         \\
+	Dense        & (3)             & units = 3             & sigmoid
+\end{tabular}
+\caption{Warstwy w sieci gêstej dla silnika \emph{dense1}}
+\label{tab:dense1}
+\end{table}
+
+\paragraph{Konwolucyjne}
+
+W konwolucyjnych silnikach predykcji g³ównym za³o¿eniem by³o wykorzystanie konwolucyjnej sieci neuronowej. Spowodowane by³o to bardzo s³abymi wynikami dla gêstych sieci z powodu przetrenowania oraz sekwencyjn± struktur± danych. Sieci konwolucyjne pozwalaj± bardzo dobrze klasyfikowaæ dane, gdzie wa¿ne jest wzajemne po³o¿enie cech, czyli w naszym przypadku odleg³o¶æ miêdzy warto¶ciami na wykresie EKG. Innym przypadkiem przydatno¶ci takiej reprezentacji jest klasyfikacja obrazów, gdzie bardziej istotne s± s±siednie piksele ni¿ te znajduj±ce siê na osobnych koñcach.
+
+G³ównymi czê¶ciami sk³adowymi w konwolucyjnych sieciach neuronowych s± warstwy wykonuj±ce konwolucjê oraz warstwy redukuj±ce ich rozmiar przez tzw. \emph{pooling}. W kontek¶cie przetwarzania danych EKG, wykonywali¶my konwolucji w jednym wymiarze. Polega ona na sumie iloczynów warto¶ci filtra i fragmentu wej¶ciowych danych. Wyj¶ciowa sekwencja jest ci±giem wyników takich operacji dla kolejnych fragmentów wej¶cia. Ilustracja dzia³ania konwolucji znajduje siê na rysunku \ref{fig:convolution}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{convolution.png}
+	\caption{Dzia³anie konwolucji w jednym wymiarze, dla rozmiaru filtra 3 i przesuniêcia 1}
+	\label{fig:convolution}
+\end{figure}
+
+Dodatkowo pojedyncza warstwa konwolucyjna mo¿e sk³adaæ siê z dowolnej ilo¶ci filtrów, wyj¶ciem jest wiêc ci±g sekwencji. W celu zmniejszenia ilo¶ci wyj¶ciowych danych jako nastêpn± warstwê stosuje siê \emph{pooling}.
+W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± najwiêksz± warto¶æ z zadanego przedzia³u i podobnie jak konwolucje produkuj± ci±g warto¶ci dla przesuniêtych przedzia³ów. Dzia³anie tej operacji ilustruje rysunek \ref{fig:max_pool}.
+
+\begin{figure}[h]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.4\linewidth]{max_pool.png}
+	\caption{Dzia³anie operacji 'max-pool' w jednym wymiarze, dla przedzia³u 3 i przesuniêcia 3}
+	\label{fig:max_pool}
+\end{figure}
+
+% TODO Opisaæ silniki dostêpne w modelu
+
+\begin{table}[h]
+	\centering
+\begin{tabular}{l|lllll}
+	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
+	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{0.5}{\hertz} & \SI{86.35}{\percent}
+\end{tabular}
+\caption{Silniki predykcji oparte o gêste sieci neuronowe}
+\label{tab:conv_engines}
+\end{table}
+
+\begin{table}[h]
+	\centering
+\begin{tabular}{l|lll}
+	Warstwa      & Rozmiar wyj¶cia & Parametry             & Aktywacja \\ \hline
+	Reshape      & (18000, 1)      & -                     & -         \\
+	Conv1D       & (17985, 32)     & kernels = 32, filter\_size = 16 & relu \\
+	MaxPooling1D & (1124, 32)      & pool\_size = 16         & - \\
+	Conv1D       & (1109, 16)      & kernels = 16, filter\_size = 16 & relu \\
+	MaxPooling1D & (69, 16)        & pool\_size = 16       & - \\
+	Flatten      & (1104)          & -                     & - \\
+	Dense        & (3)             & units = 3             & sigmoid
+\end{tabular}
+\caption{Warstwy w sieci konwolucyjnej dla silnika \emph{conv1}}
+\label{tab:conv1}
+\end{table}
+
+% TODO Sieæ konwolucyjna bez interpolacji
+
+\subsection{Eksperymenty} \label{sec:experimental}
 
 \subsubsection{Baza treningowa}
 
@@ -455,7 +628,7 @@ def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True
 
 Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± walidacje krzy¿ow±(z ang.K-fold cross-validation). Polega ona na tym ¿e oryginalny zbiór jest dzielony na K podzbiorów. Nastêpnie ka¿dy z nich jest brany jako zbiór testowy, a pozosta³e razem stanowi± zbiór ucz±cy. Odbywa siê wiêc K iteracji, których wyniki s± nastêpnie u¶redniane w celu uzyskania ostatecznego wyniku.
 
-\begin{figure}[H]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{kfold.png}
 	\caption{Wizualizacja dzia³ania K-fold dla K=10}
