@@ -647,15 +647,19 @@ Klasyfikujemy cztery klasy uderzeñ serca:
 
 \end{itemize}
 
-Jako oceny skuteczno¶ci metod klasyfikacji wybrali¶my:
-\begin{itemize}
-\item accuracy = ilo¶æ poprawnie sklasyfikowanych uderzeñ przez ca³kowit± ilo¶æ uderzeñ
-\item sensitivity = stosunek ilo¶ci poprawnie sklasyfikowanych nienormalnych uderzeñ
-\item specificity = stosunek ilo¶ci poprawnie sklasyfikowanych normalnych uderzeñ
-\item Younden index = sensitivity + specificity - 1
-%TODO KD aktualizacja metod + artyku³
+W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich metryk, które dawa³aby informacjê o jako¶ci testowanych sieci. Poniewa¿ rozwa¿any problem sprowadza siê do klasyfikacji wieloklasowej, niemo¿liwe by³o wykorzystanie gotowych metryk dostêpnych w bibliotece Keras. Spo¶ród sposobów oceny modeli dla klasyfikacji wieloklasowej \cite{mlpsurvey2010} do eksperymentów wybrali¶my nastêpuj±ce:
 
-\end{itemize}
+\begin{description}
+\item [Skuteczno¶æ (\emph{Accuracy})] W wypadku jednej klasy jest to stosunek ilo¶ci poprawnie sklasyfikowanych przypadków do liczby wszystkich przypadków. Dla klasyfikacji wieloklasowej skuteczno¶æ zdefiniowana jest jako ¶rednia skuteczno¶ci klasyfikacji dla poszczególnych klas.
+
+\item [B³±d ¶redniokwadratowy (\emph{Mean Squared Error})] B³±d dla pojedynczej próbki jest to odleg³o¶æ miêdzy warto¶ci± oczekiwan±, a przewidywan±. Metryka ta jest równa ¶redniej kwadratów tych b³êdów dla wszystkich próbek. Ma to efekt taki, ¿e na b³±d mocniej wp³ywaj± du¿e ró¿nice miêdzy warto¶ciami. Dla idealnego klasyfikatora b³±d by³by równy jeden.
+
+\item [Precyzja (\emph{Precision})] Precyzja dla jednej klasy to stosunek poprawnie sklasyfikowanych wyst±pieñ do wszystkich przewidzianych wyst±pieñ. Dla klasyfikacji wieloklasowej jest to ¶rednia precyzji jednoklasowej ze wszystkich klas. W naszym wypadku jest to ¶rednia stosunku poprawnie przewidzianych arytmii do wszystkich przewidzianych wyst±pieñ.
+
+\item [Czu³o¶æ (\emph{Recall})] Czu³o¶æ dla jednej klasy to stosunek poprawnie przewidzianych pozytywów do ilo¶ci pozytywnych próbek. Podobnie jak w przypadku czu³o¶ci, dla klasyfikacji wieloklasowej jest to ¶rednia metryki jednoklasowej ze wszystkich klas. Dla naszego problemu jest to ¶rednia stosunku poprawnie przewidzianych wyst±pieñ do wszystkich arytmii.
+
+\item [Miara $F_1$ (\emph{$F_1$-Measure})] Jest to ¶rednia harmoniczna czu³o¶ci i precyzji, dziêki czemu jej warto¶æ dok³adniej odzwierciedla jako¶æ klasyfikatora ni¿ osobne metryki.
+\end{description}
 
 
 \subsubsection{Wyniki dla ró¿nych modeli}
@@ -867,8 +871,6 @@ Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my 
 
 Jeste¶my zadowoleni z efektu koñcowego naszej pracy.
 % o ile to mo¿liwe proszê uzywaæ odwo³añ \cite w konkretnych miejscach a nie \nocite
-
-\nocite{artykul2011,ksiazka2011,narzedzie2011,projekt2011}
 
 \bibliography{bibliografia}
 
