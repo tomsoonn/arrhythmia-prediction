@@ -11,7 +11,7 @@ from arrhythmia.interface.LogWindow import LogWindow
 from arrhythmia.interface.utils import MyQGraphicsView, update_plot, PLOT_WIDTH, Player, load_datafile_name, plot, \
     FREQUENCY, create_double_validator, MyQLineEdit
 
-from arrhythmia.model import create_model, models, FunctionPipe, TimeSeries
+from arrhythmia.model import create_prediction_engine, engines, FunctionLayer
 
 STEP = 0.05  # step for '<', '>' buttons and player
 MINI_PLOT_WIDTH = 10
@@ -74,11 +74,11 @@ class PredictWindow(QObject):
         self.start_line.setValidator(QIntValidator(0, 0))
 
         # Model integration
-        self.model = create_model(models[0])
+        self.model = create_prediction_engine(engines[0])
 
         def extract_output(value):
             self.set_output(value[0] * 100, value[1] * 100, value[2] * 100)
-        self.model.set_next(FunctionPipe(extract_output))
+        self.model.set_next(FunctionLayer(extract_output))
 
         # handlers
         next_button.pressed.connect(self.start_player)
@@ -93,7 +93,7 @@ class PredictWindow(QObject):
         self.start_line.focused.connect(self.stop_player)
 
     def update_output(self):
-        self.model(TimeSeries(self.signal[:int(self.start * FREQUENCY)]))
+        self.model(self.signal[:int(self.start * FREQUENCY)])
         # self.set_output(randint(0, 100), randint(0, 100), randint(0, 100))
 
     def logs_handler(self):

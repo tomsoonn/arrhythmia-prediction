@@ -28,14 +28,12 @@ beat_types = [BeatType('N', 'Normal beat'), BeatType('SVEB', 'Supraventricular e
               BeatType('Q', 'Unknown beat')]
 
 
-class PipeObject:
+class Layer:
     """
     Abstract class representing computation layer.
     More generally it can be viewed as pipe that gets values pushed to it and
     after performing some transformation on it it pushes to next pipe in line.
     Additionally this class has been extended to allow multiple PipeObject's as next in line.
-
-    # TODO Add abstract class support to prevent this from being instantiated
     """
     def __init__(self):
         self.next = []
@@ -85,7 +83,7 @@ class PipeObject:
         self.push_value(value)
 
 
-class FunctionPipe(PipeObject):
+class FunctionLayer(Layer):
     """
     General function PipeObject, performs computation by calling passed function.
     """
@@ -100,7 +98,7 @@ class FunctionPipe(PipeObject):
         return [self.func(value)]
 
 
-class Pipeline(PipeObject):
+class Sequence(Layer):
     def __init__(self, first, last):
         super().__init__()
         self.head = first
@@ -113,7 +111,7 @@ class Pipeline(PipeObject):
         self.head.push_value(value)
 
 
-class PipelineBuilder:
+class SequenceBuilder:
     def __init__(self, pipes=None):
         self.pipes = pipes if pipes is not None else []
 
@@ -127,4 +125,4 @@ class PipelineBuilder:
             previous = pipe
         first = self.pipes[0]
         last = self.pipes[-1]
-        return Pipeline(first, last)
+        return Sequence(first, last)

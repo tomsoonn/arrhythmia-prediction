@@ -1,9 +1,8 @@
 import numpy as np
 from scipy import fftpack
 
-from arrhythmia.model.helpers import FunctionPipe
+from arrhythmia.model.helpers import FunctionLayer
 from arrhythmia.model.preprocessing import IntervalSplitter, NoiseRemover, StandardNormalizer
-from arrhythmia.model.time_series import TimeSeries
 
 # Precision of floating point comparisons
 epsilon = 1e-6
@@ -14,28 +13,27 @@ def disabled_test_interval():
     # Select two second samples each starting one second after previous
     frequency = 60
     interval = 2 * 60
-    padding = 60
     total = 4 * 60 + 1
 
-    splitter = IntervalSplitter(interval, padding)
+    splitter = IntervalSplitter(interval)
     points = list(range(total))
     # Push values in two series
-    series1 = TimeSeries(points[:10])
-    series2 = TimeSeries(points[10:])
+    series1 = np.array(points[:10])
+    series2 = np.array(points[10:])
 
     # Use function pipe to report results
     results = []
 
     def set_results(v):
         nonlocal results
-        results.append(v.points)
+        results.append(v)
 
-    endp = FunctionPipe(set_results)
+    endp = FunctionLayer(set_results)
     splitter.set_next(endp)
 
     # Calculate expected values manually
     expected = []
-    for start in range(0, total - interval + 1, padding):
+    for start in range(0, total - interval + 1):
         expected.append(points[start:start + interval])
 
     # When:
@@ -53,8 +51,6 @@ def test_standard_normalizer():
     # Create random sequence of uniform values from interval [0, 1)
     length = 100
     random_uniform = np.random.rand(length)
-    # Wrap it into TimeSeries
-    ts = TimeSeries(random_uniform)
     # Create the normalizer to test
     normalizer = StandardNormalizer()
     # Helper pipe to save the result
@@ -64,19 +60,20 @@ def test_standard_normalizer():
         nonlocal result
         result = v
 
-    endp = FunctionPipe(set_result)
+    endp = FunctionLayer(set_result)
     # Connect normalizer to ending pipe
     normalizer.set_next(endp)
+
     # When:
-    normalizer.push_value(ts)
+    normalizer.push_value(random_uniform)
+
     # Then:
-    out_points = result.points
     # Length of output sequence should be the same as input sequence
-    assert len(out_points) == length
+    assert len(result) == length
     # Mean should be zero
-    assert abs(out_points.mean()) < epsilon
+    assert abs(result.mean()) < epsilon
     # Standard deviation should be zero
-    assert abs(out_points.std() - 1.0) < epsilon
+    assert abs(result.std() - 1.0) < epsilon
 
 
 def test_noise_remover():
@@ -107,18 +104,17 @@ def test_noise_remover():
         nonlocal result
         result = v
 
-    endp = FunctionPipe(set_result)
-    # Wrap signal into TimeSeries
-    ts = TimeSeries(noisy_sinus)
+    endp = FunctionLayer(set_result)
     # Connect noise remover to ending pipe
     noise_remover.set_next(endp)
     # When:
-    noise_remover.push_value(ts)
-    # Then:
-    out_points = result.points
+    noise_remover.push_value(noisy_sinus)
 
-    peak_freq_ts = get_peak_freq(out_points)
+    # Then:
+    # Result should be set
+    assert result is not None
+    peak_freq_ts = get_peak_freq(result)
     # Min frequency of new signal should be higher or equal to noise remover parameter
     assert peak_freq_ts >= frequency
     # Length of output sequence should be the same as input sequence
-    assert len(out_points) == len(noisy_sinus)
+    assert len(result) == len(noisy_sinus)

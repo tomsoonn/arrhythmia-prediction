@@ -6,18 +6,21 @@ import keras.backend as K
 
 from keras.models import load_model
 
-from arrhythmia.model.helpers import PipeObject, PipelineBuilder
+from arrhythmia.model.helpers import Layer, SequenceBuilder
 from arrhythmia.model.preprocessing import IntervalSplitter, StandardNormalizer, Downsampler, NoiseRemover
 
 
-class NNPipe(PipeObject):
+class NNPredictor(Layer):
     def __init__(self, network):
         super().__init__()
         self.network = network
+        print(network.summary())
 
     def compute(self, value):
-        nn_input = value.points
-        nn_input = np.expand_dims(nn_input, axis=0)
+        # We expand first axis, because network expects input of size
+        # batch_num x input_size
+        # In our case "value" has "input_size" elements and our "batch_num" will always be 1.
+        nn_input = np.expand_dims(value, axis=0)
         return [self.network.predict(nn_input)[0]]
 
 
@@ -83,29 +86,29 @@ class NNetwork:
     def load(self):
         path = os.path.join(os.path.dirname(__file__), 'nn_files', self.filename)
         k_model = load_model(path, custom_objects={'precision': precision, 'recall': recall, 'fmeasure': fmeasure})
-        return NNPipe(k_model)
+        return NNPredictor(k_model)
 
 
 # List of available neural networks
 networks = [NNetwork('', 'mlp_conv_1_window5_2.hdf5', '')]
 
 
-class PredictionModel:
+class PredictionEngine:
     def __init__(self, name, layers):
         self.name = name
         self.layers = layers
 
     def build(self):
-        builder = PipelineBuilder()
+        builder = SequenceBuilder()
         for l in self.layers:
             builder.append_one(l)
         return builder.build()
 
 
-# List of available models
-models = [
-    PredictionModel('convolutional', [
-        IntervalSplitter(360*60*5, 360),
+# List of available engines
+engines = [
+    PredictionEngine('convolutional', [
+        IntervalSplitter(360*60*5),
         Downsampler(360, 60),
         NoiseRemover(60, 0.5),
         StandardNormalizer(),
@@ -113,5 +116,5 @@ models = [
 ]
 
 
-def create_model(model_description):
-    return model_description.build()
+def create_prediction_engine(engine):
+    return engine.build()

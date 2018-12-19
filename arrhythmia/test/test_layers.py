@@ -1,7 +1,7 @@
-from ..model.helpers import PipeObject, Pipeline, FunctionPipe, PipelineBuilder
+from ..model.helpers import Layer, Sequence, FunctionLayer, SequenceBuilder
 
 
-class MulPipe(PipeObject):
+class MulPipe(Layer):
     """
     Pipe that performs multiplication of input value by constant passed to constructor.
     """
@@ -13,7 +13,7 @@ class MulPipe(PipeObject):
         return [self.mul * value]
 
 
-class AddPipe(PipeObject):
+class AddPipe(Layer):
     """
     Pipe that performs addition of input value and constant passed to constructor.
     """
@@ -40,7 +40,7 @@ def test_simple_pipes():
         nonlocal result
         result = v
 
-    endp = FunctionPipe(set_result)
+    endp = FunctionLayer(set_result)
 
     mul2.set_next(add3)
     add3.set_next(mul4)
@@ -74,8 +74,8 @@ def test_branching_pipes():
         nonlocal result2
         result2 = v
 
-    endp1 = FunctionPipe(set_result1)
-    endp2 = FunctionPipe(set_result2)
+    endp1 = FunctionLayer(set_result1)
+    endp2 = FunctionLayer(set_result2)
 
     mul2.set_next([mul4, add3])
     mul4.set_next(endp1)
@@ -101,11 +101,11 @@ def test_straight_pipeline():
         nonlocal result1
         result1 = v
 
-    builder = PipelineBuilder()
+    builder = SequenceBuilder()
     builder.append_one(MulPipe(2))
     builder.append_one(AddPipe(3))
     builder.append_one(MulPipe(4))
-    builder.append_one(FunctionPipe(set_result1))
+    builder.append_one(FunctionLayer(set_result1))
     pipeline = builder.build()
 
     # When
@@ -135,12 +135,12 @@ def disabled_test_branching_pipeline():
         nonlocal result2
         result2 = v
 
-    builder = PipelineBuilder()
+    builder = SequenceBuilder()
     builder.append_one(MulPipe(2))
     builder.append_one(AddPipe(3))
     pipelines = builder.split([MulPipe(4), AddPipe(9)])
-    pipelines[0].append_one(FunctionPipe(set_result1))
-    pipelines[1].append_one(FunctionPipe(set_result2))
+    pipelines[0].append_one(FunctionLayer(set_result1))
+    pipelines[1].append_one(FunctionLayer(set_result2))
     pipeline = builder.build()
 
     # When
