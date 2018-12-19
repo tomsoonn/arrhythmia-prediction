@@ -10,6 +10,7 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{xcolor}
 \usepackage{siunitx}
 \usepackage{caption}
 
@@ -28,6 +29,11 @@
 	xleftmargin=\parindent,
 	belowskip=\baselineskip
 }
+\lstdefinestyle{result}{
+	basicstyle=\footnotesize,
+	morekeywords={loss, binary_accuracy, mean_squared_error, precision, recall, fmeasure},
+	keywordstyle=\color{green!50!black}
+}
 
 \lstset{captionpos=b, style=custompy}
 
@@ -41,7 +47,7 @@
 \supervisor{dr in¿.\ Marcin Orchel}
 
 \date{\the\year}
-
+\raggedbottom
 
 \begin{document}
 
@@ -195,7 +201,7 @@ Interfejs graficzny sk³ada siê na 5 widoków: g³ówne menu, okno predykcji, okno l
 	\label{fig:interface_diagram_class}
 \end{figure}
 
-\begin{lstlisting}[float, caption={Kod managera widoków}]
+\begin{lstlisting}[float=h!, caption={Kod managera widoków}]
 class ViewManager(QStackedWidget):
 
     def __init__(self, *args, **kwargs):
@@ -232,7 +238,7 @@ class ViewManager(QStackedWidget):
         
 \end{lstlisting}
 
-\begin{figure}[H]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.9\linewidth]{ui_file.png}
 	\caption{Przyk³adowy fragment pliku .ui}
@@ -580,7 +586,7 @@ Zawêzi³o to zbiór typów uderzeñ do 5:
 	\item Q - Unknown beat
 \end{itemize}
 
-\begin{lstlisting}[caption={Kod mapuj±cy oznaczenia z bazy MIT-BIH do standardu AAMI}]
+\begin{lstlisting}[float=h!, caption={Kod mapuj±cy oznaczenia z bazy MIT-BIH do standardu AAMI}]
 mapping = {
 	BeatType('N', 'Normal beat'): {'N', 'L', 'R'},
 	BeatType('SVEB', 'Supraventricular ectopic beat'): {'e', 'j', 'A', 'a', 'J', 'S'},
@@ -601,7 +607,7 @@ def mit_to_aami(symbol):
 
 Aby w pe³ni wykorzystaæ dane znajduj±ce siê w bazie, ka¿dy rekord jest dzielony na fragmenty o okre¶lonej d³ugo¶ci, wybierane co okre¶lony krok czasowy. W ten sposób otrzymujemy wiele unikalnych fragmentów stanowi±cych podci±gi ca³ego rekordu.
 
-\begin{lstlisting}[float, caption={Funkcja dziel±ca rekordy na fragmenty}]
+\begin{lstlisting}[float=h!, caption={Funkcja dziel±ca rekordy na fragmenty}]
 def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True):
     for record in records:
         for start in range(0, len(record[0]) - pred_len - post_len, increment):
@@ -661,13 +667,182 @@ W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich
 
 
 \subsubsection{Wyniki dla ró¿nych modeli}
+%TODO opisy
 
-%TODO KD
+\paragraph{Sieæ gêsta} - tu bêdzie opis
+
+Sieæ gêsta 10,50,10
+
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej 10,50,10}]
+loss: 0.6015 (+/-0.0216), binary_accuracy: 0.6660 (+/-0.0097), mean_squared_error: 0.2060 (+/-0.0073), precision: 0.4620 (+/-0.0378), recall: 0.3255 (+/-0.0573), fmeasure: 0.3623 (+/-0.0425)
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{simple_10_50_10_loss.png}
+	\caption{Funkcja straty dla sieci gêstej o rozmiarach warstw 10, 50, 10}
+	\label{fig:simple_10_50_10_loss}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{simple_10_50_10_acc.png}
+	\caption{Funkcja dok³adno¶ci dla sieci gêstej o rozmiarach warstw 10, 50, 10}
+	\label{fig:simple_10_50_10_acc}
+\end{figure}
+
+Sieæ gêsta 100,100
+
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej 100,100}]
+loss: 0.5974 (+/-0.0171), binary_accuracy: 0.6839 (+/-0.0053), mean_squared_error: 0.2024 (+/-0.0053), precision: 0.4681 (+/-0.0288), recall: 0.3626 (+/-0.0245), fmeasure: 0.3915 (+/-0.0204)
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{simple_100_100_loss.png}
+	\caption{Funkcja straty dla sieci gêstej o rozmiarach warstw 100,100}
+	\label{fig:simple_100_100_loss}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{simple_100_100_acc.png}
+	\caption{Funkcja dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100,100}
+	\label{fig:simple_100_100_acc}
+\end{figure}
+
+Sieæ gêsta 100,200,100
+
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej 100,200,100}]
+loss: 0.5778 (+/-0.0156), binary_accuracy: 0.6881 (+/-0.0171), mean_squared_error: 0.1967 (+/-0.0058), precision: 0.4875 (+/-0.0331), recall: 0.3248 (+/-0.0308), fmeasure: 0.3723 (+/-0.0371)
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{simple_100_200_100_loss.png}
+	\caption{Funkcja straty dla sieci gêstej o rozmiarach warstw 100,200,100}
+	\label{fig:simple_100_200_100_loss}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{simple_100_200_100_acc.png}
+	\caption{Funkcja dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100,200,100}
+	\label{fig:simple_100_200_100_acc}
+\end{figure}
+
+\paragraph{Siec konwolucyjna} - tu bêdzie opis
+
+Sieæ konwolucyjna pool=16, warstwy=[(4, 16), (16, 16)]
+
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
+loss: 0.3755 (+/-0.0338), binary_accuracy: 0.8377 (+/-0.0214), mean_squared_error: 0.1176 (+/-0.0113), precision: 0.7630 (+/-0.1123), recall: 0.6914 (+/-0.1509), fmeasure: 0.6868 (+/-0.0562)
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\linewidth]{conv_16_4_loss.png}
+	\caption{Funkcja straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\label{fig:conv_16_4_loss}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\linewidth]{conv_16_4_acc.png}
+	\caption{Funkcja dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\label{fig:conv_16_4_acc}
+\end{figure}
+
+Sieæ konwolucyjna pool=16, warstwy=[(32, 16), (16, 16)]
+
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
+loss: 0.3261 (+/-0.0410), binary_accuracy: 0.8635 (+/-0.0305), mean_squared_error: 0.1005 (+/-0.0165), precision: 0.7846 (+/-0.0883), recall: 0.7532 (+/-0.0799), fmeasure: 0.7515 (+/-0.0479)
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\linewidth]{conv_16_32_loss.png}
+	\caption{Funkcja straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\label{fig:conv_16_32_loss}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\linewidth]{conv_16_32_acc.png}
+	\caption{Funkcja dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\label{fig:conv_16_32_acc}
+\end{figure}
+
+Sieæ konwolucyjna pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]
+
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
+loss: 0.4162 (+/-0.0601), binary_accuracy: 0.8035 (+/-0.0395), mean_squared_error: 0.1347 (+/-0.0216), precision: 0.7637 (+/-0.1297), recall: 0.5548 (+/-0.0280), fmeasure: 0.6176 (+/-0.0328)
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\linewidth]{conv_16_16_loss.png}
+	\caption{Funkcja straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(16, 16), (8, 16), (4, 16)]}
+	\label{fig:conv_16_16_loss}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\linewidth]{conv_16_16_acc.png}
+	\caption{Funkcja dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy[(16, 16), (8, 16), (4, 16)]}
+	\label{fig:conv_16_16_acc}
+\end{figure}
+
 
 \subsection{Testy}
 
 Wraz z rozrastaniem siê projektu starali¶my siê równolegle pisaæ testy dla nowo powstaj±cych elementów. U³atwi³o to znacznie znajdowanie b³êdów i usprawni³o tworzenie projektu.
 %TODO 
+\begin{lstlisting}[float=h!, caption={Przyk³adowy test interfejsu}]
+def test_loading_and_plotting_predict(qtbot, manager):
+    """
+    Simple test for loading and plotting in predict window
+    """
+    predict = manager.predict
+    predict.load_plot_from_file("100.dat")
+    predict.set_new_plot()
+
+    assert predict.start == 0
+    assert predict.start_line.text() == "0"
+    assert predict.sig_len > 0
+    assert predict.figure is not None
+\end{lstlisting}
+
+\begin{lstlisting}[float=h!, caption={Przyk³adowy test normalizacji}]
+def test_standard_normalizer():
+    # Given:
+    # Create random sequence of uniform values from interval [0, 1)
+    length = 100
+    random_uniform = np.random.rand(length)
+    # Create the normalizer to test
+    normalizer = StandardNormalizer()
+    # Helper pipe to save the result
+    result = None
+
+    def set_result(v):
+        nonlocal result
+        result = v
+
+    endp = FunctionLayer(set_result)
+    # Connect normalizer to ending pipe
+    normalizer.set_next(endp)
+
+    # When:
+    normalizer.push_value(random_uniform)
+
+    # Then:
+    # Length of output sequence should be the same as input sequence
+    assert len(result) == length
+    # Mean should be zero
+    assert abs(result.mean()) < epsilon
+    # Standard deviation should be zero
+    assert abs(result.std() - 1.0) < epsilon
+\end{lstlisting}
 
 \section{\SectionTitleWorkOrganization}
 \label{sec:organizacja-pracy}
@@ -840,7 +1015,7 @@ Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji pro
 
 \subsection{Najwa¿niejsze wyniki}
 
-%TODO KD najlepsze wyniki z sieci
+%TODO najlepsze wyniki z sieci
 
 \subsection{Wnioski}
 
@@ -854,6 +1029,7 @@ Projekt mo¿na rozbudowaæ o nastêpuj±ce elementy:
 \item inne typy arytmii - powiêkszenie bazy uwzglêdnianych rodzajów uderzeñ lub bardziej szczegó³owy podzia³ na poszczególne rodzaje
 \item nowe modele - poszerzenie listy dostêpnych modeli predykcji o nowe modele, byæ mo¿e skuteczniejsze\
 \item rysowanie wykresów - optymalizacja rysowania wykresów, zastosowanie grafiki wektorowej
+%TODO rozszerzyæ
 \end{itemize}
 
 \subsection{Podsumowanie}
