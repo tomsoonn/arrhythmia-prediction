@@ -235,14 +235,14 @@ class ViewManager(QStackedWidget):
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{ui_file.png}
+	\includegraphics[width=0.9\linewidth]{ui_file.png}
 	\caption{Przyk³adowy fragment pliku .ui}
 	\label{fig:ui_file}
 \end{figure}
 
 \subsubsection{G³ówne menu}
 
-Menu jest bardzo proste. Zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g³ównymi widokami. Ka¿dy z tych widoków umo¿liwia powrót do g³ównego menu.
+Menu zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g³ównymi widokami. Ka¿dy z tych widoków umo¿liwia powrót do g³ównego menu.
 
 \begin{figure}[h!]
 	\centering
@@ -253,7 +253,25 @@ Menu jest bardzo proste. Zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g
 
 \subsubsection{Okno predykcji}
 
-Podstawowe i najwa¿niejsze okno w programie. Umo¿liwia ono wczytanie danych EKG z pliku w formacie .dat(domy¶lny format bazy MIT-BIH z której korzystamy). Na podstawie wczytanych danych generowany jest wykres podgl±du. Wykres jest skalowany do aktualnie wy¶wietlanych danych, tak aby by³y one dobrze widoczne. Nad nim znajduje siê pasek nawigacyjny umo¿liwiaj±cy: przeskok do wybranego fragmentu poprzez wpisanie warto¶ci pocz±tkowej wykresu, przewijanie wstecz lub do przodu oraz odtwarzanie danych w przód co pozwala symulowaæ dzia³anie w czasie rzeczywistym.
+Podstawowe i najwa¿niejsze okno w programie. Umo¿liwia ono wczytanie danych EKG z pliku w formacie .dat(domy¶lny format bazy MIT-BIH z której korzystamy) poprzez wybranie go w eksploratorze plików.
+ 
+Na podstawie wczytanych danych generowany jest wykres podgl±du przedstawiaj±cy 6 sekundowy fragment rekordu. Wykres jest skalowany na osi Y do aktualnie wy¶wietlanych danych, tak aby by³y one zawsze dobrze widoczne. W prawym dolnym rogu tego wykresu znajduje siê mniejszy wykres, wraz z legend±, przedstawiaj±cy jak zmienia³y siê poszczególne warto¶ci predykcji na przestrzeni ostatnich 10 warto¶ci. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{plot.png}
+	\caption{Wykres danych EKG wraz z wykresem zmian predykcji}
+	\label{fig:plot}
+\end{figure}
+
+Nad wykresem znajduje siê pasek nawigacyjny umo¿liwiaj±cy:
+\begin{itemize}
+\item przeskok do wybranego fragmentu poprzez wpisanie warto¶ci pocz±tkowej wykresu w sekundach z dok³adno¶ci± do 2 cyfr dziesiêtnych, warto¶æ jest ograniczona do rozmiaru danych
+\item przewijanie wykresu wstecz lub do przodu poprzez klikanie b±d¼ przytrzymanie odpowiedniego przycisku
+\item odtwarzanie danych w przód co pozwala symulowaæ dzia³anie w czasie rzeczywistym
+\end{itemize}
+
+Dodatkowo po wczytaniu danych wy¶wietlana jest nazwa rekordu oraz maksymalna warto¶æ do której mo¿na przeskoczyæ. Odtwarzanie danych inicjowane jest przez odrêbny w±tek.
 
 \begin{figure}[h!]
 	\centering
@@ -262,16 +280,17 @@ Podstawowe i najwa¿niejsze okno w programie. Umo¿liwia ono wczytanie danych EKG 
 	\label{fig:navigation}
 \end{figure}
 
-Poni¿ej wykresu znajduje siê pasek wy¶wietlaj±cy warto¶ci, które na wyj¶ciu daje model predykcji dla aktualnych danych. Rozwa¿amy 3 typy arytmii o oznaczeniach: SVEB, VEB oraz F.
+Pod wykresem z prawej strony znajduje siê pasek wy¶wietlaj±cy warto¶ci, które na wyj¶ciu daje model predykcji dla aktualnych danych. Rozwa¿amy 3 typy arytmii o oznaczeniach: SVEB, VEB oraz F.
+Predykcja równie¿ inicjowana jest w innym w±tku i odbywa siê co 1 sekundê w trakcie odtwarzania wykresu.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{prediction.jpg}
-	\caption{Widok okna predykcji}
-	\label{fig:prediction}
+	\includegraphics[width=0.5\linewidth]{output.png}
+	\caption{Pasek warto¶ci predykcji}
+	\label{fig:output}
 \end{figure}
 
-Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawieraj±ce logi wszystkiego co siê do tej pory dzia³o w zak³adce dotycz±cej predykcji. Dodatkowo w oknie mamy mo¿liwo¶æ wyczyszczenia dotychczasowej historii oraz zapisania jej do pliku tekstowego.
+Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawieraj±ce logi wszystkiego co siê do tej pory dzia³o w zak³adce dotycz±cej predykcji. W oknie mamy mo¿liwo¶æ wyczyszczenia dotychczasowej historii lub zapisania jej do pliku tekstowego.
 
 \begin{figure}[H]
 	\centering
@@ -280,9 +299,19 @@ Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawiera
 	\label{fig:logs}
 \end{figure}
 
+
+Ca³o¶æ prezentuje siê nastêpuj±co:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{prediction.png}
+	\caption{Widok okna predykcji}
+	\label{fig:prediction}
+\end{figure}
+
 \subsubsection{Przegl±danie danych}
 
-W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia wczytanie danych z plików wraz z informacjami na temat poszczególnych uderzeñ. Na podstawie danych generowany jest wykres na którym ka¿de uderzenie jest oznaczone w odpowiedni sposób. Pasek nawigacyjny dzia³a w taki sam sposób jak w oknie dotycz±cym predykcji i umo¿liwia swobodne przegl±danie danych.
+W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia wczytanie danych z plików wraz z informacjami na temat poszczególnych uderzeñ. Na podstawie danych generowany jest wykres na którym ka¿de uderzenie jest oznaczone w odpowiedni sposób. Nad wykresem znajduje siê pasek do nawigacji po wykresie taki sam jak w oknie predykcji.
 
 \begin{figure}[h!]
 	\centering
@@ -295,7 +324,7 @@ W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia
 
 Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytmii. Z lewej strony mamy listê zawieraj±c± rodzaje nieprawid³owo¶ci. Po wybraniu elementu z listy po prawej stronie zostan± wy¶wietlone odpowiednie informacje. Dane wczytywane s± z plików tekstowych.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{types.jpg}
 	\caption{Okno z informacjami na temat ró¿nych typów arytmii}
@@ -437,7 +466,24 @@ Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± wali
 
 \subsubsection{Metodologia oceny skuteczno¶ci}
 
-%TODO KD
+Klasyfikujemy cztery klasy uderzeñ serca:
+\begin{itemize}
+\item Nadkomorowy skurcz dodatkowy (SVEB)
+\item Komorowy skurcz dodatkowy (VEB)
+\item Uderzenia po³±czone (F)
+
+\end{itemize}
+
+Jako oceny skuteczno¶ci metod klasyfikacji wybrali¶my:
+\begin{itemize}
+\item accuracy = ilo¶æ poprawnie sklasyfikowanych uderzeñ przez ca³kowit± ilo¶æ uderzeñ
+\item sensitivity = stosunek ilo¶ci poprawnie sklasyfikowanych nienormalnych uderzeñ
+\item specificity = stosunek ilo¶ci poprawnie sklasyfikowanych normalnych uderzeñ
+\item Younden index = sensitivity + specificity - 1
+%TODO KD aktualizacja metod + artyku³
+
+\end{itemize}
+
 
 \subsubsection{Wyniki dla ró¿nych modeli}
 
@@ -466,7 +512,6 @@ Dodatkowo aby predykcja by³a mo¿liwa musimy mieæ oznaczone dane treningowe, na k
 
 W sk³ad naszego zespo³u wchodzi³o dwóch studentów Informatyki. Pracê nad systemem podzielili¶my na zadania, które starali¶my siê równo podzieliæ miêdzy cz³onkami zespo³u. Dodatkowo przy dzieleniu siê prac± brali¶my pod uwagê umiejêtno¶ci, zainteresowania i do¶wiadczenie. Nad szczególnymi i kluczowymi elementami projektu pracowali¶my wspólnie.
 
-% TODO dodaæ uzasadnienie
 \begin{itemize}
 	\item \textbf{Tomasz Nizio}	
 	
@@ -485,7 +530,6 @@ Dodatkowo za ka¿dym razem recenzowali¶my siê nawzajem w sprawie wprowadzanych zm
 Prace nad projektem przebiega³y dosyæ nieregularnie. Pod koniec semestru letniego uda³o siê uzyskaæ prototyp o minimalnej funkcjonalno¶ci. W trakcie przerwy semestralnej prace nad projektem spowolni³y. Najwiêksza czê¶æ projektu powsta³a w trakcie semestru zimowego. 
 
 Wyszczególniæ mo¿emy nastêpuj±ce etapy prac:
-
 
 \subsubsection{Zapoznanie z tematyk± projektu oraz konfiguracja ¶rodowiska}
 
@@ -573,8 +617,6 @@ Osi±gniête cele:
 
 Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach na repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
 
-%TODO zrzut z trello
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{slack.png}
@@ -591,7 +633,7 @@ Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplika
 
 Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}. Do jego tworzenia wykorzystywali¶my miêdzy innymi takie narzêdzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, którego pliki zosta³y zaimportowane do projektu.
 
-%TODO zrzut z GitHub i mo¿e samphoreci, jupytera
+%TODO zrzut z GitHub i mo¿e samphoreci, codefactor, jupyter
 %TODO KD dopisz tu co¶ dlaczego korzysta³e¶ z Jupytera(³adnie wygl±da itd.) oraz inne istotne narzêdzia(proste edytory tekstu chyba nie s± istotne)
 
 Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}
@@ -603,6 +645,8 @@ Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}
 	\label{fig:qt_designer}
 \end{figure}
 
+Diagramy rysowali¶my przy pomocy narzêdzia \textbf{draw.io} oraz \textbf{Umlet}
+
 \section{\SectionTitleResults}
 \label{sec:wyniki-projektu}
 \emph{Wskazanie wyników projektu (co konkretnie uda³o siê uzyskaæ:
@@ -613,14 +657,42 @@ Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}
 
 \subsection{Zrealizowane cele}
 
+Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji projektu:
+\begin{itemize}
+\item wy¶wietlanie wykresu EKG - wykres jest rysowany
+\item mo¿liwo¶æ nawigowania po wykresie - mo¿liwe jest przesuwanie wykresu w obydwie strony, a tak¿e przeskok do wybranego fragmentu
+\item mo¿liwo¶æ odtwarzania wykresu EKG - mo¿liwe jest odtwarzanie wykresu dla wczytanych danych co symuluje pracê w czasie rzeczywistym
+\item stworzenie oraz przetestowanie skuteczno¶ci ró¿nych modeli sieci neuronowych - przetestowane modele zosta³y opisane w rozdziale 3.3.
+\item zintegrowanie ostatecznych modeli z odtwarzaniem wykresu - w trakcie odtwarzania wykresu, co sekundê odbywa siê predykcja dla fragmentu EKG koñcz±cego siê w tym samym miejscu co aktualnie wy¶wietlany wykres. Wyniki predykcji wy¶wietlane s± w interfejsie, wpisywane do logów, a tak¿e wy¶wietlany jest wykres jak przebiega³a predykcja
+\item mo¿liwo¶æ przegl±dania danych z oznaczonymi typami uderzeñ - stworzyli¶my zak³adkê na której wykres wy¶wietlany jest wraz z adnotacjami przy ka¿dym uderzeniu serca 
+\item udostêpnienie informacji na temat arytmii - stworzyli¶my zak³adkê, w której znajduje siê lista arytmii wraz z ich opisami
+\end{itemize}
+
 \subsection{Najwa¿niejsze wyniki}
+
+%TODO KD najlepsze wyniki z sieci
 
 \subsection{Wnioski}
 
+%TODO wnioski
+
 \subsection{Mo¿liwo¶ci rozwoju}
+
+Projekt mo¿na rozbudowaæ o nastêpuj±ce elementy:
+\begin{itemize}
+\item inne formaty danych - do systemu mo¿na dodaæ obs³ugê wczytywania danych z plików o innych formatach ni¿ zrealizowane przez nas lub nawet pobieranie danych w czasie rzeczywistym z odpowiednich urz±dzeñ
+\item inne typy arytmii - powiêkszenie bazy uwzglêdnianych rodzajów uderzeñ lub bardziej szczegó³owy podzia³ na poszczególne rodzaje
+\item nowe modele - poszerzenie listy dostêpnych modeli predykcji o nowe modele, byæ mo¿e skuteczniejsze\
+\item rysowanie wykresów - optymalizacja rysowania wykresów, zastosowanie grafiki wektorowej
+\end{itemize}
 
 \subsection{Podsumowanie}
 
+W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe³niaj±c± za³o¿one wymagania. Przetestowali¶my równie¿ skuteczno¶æ predykcji arytmii przez ró¿ne modele predykcji.
+
+Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my cenne do¶wiadczenie pracy w zespole. Nauczyli¶my siê sprawnie rozwi±zywaæ problemy pojawiaj±ce siê w trakcie rozwoju projeku. Poznali¶my te¿ nowe technologie, które zosta³y wykorzystane przy tworzeniu systemu.
+
+Jeste¶my zadowoleni z efektu koñcowego naszej pracy.
 % o ile to mo¿liwe proszê uzywaæ odwo³añ \cite w konkretnych miejscach a nie \nocite
 
 \nocite{artykul2011,ksiazka2011,narzedzie2011,projekt2011}
