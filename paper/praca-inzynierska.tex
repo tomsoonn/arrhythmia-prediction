@@ -50,7 +50,6 @@
 \tableofcontents
 \newpage
 
-%TODO streszczenie
 
 \section{\SectionTitleProjectVision}
 \label{sec:cel-wizja}
@@ -60,7 +59,6 @@
 Arytmia serca jest to stan, w którym praca serca jest nieregularna, a czêstotliwo¶æ wychodzi poza zakres 60-100 uderzeñ na minutê bez przyczyny zewnêtrznej. Stan taki mo¿e stanowiæ zagro¿enie dla ¿ycia, chocia¿ nie jest to regu³±. 
 Stan w którym tempo bicia serca wynosi ponad 100 uderzeñ na minutê nazywany jest tachykardi±. D³u¿sza praca serca w przyspieszonym rytmie mo¿e prowadziæ do szkodliwych efektów. Tachykardia mo¿e byæ odczuwana jako nieprzyjemne i mocne bicie serca popularnie okre¶lane ko³ataniem.
 Zbyt wolny rytm pracy serca, który wynosi poni¿ej 50 uderzeñ na minutê nazywany jest bradykardi±. Zazwyczaj stan ten nie zagra¿a ¿yciu, choæ mo¿e powodowaæ niepo¿±dane objawy.
-% TODO ¼ród³o: wikipedia
 
 % EKG
 Najczê¶ciej stosowan± metod± diagnozowania arytmii jest elektrokardiogram - zapis elektrycznej czynno¶ci serca. Pozwala on dok³adnie okre¶liæ rodzaj arytmii, a wiêc i jej szkodliwo¶æ oraz potencjalne przyczyny. W wypadku krótkotrwa³ych arytmii stosuje siê monitory holterowskie umo¿liwiaj±ce ca³odobowe monitorowanie pracy serca.
@@ -83,13 +81,13 @@ Celem naszego projektu jest stworzenie aplikacji na komputery z systemem Windows
 \subsection{Studium wykonalno¶ci}
 
 % Jak z³o¿ony jest problem
-Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i publicznych publikacji na ten temat. Dodatkowo problem jest interdyscyplinarny, obejmuj±c w swoim zakresie zagadnienia informatyczne, jak i zagadnienia zwi±zane z medycyn±. Z tego wzglêdu konieczne jest uwa¿ne przestudiowanie wiedzy dziedzinowej, z któr± autorzy nie s± zaznajomieni, a które do pe³nego zrozumienia wymaga osobnych studiów.
+Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i publikacji na ten temat. Dodatkowo problem jest interdyscyplinarny, obejmuj±c w swoim zakresie zagadnienia informatyczne, jak i zagadnienia zwi±zane z medycyn±. Z tego wzglêdu konieczne jest uwa¿ne przestudiowanie wiedzy dziedzinowej, z któr± nie jeste¶my zaznajomieni, a która do pe³nego zrozumienia wymaga osobnych studiów.
 
-Ze wzglêdu na konieczno¶æ posiadania wiedzy dziedzinowej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ"\ siê reprezentacji wiedzy dziedzinowej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
+Ze wzglêdu na konieczno¶æ posiadania wiedzy specjalistycznej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ"\ siê reprezentacji wiedzy specjalistycznej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
 
-Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjne modele organizacyjne, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci pozyskanych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia równie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
+Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjne modele organizacyjne, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci wynikaj±cych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia równie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
 
-Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwiaj±c elastyczniejsze podej¶cie do problemu.
+Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy z sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwiaj±c elastyczniejsze podej¶cie do problemu.
 
 \begin{figure}[h!]
 	\centering
@@ -116,7 +114,7 @@ Jako technologiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zos
 	\label{fig:pyside}
 \end{figure}
 
-Podsumowuj±c projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
+Podsumowuj±c, projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
 
 \subsection{Analiza zagro¿eñ}
 
@@ -826,11 +824,6 @@ Diagramy rysowali¶my przy pomocy narzêdzia \textbf{draw.io} oraz \textbf{Umlet}
 
 \section{\SectionTitleResults}
 \label{sec:wyniki-projektu}
-\emph{Wskazanie wyników projektu (co konkretnie uda³o siê uzyskaæ:
-  oprogramowanie, dokumentacja, raporty z testów/wdro¿enia, itd.), prezentacja wyników
-  i ocena ich u¿yteczno¶ci (jak zosta³o to zweryfikowane --- np.\ wnioski
-  klienta/u¿ytkownika, zrealizowane testy wydajno¶ciowe, itd.),
-  istniej±ce ograniczenia i propozycje dalszych prac.}  % niniejsza linijka to tylko komentarz, który nale¿y usun±æ
 
 \subsection{Zrealizowane cele}
 
@@ -870,7 +863,11 @@ W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe
 Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my cenne do¶wiadczenie pracy w zespole. Nauczyli¶my siê sprawnie rozwi±zywaæ problemy pojawiaj±ce siê w trakcie rozwoju projeku. Poznali¶my te¿ nowe technologie, które zosta³y wykorzystane przy tworzeniu systemu.
 
 Jeste¶my zadowoleni z efektu koñcowego naszej pracy.
-% o ile to mo¿liwe proszê uzywaæ odwo³añ \cite w konkretnych miejscach a nie \nocite
+
+
+
+% Tak dla pewno¶ci, ¿eby wypisa³y siê wszystkie materia³y, które mamy.
+\nocite{*}
 
 \bibliography{bibliografia}
 
