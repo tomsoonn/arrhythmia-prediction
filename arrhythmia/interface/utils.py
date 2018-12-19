@@ -1,9 +1,9 @@
-import os
 from time import sleep
 
 import numpy as np
-from PySide2.QtCore import QThread, Signal
-from PySide2.QtWidgets import QFileDialog, QGraphicsView
+from PySide2.QtCore import QThread, Signal, QLocale
+from PySide2.QtGui import QDoubleValidator
+from PySide2.QtWidgets import QFileDialog, QGraphicsView, QLineEdit
 
 from arrhythmia.experimental.mitdb import data_dir
 from arrhythmia.interface.wfdb_plot_patched import plot_items
@@ -21,7 +21,7 @@ def update_plot(start, figure):
     figure.canvas.draw_idle()
 
 
-def plot(signal, samples, symbols, fig_size=(10, 6)):
+def plot(signal, samples, symbols, fig_size=(10.8, 5.8)):
     figure = plot_items(signal=signal, ann_samp=samples, ann_sym=symbols,
                         sig_units=['mV'], time_units=TIME_UNITS, figsize=fig_size, fs=360,
                         # ecg_grids='all', # not working on this big data
@@ -35,6 +35,16 @@ def plot(signal, samples, symbols, fig_size=(10, 6)):
     ax.grid()
 
     return figure
+
+
+def create_double_validator(min_val, max_val, decimals):
+    validator = QDoubleValidator(min_val, max_val, decimals)
+    validator.setNotation(QDoubleValidator.StandardNotation)
+    # disable comma
+    lo = QLocale(QLocale.C)
+    lo.setNumberOptions(QLocale.RejectGroupSeparator)
+    validator.setLocale(lo)
+    return validator
 
 
 def autoscale_y(ax, margin=0.1):
@@ -76,6 +86,16 @@ class MyQGraphicsView(QGraphicsView):
 
     def resizeEvent(self, event):
         self.fitInView(0, 0, self.scene().width(), self.scene().height())
+
+
+class MyQLineEdit(QLineEdit):
+    focused = Signal()
+
+    def __init__(self, parent=None):
+        super(MyQLineEdit, self).__init__(parent)
+
+    def focusInEvent(self, event):
+        self.focused.emit()
 
 
 class Player(QThread):

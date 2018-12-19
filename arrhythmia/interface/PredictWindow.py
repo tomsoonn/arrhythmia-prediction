@@ -1,29 +1,32 @@
 from random import randint
 
 from PySide2.QtGui import QIntValidator
-from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QLineEdit, QLabel, QLCDNumber
+from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QLineEdit, QLabel, QLCDNumber, QSizePolicy
 from PySide2.QtCore import QObject
 from matplotlib.backends.backend_qt5agg import FigureCanvas
+from matplotlib.pyplot import legend
 
 from arrhythmia.experimental.mitdb import get_record
 from arrhythmia.interface.LogWindow import LogWindow
 from arrhythmia.interface.utils import MyQGraphicsView, update_plot, PLOT_WIDTH, Player, load_datafile_name, plot, \
-    FREQUENCY
+    FREQUENCY, create_double_validator, MyQLineEdit
 
 from arrhythmia.model import create_model, models, FunctionPipe, TimeSeries
 
 STEP = 0.05  # step for '<', '>' buttons and player
 MINI_PLOT_WIDTH = 10
 
+
 def update_mini_plot(fig, values):
     ax = fig.axes[1]
     ax.clear()
     ax.set_ylim(0, 100)
     ax.set_xlim(0, MINI_PLOT_WIDTH)
-    ax.set_yticks([50, 100])
-    #ax.set_yticklabels(["0","50","100"])
+    ax.set_yticks([100])
+    # ax.set_yticklabels(["0","50","100"])
     lines = ax.plot(values)
     lines[0].set_color("r")
+    legend(lines, ("sveb", "veb", "f"), loc=3, labelspacing=0.1, fontsize=8)
 
 
 class PredictWindow(QObject):
@@ -50,8 +53,11 @@ class PredictWindow(QObject):
 
         # loading components of ui
         layout = self.window.findChild(QGridLayout, 'gridLayout')
-        self.start_line = self.window.findChild(QLineEdit, 'start_line')
+        #self.start_line = self.window.findChild(QLineEdit, 'start_line')
+        self.start_line = MyQLineEdit()
+        self.start_line.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         self.start_label = self.window.findChild(QLabel, 'start_label')
+        self.data_label = self.window.findChild(QLabel, 'data_label')
         self.play_button = self.window.findChild(QPushButton, 'play_button')
         next_button = self.window.findChild(QPushButton, 'go_next_button')
         prev_button = self.window.findChild(QPushButton, 'go_prev_button')
@@ -64,6 +70,7 @@ class PredictWindow(QObject):
         self.f_lcdnumber = self.window.findChild(QLCDNumber, 'f_value')
 
         layout.addWidget(self.graphics, 5, 0, 1, 15)  # put in layout
+        layout.addWidget(self.start_line, 0, 11, 1, 1)
         self.start_line.setValidator(QIntValidator(0, 0))
 
         # Model integration
@@ -82,7 +89,8 @@ class PredictWindow(QObject):
         back_button.clicked.connect(self.back_handler)
         logs_button.clicked.connect(self.logs_handler)
         self.play_button.clicked.connect(self.play_button_handler)
-        self.start_line.returnPressed.connect(self.set_start_from_text_line)
+        self.start_line.editingFinished.connect(self.set_start_from_text_line)
+        self.start_line.focused.connect(self.stop_player)
 
     def update_output(self):
         self.model(TimeSeries(self.signal[:int(self.start * FREQUENCY)]))
@@ -95,7 +103,7 @@ class PredictWindow(QObject):
         file_path = load_datafile_name(self.window)
         if file_path != "":
             self.load_plot_from_file(file_path)
-            self.set_plot()
+            self.set_new_plot()
 
     def load_plot_from_file(self, file_path):
         filename = file_path.split('/')[-1].split('.')[0]  # getting filename from path without extension
@@ -108,20 +116,24 @@ class PredictWindow(QObject):
         self.figure = figure
         self.sig_len = len(signal) // FREQUENCY
 
+        self.data_label.setText("Data view (record {})".format(filename))
         self.log_window.log("Loaded record: {}, signal length: {} seconds".format(filename, self.sig_len))
-        update_mini_plot(self.figure, [20])
 
-    def set_plot(self):
+    def set_new_plot(self):
         canvas = FigureCanvas(self.figure)
         scene = QGraphicsScene()
         scene.addWidget(canvas)
         self.graphics.setScene(scene)
         self.graphics.fitInView(0, 0, scene.width(), scene.height())
 
+        self.stop_player()
         self.start = 0
-        self.start_line.setValidator(QIntValidator(0, self.sig_len - PLOT_WIDTH))
         self.start_line.setText(str(self.start))
-        self.start_label.setText("Start at(max {}):".format(self.sig_len - PLOT_WIDTH))
+        validator = create_double_validator(0, self.sig_len - PLOT_WIDTH, 2)
+        self.start_line.setValidator(validator)
+        self.start_label.setText("Start at (max {}):".format(self.sig_len - PLOT_WIDTH))
+        self.out_hist = []
+        self.set_output(0, 0, 0)
 
     def plot_next(self):
         if self.start + STEP < self.sig_len - PLOT_WIDTH:
@@ -142,7 +154,8 @@ class PredictWindow(QObject):
         self.start_line.setText(str(self.start))
 
     def set_start_from_text_line(self):
-        self.start = int(self.start_line.text())
+        self.start = float(self.start_line.text())
+        print(self.start)
         if self.sig_len > 0:
             update_plot(self.start, self.figure)
 

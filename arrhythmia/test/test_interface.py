@@ -30,7 +30,7 @@ def test_loading_and_plotting_explore(qtbot, manager):
     """
     explore = manager.explore
     explore.load_plot_from_file("100.dat")
-    explore.set_plot()
+    explore.set_new_plot()
 
     assert explore.start == 0
     assert explore.start_line.text() == "0"
@@ -44,7 +44,7 @@ def test_loading_and_plotting_predict(qtbot, manager):
     """
     predict = manager.predict
     predict.load_plot_from_file("100.dat")
-    predict.set_plot()
+    predict.set_new_plot()
 
     assert predict.start == 0
     assert predict.start_line.text() == "0"

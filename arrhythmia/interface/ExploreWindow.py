@@ -1,14 +1,14 @@
 import numpy as np
 from PySide2.QtGui import QIntValidator
 
-from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QLineEdit, QLabel
+from PySide2.QtWidgets import QPushButton, QGraphicsScene, QGridLayout, QLabel, QSizePolicy
 from PySide2.QtCore import QObject
 
 from matplotlib.backends.backend_qt5agg import FigureCanvas
 
 from arrhythmia.experimental.mitdb import get_record
 from arrhythmia.interface.utils import update_plot, plot, load_datafile_name, MyQGraphicsView, Player, PLOT_WIDTH, \
-    FREQUENCY
+    FREQUENCY, create_double_validator, MyQLineEdit
 
 STEP = 0.1  # step for '<' and '>' buttons
 
@@ -39,9 +39,13 @@ class ExploreWindow(QObject):
         prev_button = self.window.findChild(QPushButton, 'prev_button')
         self.play_button = self.window.findChild(QPushButton, 'play_button')
         self.start_label = self.window.findChild(QLabel, 'start_label')
-        self.start_line = self.window.findChild(QLineEdit, 'start_line')
+        self.data_label = self.window.findChild(QLabel, 'data_label')
+        #self.start_line = self.window.findChild(QLineEdit, 'start_line')
+        self.start_line = MyQLineEdit()
+        self.start_line.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
         layout.addWidget(self.graphics, 2, 0, 1, 8)  # put in layout
+        layout.addWidget(self.start_line, 1, 4, 1, 1)
         self.start_line.setValidator(QIntValidator(0, 0))
 
         back_button.clicked.connect(self.back_to_menu_handler)
@@ -51,13 +55,14 @@ class ExploreWindow(QObject):
         prev_button.pressed.connect(self.start_back_player)
         prev_button.released.connect(self.stop_player)
         self.play_button.clicked.connect(self.play_handler)
-        self.start_line.returnPressed.connect(self.set_start_from_text_line)
+        self.start_line.editingFinished.connect(self.set_start_from_text_line)
+        self.start_line.focused.connect(self.stop_player)
 
     def load_button_handler(self):
         file_path = load_datafile_name(self.window)
         if file_path != "":
             self.load_plot_from_file(file_path)
-            self.set_plot()
+            self.set_new_plot()
 
     def load_plot_from_file(self, file_path):
         filename = file_path.split('/')[-1].split('.')[0]  # getting filename from path without extension
@@ -73,8 +78,9 @@ class ExploreWindow(QObject):
         figure = plot(signal, samples, symbols)
         self.figure = figure
         self.sig_len = len(signal)//FREQUENCY
+        self.data_label.setText("Data view (record {})".format(filename))
 
-    def set_plot(self):
+    def set_new_plot(self):
         canvas = FigureCanvas(self.figure)
         scene = QGraphicsScene()
         scene.addWidget(canvas)
@@ -82,12 +88,13 @@ class ExploreWindow(QObject):
         self.graphics.fitInView(0, 0, scene.width(), scene.height())
 
         self.start = 0
-        self.start_line.setValidator(QIntValidator(0, self.sig_len - PLOT_WIDTH))
+        validator = create_double_validator(0, self.sig_len - PLOT_WIDTH, 2)
+        self.start_line.setValidator(validator)
         self.start_line.setText(str(self.start))
-        self.start_label.setText("Start at(max {}):".format(self.sig_len - PLOT_WIDTH))
+        self.start_label.setText("Start at (max {}):".format(self.sig_len - PLOT_WIDTH))
 
     def set_start_from_text_line(self):
-        self.start = int(self.start_line.text())
+        self.start = float(self.start_line.text())
         if self.sig_len > 0:
             update_plot(self.start, self.figure)
 

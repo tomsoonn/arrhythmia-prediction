@@ -15,8 +15,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_2">
+    <item row="0" column="0" colspan="3">
+     <widget class="QLabel" name="data_label">
       <property name="text">
        <string>Data view</string>
       </property>
@@ -104,16 +104,6 @@
       </property>
       <property name="text">
        <string>Play</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="11">
-     <widget class="QLineEdit" name="start_line">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
       </property>
      </widget>
     </item>

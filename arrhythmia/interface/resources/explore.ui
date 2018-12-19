@@ -41,16 +41,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
-     <widget class="QLineEdit" name="start_line">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
     <item row="5" column="0">
      <widget class="QPushButton" name="back_button">
       <property name="sizePolicy">
@@ -100,6 +90,13 @@
       </property>
       <property name="text">
        <string>Start at:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QLabel" name="data_label">
+      <property name="text">
+       <string>Data view</string>
       </property>
      </widget>
     </item>

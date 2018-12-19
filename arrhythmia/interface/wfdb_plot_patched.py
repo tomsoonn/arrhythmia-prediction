@@ -206,13 +206,13 @@ def plot_annotation(ann_samp, n_annot, ann_sym, signal, n_sig, fs, time_units,
             else:
                 y = np.zeros(len(ann_samp[ch]))
 
-            axes[ch].plot(ann_samp[ch] / downsample_factor, y, ann_style[ch])
+            axes[ch].plot(ann_samp[ch] / downsample_factor, y, ann_style[ch], markersize=8)
 
             # Plot the annotation symbols if any
             if ann_sym is not None and ann_sym[ch] is not None:
                 for i, s in enumerate(ann_sym[ch]):
-                    axes[ch].annotate(s, (ann_samp[ch][i] / downsample_factor,
-                                          y[i]))
+                    axes[ch].annotate(s, ((ann_samp[ch][i]+15) / downsample_factor,
+                                          y[i]), fontsize=12)
 
 
 def plot_ecg_grids(ecg_grids, fs, units, time_units, axes):
