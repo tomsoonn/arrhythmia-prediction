@@ -89,13 +89,17 @@ class NNetwork:
 
 
 # List of available neural networks
-networks = [NNetwork('', 'mlp_conv_1_window5_2.hdf5', '')]
+networks = [
+    NNetwork('', 'mlp_conv_f60_fft_win_5_2.hdf5', ''),
+    NNetwork('', 'mlp_dense_100_200_100_f60_fft_win_5_2.hdf5', '')
+]
 
 
 class PredictionEngine:
-    def __init__(self, name, layers):
+    def __init__(self, name, description, layers):
         self.name = name
         self.layers = layers
+        self.description = description
 
     def build(self):
         builder = SequenceBuilder()
@@ -105,13 +109,43 @@ class PredictionEngine:
 
 
 # List of available engines
+dense1 = PredictionEngine(
+    'dense1',
+    '''
+Engine based on dense neural network.
+First it performs downsampling of input signal to 60Hz.
+Then low frequency noise is removed by cutting out everything below 1Hz.
+
+Size of window before prediction: 5 minutes.
+Size of predicted window: 2 minutes.
+    ''',
+    [IntervalSplitter(360*60*5),
+     Downsampler(360, 60),
+     NoiseRemover(60, 1),
+     StandardNormalizer(),
+     networks[1].load()]
+)
+
+
+conv1 = PredictionEngine(
+    'conv1',
+    '''
+Engine based on convolutional neural network (CNN).
+First it performs downsampling of input signal to 60Hz.
+Then low frequency noise is removed by cutting out everything below 1Hz.
+
+Size of window before prediction: 5 minutes.
+Size of predicted window: 2 minutes.
+    ''',
+    [IntervalSplitter(360*60*5),
+     Downsampler(360, 60),
+     NoiseRemover(60, 1),
+     StandardNormalizer(),
+     networks[0].load()]
+)
 engines = [
-    PredictionEngine('convolutional', [
-        IntervalSplitter(360*60*5),
-        Downsampler(360, 60),
-        NoiseRemover(60, 0.5),
-        StandardNormalizer(),
-        networks[0].load()])
+    dense1,
+    conv1
 ]
 
 
