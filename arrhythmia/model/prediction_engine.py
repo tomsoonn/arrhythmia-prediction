@@ -14,7 +14,6 @@ class NNPredictor(Layer):
     def __init__(self, network):
         super().__init__()
         self.network = network
-        print(network.summary())
 
     def compute(self, value):
         # We expand first axis, because network expects input of size

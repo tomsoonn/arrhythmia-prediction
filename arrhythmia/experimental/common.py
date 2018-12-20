@@ -59,7 +59,6 @@ class ModelTester:
         plt.plot(history.history['loss'])
         if w_val_loss:
             plt.plot(history.history['val_loss'])
-        plt.title('model loss')
         plt.ylabel('loss')
         plt.xlabel('epoch')
         plt.legend(['train', 'test'], loc='upper left')
@@ -67,7 +66,6 @@ class ModelTester:
         # plot history for accuracy
         plt.plot(history.history['binary_accuracy'])
         plt.plot(history.history['val_binary_accuracy'])
-        plt.title('model accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'test'], loc='upper left')
