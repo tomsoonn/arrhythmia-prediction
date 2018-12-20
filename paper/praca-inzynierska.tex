@@ -91,7 +91,7 @@ Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i 
 
 Ze wzglêdu na konieczno¶æ posiadania wiedzy specjalistycznej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ"\ siê reprezentacji wiedzy specjalistycznej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
 
-Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologi. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjne modele organizacyjne, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci wynikaj±cych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia równie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
+Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologii. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjne modele organizacyjne, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci wynikaj±cych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia równie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
 
 Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy z sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwiaj±c elastyczniejsze podej¶cie do problemu.
 
@@ -124,14 +124,14 @@ Podsumowuj±c, projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wz
 
 \subsection{Analiza zagro¿eñ}
 
-Podczas tworzenia aplikacji przewiduj±cej wyst±pienie arytmii przy u¿yciu sieci neuronowej w ma³ym zespole istnieje wiele zagro¿eñ, wymienionych poni¿ej:
+Podczas tworzenia aplikacji do predykcji arytmii w tak ma³ym zespole istnieje wiele zagro¿eñ. Najistotniejsze z nich to:
 
 \begin{itemize}
 \item Brak wiedzy dziedzinowej - jako studenci informatyki nie posiadamy ¿adnej wiedzy z zakresu medycyny i chorób serca, nie wiemy szczegó³owo jak dzia³a ludzki organizm oraz jak pracuje narz±d, który pompuje krew w jego wnêtrzu. Mo¿e to bardzo utrudniæ pracê oraz prowadziæ do pewnych b³êdów w rozumowaniu.
 
-\item Brak wystarczaj±cej ilo¶ci danych - potrzebujemy du¿ej ilo¶ci danych aby program móg³ siê nauczyæ przewidywaæ arytmie. Dodatkowo dane te musz± byæ dok³adnie oznaczone, gdy¿ nie jeste¶my w stanie zrobiæ tego sami, a bardzo ciê¿ko o takie dane.
+\item Brak wystarczaj±cej ilo¶ci danych - potrzebujemy du¿ej ilo¶ci danych, aby program móg³ siê nauczyæ przewidywaæ arytmie. Dodatkowo dane te musz± byæ dok³adnie oznaczone, gdy¿ nie jeste¶my w stanie zrobiæ tego sami, a bardzo ciê¿ko o takie dane.
 
-\item Niewystarczaj±ca skuteczno¶æ sieci neuronowej - mo¿e siê okazaæ ¿e nie jeste¶my w stanie uzyskaæ skuteczno¶ci która by³aby satysfakcjonuj±ca, byæ mo¿e nie ma specjalnych prawid³owo¶ci które pozwoli³yby przewidywaæ nieprawid³owo¶ci w pracy serca lub sieæ neuronowa nie poradzi sobie z tak skomplikowanym problemem.
+\item Niewystarczaj±ca skuteczno¶æ sieci neuronowej - mo¿e siê okazaæ ¿e nie jeste¶my w stanie uzyskaæ skuteczno¶ci, która by³aby satysfakcjonuj±ca, byæ mo¿e nie ma specjalnych prawid³owo¶ci, które pozwoli³yby przewidywaæ nieprawid³owo¶ci w pracy serca lub sieæ neuronowa nie poradzi sobie z tak skomplikowanym problemem.
 
 \item Ró¿norodno¶æ typów arytmii - rodzajów arytmii jest wiele, nie wszystkie s± dok³adnie zbadane i opisane. Prawdopodobnie niektórych nie da siê przewidzieæ i nie bêdziemy mogli braæ wszystkich pod uwagê.
 \end{itemize}
@@ -188,11 +188,11 @@ Projekt zosta³ podzielony na 3 g³ówne modu³y :
 	\item experimental - znajduje siê w nim kod odpowiedzialny za testowanie i trenowanie ró¿nych konfiguracji sieci neuronowych
 \end{itemize}
 
-W odrêbnym module znajduj± siê wszystkie testy.
+W odrêbnym module znajduj± siê wszystkie napisane przez nas testy.
 
 \subsection{Interfejs}
 
-Interfejs graficzny sk³ada siê na 5 widoków: g³ówne menu, okno predykcji, okno logów predykcji, okno do przegl±dania wykresów EKG oraz okno z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie.
+Interfejs graficzny sk³ada siê na 4 g³ówne widoki: g³ówne menu, okno predykcji, okno do przegl±dania wykresów EKG oraz okno z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Poza g³ównymi widokami w oknie predykcji dostêpne s± 2 dodatkowe widoki: okno z logami predykcji oraz okno wyboru modelu predykcji. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie.
 
 \begin{figure}[H]
 	\centering
@@ -207,7 +207,7 @@ class ViewManager(QStackedWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
-        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'))
+        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'), load_ui('resources/models.ui'))
         self.types = TypesWindow(self, load_ui('resources/types.ui'))
         self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
 
@@ -251,7 +251,7 @@ Menu zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g³ównymi widokami. Ka
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.3\linewidth]{menu.jpg}
+	\includegraphics[width=0.3\linewidth]{menu.png}
 	\caption{G³ówne menu programu}
 	\label{fig:menu}
 \end{figure}
@@ -280,7 +280,7 @@ Dodatkowo po wczytaniu danych wy¶wietlana jest nazwa rekordu oraz maksymalna war
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.9\linewidth]{navigation.jpg}
+	\includegraphics[width=0.9\linewidth]{navigation.png}
 	\caption{Pasek do nawigacji po wykresie}
 	\label{fig:navigation}
 \end{figure}
@@ -299,11 +299,17 @@ Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawiera
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{logs.jpg}
+	\includegraphics[width=0.6\linewidth]{logs.png}
 	\caption{Okno wy¶wietlaj±ce logi programu}
 	\label{fig:logs}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{models.png}
+	\caption{Okno wyboru modelu predykcji}
+	\label{fig:models}
+\end{figure}
 
 Ca³o¶æ prezentuje siê nastêpuj±co:
 
@@ -320,7 +326,7 @@ W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\linewidth]{explore.jpg}
+	\includegraphics[width=0.8\linewidth]{explore.png}
 	\caption{Okno do przegl±dania oznaczonych danych}
 	\label{fig:explore}
 \end{figure}
@@ -331,7 +337,7 @@ Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytm
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{types.jpg}
+	\includegraphics[width=0.7\linewidth]{types.png}
 	\caption{Okno z informacjami na temat ró¿nych typów arytmii}
 	\label{fig:types}
 \end{figure}
@@ -674,58 +680,58 @@ W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich
 Sieæ gêsta 10,50,10
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej 10,50,10}]
-loss: 0.6015 (+/-0.0216), binary_accuracy: 0.6660 (+/-0.0097), mean_squared_error: 0.2060 (+/-0.0073), precision: 0.4620 (+/-0.0378), recall: 0.3255 (+/-0.0573), fmeasure: 0.3623 (+/-0.0425)
+loss: 0.6130 (+/-0.0159), binary_accuracy: 0.6704 (+/-0.0213), mean_squared_error: 0.2102 (+/-0.0071), precision: 0.4789 (+/-0.0475), recall: 0.3681 (+/-0.0560), fmeasure: 0.3917 (+/-0.0182)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{simple_10_50_10_loss.png}
-	\caption{Funkcja straty dla sieci gêstej o rozmiarach warstw 10, 50, 10}
-	\label{fig:simple_10_50_10_loss}
+	\includegraphics[width=0.7\linewidth]{dense_10_50_10_loss.png}
+	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 10, 50, 10}
+	\label{fig:dense_10_50_10_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{simple_10_50_10_acc.png}
-	\caption{Funkcja dok³adno¶ci dla sieci gêstej o rozmiarach warstw 10, 50, 10}
-	\label{fig:simple_10_50_10_acc}
+	\includegraphics[width=0.7\linewidth]{dense_10_50_10_acc.png}
+	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 10, 50, 10}
+	\label{fig:dense_10_50_10_acc}
 \end{figure}
 
 Sieæ gêsta 100,100
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej 100,100}]
-loss: 0.5974 (+/-0.0171), binary_accuracy: 0.6839 (+/-0.0053), mean_squared_error: 0.2024 (+/-0.0053), precision: 0.4681 (+/-0.0288), recall: 0.3626 (+/-0.0245), fmeasure: 0.3915 (+/-0.0204)
+loss: 0.6172 (+/-0.0219), binary_accuracy: 0.6820 (+/-0.0200), mean_squared_error: 0.2086 (+/-0.0084), precision: 0.4631 (+/-0.0315), recall: 0.3754 (+/-0.0372), fmeasure: 0.3973 (+/-0.0376)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{simple_100_100_loss.png}
-	\caption{Funkcja straty dla sieci gêstej o rozmiarach warstw 100,100}
-	\label{fig:simple_100_100_loss}
+	\includegraphics[width=0.7\linewidth]{dense_100_100_loss.png}
+	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 100,100}
+	\label{fig:dense_100_100_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{simple_100_100_acc.png}
-	\caption{Funkcja dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100,100}
-	\label{fig:simple_100_100_acc}
+	\includegraphics[width=0.7\linewidth]{dense_100_100_acc.png}
+	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100,100}
+	\label{fig:dense_100_100_acc}
 \end{figure}
 
 Sieæ gêsta 100,200,100
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej 100,200,100}]
-loss: 0.5778 (+/-0.0156), binary_accuracy: 0.6881 (+/-0.0171), mean_squared_error: 0.1967 (+/-0.0058), precision: 0.4875 (+/-0.0331), recall: 0.3248 (+/-0.0308), fmeasure: 0.3723 (+/-0.0371)
+loss: 0.5799 (+/-0.0133), binary_accuracy: 0.6900 (+/-0.0091), mean_squared_error: 0.1969 (+/-0.0045), precision: 0.4926 (+/-0.0249), recall: 0.3370 (+/-0.0282), fmeasure: 0.3836 (+/-0.0115)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{simple_100_200_100_loss.png}
-	\caption{Funkcja straty dla sieci gêstej o rozmiarach warstw 100,200,100}
-	\label{fig:simple_100_200_100_loss}
+	\includegraphics[width=0.7\linewidth]{dense_100_200_100_loss.png}
+	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 100,200,100}
+	\label{fig:dense_100_200_100_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{simple_100_200_100_acc.png}
-	\caption{Funkcja dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100,200,100}
-	\label{fig:simple_100_200_100_acc}
+	\includegraphics[width=0.7\linewidth]{dense_100_200_100_acc.png}
+	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100,200,100}
+	\label{fig:dense_100_200_100_acc}
 \end{figure}
 
 \paragraph{Siec konwolucyjna} - tu bêdzie opis
@@ -733,64 +739,64 @@ loss: 0.5778 (+/-0.0156), binary_accuracy: 0.6881 (+/-0.0171), mean_squared_erro
 Sieæ konwolucyjna pool=16, warstwy=[(4, 16), (16, 16)]
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
-loss: 0.3755 (+/-0.0338), binary_accuracy: 0.8377 (+/-0.0214), mean_squared_error: 0.1176 (+/-0.0113), precision: 0.7630 (+/-0.1123), recall: 0.6914 (+/-0.1509), fmeasure: 0.6868 (+/-0.0562)
+loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_error: 0.1174 (+/-0.0095), precision: 0.8013 (+/-0.0821), recall: 0.6223 (+/-0.1151), fmeasure: 0.6768 (+/-0.0526)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_4_loss.png}
-	\caption{Funkcja straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\caption{Wykres straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
 	\label{fig:conv_16_4_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_4_acc.png}
-	\caption{Funkcja dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
 	\label{fig:conv_16_4_acc}
 \end{figure}
 
 Sieæ konwolucyjna pool=16, warstwy=[(32, 16), (16, 16)]
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
-loss: 0.3261 (+/-0.0410), binary_accuracy: 0.8635 (+/-0.0305), mean_squared_error: 0.1005 (+/-0.0165), precision: 0.7846 (+/-0.0883), recall: 0.7532 (+/-0.0799), fmeasure: 0.7515 (+/-0.0479)
+loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_error: 0.1178 (+/-0.0204), precision: 0.7980 (+/-0.1436), recall: 0.6589 (+/-0.1287), fmeasure: 0.6813 (+/-0.0438)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_32_loss.png}
-	\caption{Funkcja straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\caption{Wykres straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
 	\label{fig:conv_16_32_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_32_acc.png}
-	\caption{Funkcja dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
 	\label{fig:conv_16_32_acc}
 \end{figure}
 
 Sieæ konwolucyjna pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
-loss: 0.4162 (+/-0.0601), binary_accuracy: 0.8035 (+/-0.0395), mean_squared_error: 0.1347 (+/-0.0216), precision: 0.7637 (+/-0.1297), recall: 0.5548 (+/-0.0280), fmeasure: 0.6176 (+/-0.0328)
+loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_error: 0.1134 (+/-0.0218), precision: 0.8229 (+/-0.0607), recall: 0.5770 (+/-0.0925), fmeasure: 0.6546 (+/-0.0808)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[width=0.7\linewidth]{conv_16_16_loss.png}
-	\caption{Funkcja straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(16, 16), (8, 16), (4, 16)]}
-	\label{fig:conv_16_16_loss}
+	\includegraphics[width=0.7\linewidth]{conv_8_16_loss.png}
+	\caption{Wykres straty dla sieci konwolucyjnej z parametrami: pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]}
+	\label{fig:conv_8_16_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[width=0.7\linewidth]{conv_16_16_acc.png}
-	\caption{Funkcja dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy[(16, 16), (8, 16), (4, 16)]}
-	\label{fig:conv_16_16_acc}
+	\includegraphics[width=0.7\linewidth]{conv_8_16_acc.png}
+	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=8, warstwy[(16, 16), (8, 16), (4, 16)]}
+	\label{fig:conv_8_16_acc}
 \end{figure}
 
 
