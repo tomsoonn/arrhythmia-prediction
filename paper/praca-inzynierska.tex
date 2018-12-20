@@ -486,7 +486,7 @@ Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu m
 	\centering
 \begin{tabular}{l|lllll}
 	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
-	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{0.5}{\hertz} & \SI{68,81}{\percent}
+	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{69,00}{\percent}
 \end{tabular}
 \caption{Silniki predykcji oparte o gêste sieci neuronowe}
 \label{tab:dense_engines}
@@ -494,12 +494,12 @@ Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu m
 
 \begin{table}[h]
 	\centering
-\begin{tabular}{l|lll}
-	Warstwa      & Rozmiar wyj¶cia & Parametry             & Aktywacja \\ \hline
-	Dense        & (100, 1)        & units = 100           & relu         \\
-	Dense        & (200, 1)        & units = 200           & relu         \\
-	Dense        & (100, 1)        & units = 100           & relu         \\
-	Dense        & (3)             & units = 3             & sigmoid
+\begin{tabular}{l|ll}
+	Warstwa      & Parametry             & Aktywacja \\ \hline
+	Dense        & units = 100           & relu         \\
+	Dense        & units = 200           & relu         \\
+	Dense        & units = 100           & relu         \\
+	Dense        & units = 3             & sigmoid
 \end{tabular}
 \caption{Warstwy w sieci gêstej dla silnika \emph{dense1}}
 \label{tab:dense1}
@@ -535,7 +535,7 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 	\centering
 \begin{tabular}{l|lllll}
 	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
-	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{0.5}{\hertz} & \SI{86.35}{\percent}
+	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{84.21}{\percent}
 \end{tabular}
 \caption{Silniki predykcji oparte o gêste sieci neuronowe}
 \label{tab:conv_engines}
@@ -543,21 +543,21 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 
 \begin{table}[h]
 	\centering
-\begin{tabular}{l|lll}
-	Warstwa      & Rozmiar wyj¶cia & Parametry             & Aktywacja \\ \hline
-	Reshape      & (18000, 1)      & -                     & -         \\
-	Conv1D       & (17985, 32)     & kernels = 32, filter\_size = 16 & relu \\
-	MaxPooling1D & (1124, 32)      & pool\_size = 16         & - \\
-	Conv1D       & (1109, 16)      & kernels = 16, filter\_size = 16 & relu \\
-	MaxPooling1D & (69, 16)        & pool\_size = 16       & - \\
-	Flatten      & (1104)          & -                     & - \\
-	Dense        & (3)             & units = 3             & sigmoid
+\begin{tabular}{l|ll}
+	Warstwa      & Parametry                       & Aktywacja \\ \hline
+	Reshape      & -                               & -         \\
+	Conv1D       & kernels = 16, filter\_size = 16 & relu \\
+	MaxPooling1D & pool\_size = 8                  & - \\
+	Conv1D       & kernels = 8, filter\_size = 16  & relu \\
+	MaxPooling1D & pool\_size = 8                  & - \\
+	Conv1D       & kernels = 8, filter\_size = 16  & relu \\
+	MaxPooling1D & pool\_size = 8                  & - \\
+	Flatten      & -                               & - \\
+	Dense        & units = 3                       & sigmoid
 \end{tabular}
 \caption{Warstwy w sieci konwolucyjnej dla silnika \emph{conv1}}
 \label{tab:conv1}
 \end{table}
-
-% TODO Sieæ konwolucyjna bez interpolacji
 
 \subsection{Eksperymenty} \label{sec:experimental}
 
@@ -636,7 +636,7 @@ def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True
 
 \end{lstlisting}
 
-Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± walidacje krzy¿ow±(z ang.K-fold cross-validation). Polega ona na tym ¿e oryginalny zbiór jest dzielony na K podzbiorów. Nastêpnie ka¿dy z nich jest brany jako zbiór testowy, a pozosta³e razem stanowi± zbiór ucz±cy. Odbywa siê wiêc K iteracji, których wyniki s± nastêpnie u¶redniane w celu uzyskania ostatecznego wyniku.
+Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± walidacje krzy¿ow± (z ang. K-fold cross-validation). Polega ona na tym ¿e oryginalny zbiór jest dzielony na K podzbiorów. Nastêpnie ka¿dy z nich jest brany jako zbiór testowy, a pozosta³e razem stanowi± zbiór ucz±cy. Odbywa siê wiêc K iteracji, których wyniki s± nastêpnie u¶redniane w celu uzyskania ostatecznego wyniku. W naszym wypadku jako parametr $K$ oraz ilo¶æ iteracji wybrali¶my warto¶æ 5.
 
 \begin{figure}[h!]
 	\centering
@@ -644,7 +644,6 @@ Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± wali
 	\caption{Wizualizacja dzia³ania K-fold dla K=10}
 	\label{fig:kfold}
 \end{figure}
-%TODO KD poprawki, jakie mamy K
 %obrazek z https://stats.stackexchange.com/questions/336038/question-on-double-cross-validation
 
 \subsubsection{Metodologia oceny skuteczno¶ci}
@@ -971,7 +970,7 @@ Osi±gniête cele:
 
 \subsection{Wykorzystane narzêdzia}
 
-Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach na repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
+Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach w repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
 
 \begin{figure}[H]
 	\centering
@@ -989,10 +988,7 @@ Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplika
 
 Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}. Do jego tworzenia wykorzystywali¶my miêdzy innymi takie narzêdzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, którego pliki zosta³y zaimportowane do projektu.
 
-%TODO zrzut z GitHub i mo¿e samphoreci, codefactor, jupyter
-%TODO KD dopisz tu co¶ dlaczego korzysta³e¶ z Jupytera(³adnie wygl±da itd.) oraz inne istotne narzêdzia(proste edytory tekstu chyba nie s± istotne)
-
-Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}
+Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}.
 
 \begin{figure}[H]
 	\centering
@@ -1001,7 +997,7 @@ Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}
 	\label{fig:qt_designer}
 \end{figure}
 
-Diagramy rysowali¶my przy pomocy narzêdzia \textbf{draw.io} oraz \textbf{Umlet}
+Diagramy rysowali¶my przy pomocy narzêdzia \textbf{draw.io} oraz \textbf{Umlet}.
 
 \section{\SectionTitleResults}
 \label{sec:wyniki-projektu}
