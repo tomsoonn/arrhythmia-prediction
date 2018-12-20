@@ -480,13 +480,12 @@ $$
 
 W warstwie gêstej neurony \emph{³±cz±} ka¿d± warto¶æ wej¶ciow± z ka¿d± warto¶ci± wyj¶ciow±, z tego powodu ilo¶æ parametrów w sieci zbudowanej z takich warstw ro¶nie bardzo szybko wraz ze wzrostem z³o¿ono¶ci i wymiarowo¶ci danych. Z tego powodu sieæ taka jest bardzo podatna na przetrenowania, to znaczy wyuczenie siê zbioru treningowego zamiast zale¿no¶ci jakie reprezentuje. Dodatkowo sieæ taka traktuje w ten sam sposób zale¿no¶æ miêdzy odleg³ymi warto¶ciami w danych wej¶ciowych, a warto¶ciami s±siednimi. Z tego powodu sieæ ta niezbyt dobrze nadaje siê do klasyfikacji wykresów zale¿nych od czasu tak jak w naszym przypadku.
 
-Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu model udostêpnia tylko jeden silnik predykcji oparte o nie.
-
 \begin{table}[h]
 	\centering
 \begin{tabular}{l|lllll}
 	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
-	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{69,00}{\percent}
+	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{69,00}{\percent} \\
+	dense2 & 3 minuty & 1 minuta & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{73,48}{\percent}
 \end{tabular}
 \caption{Silniki predykcji oparte o gêste sieci neuronowe}
 \label{tab:dense_engines}
@@ -501,7 +500,7 @@ Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu m
 	Dense        & units = 100           & relu         \\
 	Dense        & units = 3             & sigmoid
 \end{tabular}
-\caption{Warstwy w sieci gêstej dla silnika \emph{dense1}}
+\caption{Warstwy w sieci gêstej dla silników \emph{dense1} i \emph{dense2}}
 \label{tab:dense1}
 \end{table}
 
@@ -535,13 +534,14 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 	\centering
 \begin{tabular}{l|lllll}
 	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
-	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{84.21}{\percent}
+	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{84.21}{\percent} \\
+	conv2 & 3 minuty & 1 minuta & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{85.06}{\percent}
 \end{tabular}
 \caption{Silniki predykcji oparte o gêste sieci neuronowe}
 \label{tab:conv_engines}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 	\centering
 \begin{tabular}{l|ll}
 	Warstwa      & Parametry                       & Aktywacja \\ \hline
@@ -557,6 +557,22 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 \end{tabular}
 \caption{Warstwy w sieci konwolucyjnej dla silnika \emph{conv1}}
 \label{tab:conv1}
+\end{table}
+
+\begin{table}[h!]
+	\centering
+\begin{tabular}{l|ll}
+	Warstwa      & Parametry                       & Aktywacja \\ \hline
+	Reshape      & -                               & -         \\
+	Conv1D       & kernels = 32, filter\_size = 16 & relu \\
+	MaxPooling1D & pool\_size = 16                 & - \\
+	Conv1D       & kernels = 16, filter\_size = 16 & relu \\
+	MaxPooling1D & pool\_size = 16                 & - \\
+	Flatten      & -                               & - \\
+	Dense        & units = 3                       & sigmoid
+\end{tabular}
+\caption{Warstwy w sieci konwolucyjnej dla silnika \emph{conv2}}
+\label{tab:conv2}
 \end{table}
 
 \subsection{Eksperymenty} \label{sec:experimental}
