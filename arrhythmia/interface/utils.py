@@ -21,7 +21,7 @@ def update_plot(start, figure):
     figure.canvas.draw_idle()
 
 
-def plot(signal, samples, symbols, fig_size=(10.8, 5.8)):
+def plot(signal, samples, symbols, fig_size=(10.8, 5.4)):
     figure = plot_items(signal=signal, ann_samp=samples, ann_sym=symbols,
                         sig_units=['mV'], time_units=TIME_UNITS, figsize=fig_size, fs=360,
                         # ecg_grids='all', # not working on this big data

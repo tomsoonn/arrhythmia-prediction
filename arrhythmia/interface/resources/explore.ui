@@ -15,8 +15,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="6">
-     <widget class="QPushButton" name="play_button">
+    <item row="7" column="0">
+     <widget class="QPushButton" name="back_button">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -24,7 +24,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Play</string>
+       <string>Back to menu</string>
       </property>
      </widget>
     </item>
@@ -41,19 +41,6 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
-     <widget class="QPushButton" name="back_button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Back to menu</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="7">
      <widget class="QPushButton" name="next_button">
       <property name="sizePolicy">
@@ -67,8 +54,8 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="load_button">
+    <item row="1" column="6">
+     <widget class="QPushButton" name="play_button">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -76,7 +63,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Load</string>
+       <string>Play</string>
       </property>
      </widget>
     </item>
@@ -97,6 +84,32 @@
      <widget class="QLabel" name="data_label">
       <property name="text">
        <string>Data view</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QPushButton" name="load_button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Load file</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="8">
+     <widget class="Line" name="line">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>

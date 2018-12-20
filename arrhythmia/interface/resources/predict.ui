@@ -77,7 +77,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Settings</string>
+       <string>Change model</string>
       </property>
      </widget>
     </item>

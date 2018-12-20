@@ -7,10 +7,9 @@ from PySide2.QtWidgets import QPushButton, QTextEdit, QMessageBox
 
 class LogWindow(QObject):
 
-    def __init__(self, manager, ui_file, parent=None):
+    def __init__(self, ui_file, parent=None):
         super(LogWindow, self).__init__(parent)
         self.window = ui_file
-        self.manager = manager
 
         close_button = self.window.findChild(QPushButton, 'close_button')
         clear_button = self.window.findChild(QPushButton, 'clear_button')

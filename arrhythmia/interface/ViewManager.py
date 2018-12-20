@@ -26,7 +26,7 @@ class ViewManager(QStackedWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
-        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'))
+        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'), load_ui('resources/models.ui'))
         self.types = TypesWindow(self, load_ui('resources/types.ui'))
         self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
 

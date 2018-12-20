@@ -1,3 +1,7 @@
 [SVEB] Supraventricular ectopic beat
 
-Description
+A beat that is premature, narrow in width but may be slightly different shaped than the patient's "normal" beats. These beats may be sinus, atrial, or nodal in origin. Characteristics include: P wave if sinus or atrial origin, no P wave if nodal origin, or changes in the P wave such as: inverted, notched, biphasic or retrograde, narrow, or normal QRS.
+
+Supraventricular Ectopic Beats indicates atrial irritability.  Isolated Supraventricular Ectopic Beats are generally not significant in nature but a high frequency can represent more risk.  An increasing trend in Supraventricular Ectopic Beats may be an indicator or sign for atrial fibrillation. Atrial Fibrillation is considered to be significant as it can lead to heart attack or stroke.
+
+source: http://cardiacmonitoring.com/ecg-arrhythmia-guide/supraventricular-arrhythmias/supraventricular-ectopic-beat/

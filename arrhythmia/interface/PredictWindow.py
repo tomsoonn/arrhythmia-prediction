@@ -8,10 +8,12 @@ from matplotlib.pyplot import legend
 
 from arrhythmia.experimental.mitdb import get_record
 from arrhythmia.interface.LogWindow import LogWindow
+from arrhythmia.interface.ModelsWindow import ModelsWindow
 from arrhythmia.interface.utils import MyQGraphicsView, update_plot, PLOT_WIDTH, Player, load_datafile_name, plot, \
     FREQUENCY, create_double_validator, MyQLineEdit
 
 from arrhythmia.model import create_prediction_engine, engines, FunctionLayer
+from arrhythmia.model.helpers import beat_types
 
 STEP = 0.05  # step for '<', '>' buttons and player
 MINI_PLOT_WIDTH = 10
@@ -26,15 +28,16 @@ def update_mini_plot(fig, values):
     # ax.set_yticklabels(["0","50","100"])
     lines = ax.plot(values)
     lines[0].set_color("r")
-    legend(lines, ("sveb", "veb", "f"), loc=3, labelspacing=0.1, fontsize=8)
+    legend(lines, [beat.symbol for beat in beat_types[1:-1]], loc=3, labelspacing=0.1, fontsize=8)
 
 
 class PredictWindow(QObject):
 
-    def __init__(self, manager, ui_file, ui_logs, parent=None):
+    def __init__(self, manager, ui_file, ui_logs, ui_models, parent=None):
         super(PredictWindow, self).__init__(parent)
         self.window = ui_file
-        self.log_window = LogWindow(self, ui_logs)
+        self.log_window = LogWindow(ui_logs)
+        self.models_window = ModelsWindow(self, ui_models)
         self.manager = manager
         self.play_active = False
         self.start = 0
@@ -74,11 +77,8 @@ class PredictWindow(QObject):
         self.start_line.setValidator(QIntValidator(0, 0))
 
         # Model integration
-        self.model = create_prediction_engine(engines[0])
-
-        def extract_output(value):
-            self.set_output(value[0] * 100, value[1] * 100, value[2] * 100)
-        self.model.set_next(FunctionLayer(extract_output))
+        self.model = None
+        self.change_model(0)  # set default model)
 
         # handlers
         next_button.pressed.connect(self.start_player)
@@ -88,6 +88,7 @@ class PredictWindow(QObject):
         load_button.clicked.connect(self.load_button_handler)
         back_button.clicked.connect(self.back_handler)
         logs_button.clicked.connect(self.logs_handler)
+        settings_button.clicked.connect(self.models_handler)
         self.play_button.clicked.connect(self.play_button_handler)
         self.start_line.editingFinished.connect(self.set_start_from_text_line)
         self.start_line.focused.connect(self.stop_player)
@@ -95,6 +96,18 @@ class PredictWindow(QObject):
     def update_output(self):
         self.model(self.signal[:int(self.start * FREQUENCY)])
         # self.set_output(randint(0, 100), randint(0, 100), randint(0, 100))
+
+    def change_model(self, model_index):
+        self.model = create_prediction_engine(engines[model_index])
+
+        def extract_output(value):
+            self.set_output(value[0] * 100, value[1] * 100, value[2] * 100)
+
+        self.model.set_next(FunctionLayer(extract_output))
+        self.log_window.log("Prediction engine set to: {}".format(engines[model_index].name))
+
+    def models_handler(self):
+        self.models_window.show()
 
     def logs_handler(self):
         self.log_window.show()
@@ -155,7 +168,6 @@ class PredictWindow(QObject):
 
     def set_start_from_text_line(self):
         self.start = float(self.start_line.text())
-        print(self.start)
         if self.sig_len > 0:
             update_plot(self.start, self.figure)
 
@@ -167,9 +179,10 @@ class PredictWindow(QObject):
             self.play_button.setText('Stop')
 
     def start_player(self):
-        self.play_active = True
-        self.player.start()
-        self.output_updater.start()
+        if self.sig_len > 0:
+            self.play_active = True
+            self.player.start()
+            self.output_updater.start()
 
     def start_back_player(self):
         self.play_active = True
@@ -189,7 +202,7 @@ class PredictWindow(QObject):
         self.sveb_lcdnumber.display(sveb)
         self.veb_lcdnumber.display(veb)
         self.f_lcdnumber.display(f)
-        self.log_window.log("SVEB: {} %, VEB: {} %, F: {} %".format(sveb, veb, f))
+        self.log_window.log("Start={}, SVEB: {} %, VEB: {} %, F: {} %".format(self.start, round(sveb,3), round(veb, 3), round(f, 3)))
         if len(self.out_hist) > MINI_PLOT_WIDTH:
             self.out_hist = self.out_hist[1:] + [(sveb, veb, f)]
         else:
