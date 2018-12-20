@@ -213,3 +213,4 @@ class PredictWindow(QObject):
     def closeEvent(self):
         self.stop_player()
         self.player.wait()
+        self.output_updater.wait()

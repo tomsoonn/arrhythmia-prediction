@@ -11,8 +11,8 @@ def init_types_list(types_list):
     types_list.setModel(model)
 
 
-def get_model_info(model_name):
-    description = model_name
+def get_model_info(model_index):
+    description = engines[model_index].description
     return description
 
 
@@ -37,7 +37,7 @@ class ModelsWindow(QObject):
         self.window.close()
 
     def type_clicked(self):
-        info = get_model_info(self.types_list.currentIndex().data())
+        info = get_model_info(self.types_list.currentIndex().row())
         self.text_field.setPlainText(info)
 
     def show(self):
