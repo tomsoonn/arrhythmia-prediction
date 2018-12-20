@@ -1,5 +1,5 @@
 \documentclass[polish,12pt]{aghthesis}
-% \documentclass[english,12pt]{aghthesis} dla pracy w jêzyku angielskim. Uwaga, w przypadku strony tytu³owej zmiana jêzyka dotyczy tylko kolejno¶ci wersji jêzykowych tytu³u pracy. 
+% \documentclass[english,12pt]{aghthesis} dla pracy w jÄ™zyku angielskim. Uwaga, w przypadku strony tytuÅ‚owej zmiana jÄ™zyka dotyczy tylko kolejnoÅ›ci wersji jÄ™zykowych tytuÅ‚u pracy. 
 
 % Szablon przystosowany jest do druku dwustronnego. 
 
@@ -37,14 +37,14 @@
 
 \lstset{captionpos=b, style=custompy}
 
-\author{Konrad Dobro¶, Tomasz Nizio}
+\author{Konrad DobroÅ›, Tomasz Nizio}
 
-\titlePL{System do predykcji arytmii serca za pomoc± metod uczenia maszynowego}
+\titlePL{System do predykcji arytmii serca za pomocÄ… metod uczenia maszynowego}
 \titleEN{System for predicting cardiac arrhythmia using machine learning methods}
 
 \fieldofstudy{Informatyka}
 
-\supervisor{dr in¿.\ Marcin Orchel}
+\supervisor{dr inÅ¼.\ Marcin Orchel}
 
 \date{\the\year}
 \raggedbottom
@@ -62,38 +62,38 @@
 \subsection{Charakterystyka problemu}
 
 % Czym jest arytmia
-Arytmia serca jest to stan, w którym praca serca jest nieregularna, a czêstotliwo¶æ wychodzi poza zakres 60-100 uderzeñ na minutê bez przyczyny zewnêtrznej. Stan taki mo¿e stanowiæ zagro¿enie dla ¿ycia, chocia¿ nie jest to regu³±. 
-Stan w którym tempo bicia serca wynosi ponad 100 uderzeñ na minutê nazywany jest tachykardi±. D³u¿sza praca serca w przyspieszonym rytmie mo¿e prowadziæ do szkodliwych efektów. Tachykardia mo¿e byæ odczuwana jako nieprzyjemne i mocne bicie serca popularnie okre¶lane ko³ataniem.
-Zbyt wolny rytm pracy serca, który wynosi poni¿ej 50 uderzeñ na minutê nazywany jest bradykardi±. Zazwyczaj stan ten nie zagra¿a ¿yciu, choæ mo¿e powodowaæ niepo¿±dane objawy.
+Arytmia serca jest to stan, w ktÃ³rym praca serca jest nieregularna, a czÄ™stotliwoÅ›Ä‡ wychodzi poza zakres 60-100 uderzeÅ„ na minutÄ™ bez przyczyny zewnÄ™trznej. Stan taki moÅ¼e stanowiÄ‡ zagroÅ¼enie dla Å¼ycia, chociaÅ¼ nie jest to reguÅ‚Ä…. 
+Stan w ktÃ³rym tempo bicia serca wynosi ponad 100 uderzeÅ„ na minutÄ™ nazywany jest tachykardiÄ…. DÅ‚uÅ¼sza praca serca w przyspieszonym rytmie moÅ¼e prowadziÄ‡ do szkodliwych efektÃ³w. Tachykardia moÅ¼e byÄ‡ odczuwana jako nieprzyjemne i mocne bicie serca popularnie okreÅ›lane koÅ‚ataniem.
+Zbyt wolny rytm pracy serca, ktÃ³ry wynosi poniÅ¼ej 50 uderzeÅ„ na minutÄ™ nazywany jest bradykardiÄ…. Zazwyczaj stan ten nie zagraÅ¼a Å¼yciu, choÄ‡ moÅ¼e powodowaÄ‡ niepoÅ¼Ä…dane objawy.
 
 % EKG
-Najczê¶ciej stosowan± metod± diagnozowania arytmii jest elektrokardiogram - zapis elektrycznej czynno¶ci serca. Pozwala on dok³adnie okre¶liæ rodzaj arytmii, a wiêc i jej szkodliwo¶æ oraz potencjalne przyczyny. W wypadku krótkotrwa³ych arytmii stosuje siê monitory holterowskie umo¿liwiaj±ce ca³odobowe monitorowanie pracy serca.
+NajczÄ™Å›ciej stosowanÄ… metodÄ… diagnozowania arytmii jest elektrokardiogram - zapis elektrycznej czynnoÅ›ci serca. Pozwala on dokÅ‚adnie okreÅ›liÄ‡ rodzaj arytmii, a wiÄ™c i jej szkodliwoÅ›Ä‡ oraz potencjalne przyczyny. W wypadku krÃ³tkotrwaÅ‚ych arytmii stosuje siÄ™ monitory holterowskie umoÅ¼liwiajÄ…ce caÅ‚odobowe monitorowanie pracy serca.
 
-W wypadku krótkotrwa³ych arytmii stosuje siê monitorowanie pracy serca przez ca³± dobê. Podej¶cie takie produkuje ogromn± ilo¶æ danych, do analizy której potrzebna jest specjalistyczna wiedza, a rêczne oznaczenie danych jest bardzo czasoch³onne. Obecnie w procesie tym wykorzystywane s± metody matematyczne, które wykorzystuj± w bardzo ograniczonym zakresie wiedzê dziedzinow± i wymagaj± bardzo uwa¿nego nadzorowania.
+W wypadku krÃ³tkotrwaÅ‚ych arytmii stosuje siÄ™ monitorowanie pracy serca przez caÅ‚Ä… dobÄ™. PodejÅ›cie takie produkuje ogromnÄ… iloÅ›Ä‡ danych, do analizy ktÃ³rej potrzebna jest specjalistyczna wiedza, a rÄ™czne oznaczenie danych jest bardzo czasochÅ‚onne. Obecnie w procesie tym wykorzystywane sÄ… metody matematyczne, ktÃ³re wykorzystujÄ… w bardzo ograniczonym zakresie wiedzÄ™ dziedzinowÄ… i wymagajÄ… bardzo uwaÅ¼nego nadzorowania.
 
 % Jaka jest potrzeba
-Istnieje potrzeba zautomatyzowania procesu wykrywania arytmii w wiêkszym stopniu i za pomoc± bardziej niezawodnych metod, które wykorzystywa³yby wiedzê dziedzinow±. Proces ten dodatkowo mo¿e byæ usprawniony przez system predykcji wyst±pienia arytmii, który umo¿liwia³by wcze¶niejsze wykrywanie arytmii i reagowanie na jej potencjalne wyst±pienie z wyprzedzeniem. Umo¿liwi³oby to znaczne ograniczenie kosztownego czasu pracy lekarzy i mog³oby zwiêkszyæ jej efektywno¶æ. Poniewa¿ problem ten wymaga posiadania wiedzy dziedzinowej do rozwi±zania bardzo obiecuj±cym podej¶ciem jest wykorzystanie metod uczenia maszynowego. Metody te mog± "uczyæ"\ siê wiedzy specjalistycznej z oznaczonych danych. Jest to szczególnie przydatne, gdy wiedza ta jest ciê¿ka do reprezentacji za pomoc± klasycznych metod, ze wzglêdu na czynniki takie jak du¿a ilo¶æ danych wej¶ciowych, brak jasnych powi±zañ miêdzy danymi czy konieczno¶æ reprezentacji ludzkiego rozumowania.
+Istnieje potrzeba zautomatyzowania procesu wykrywania arytmii w wiÄ™kszym stopniu i za pomocÄ… bardziej niezawodnych metod, ktÃ³re wykorzystywaÅ‚yby wiedzÄ™ dziedzinowÄ…. Proces ten dodatkowo moÅ¼e byÄ‡ usprawniony przez system predykcji wystÄ…pienia arytmii, ktÃ³ry umoÅ¼liwiaÅ‚by wczeÅ›niejsze wykrywanie arytmii i reagowanie na jej potencjalne wystÄ…pienie z wyprzedzeniem. UmoÅ¼liwiÅ‚oby to znaczne ograniczenie kosztownego czasu pracy lekarzy i mogÅ‚oby zwiÄ™kszyÄ‡ jej efektywnoÅ›Ä‡. PoniewaÅ¼ problem ten wymaga posiadania wiedzy dziedzinowej do rozwiÄ…zania bardzo obiecujÄ…cym podejÅ›ciem jest wykorzystanie metod uczenia maszynowego. Metody te mogÄ… "uczyÄ‡"\ siÄ™ wiedzy specjalistycznej z oznaczonych danych. Jest to szczegÃ³lnie przydatne, gdy wiedza ta jest ciÄ™Å¼ka do reprezentacji za pomocÄ… klasycznych metod, ze wzglÄ™du na czynniki takie jak duÅ¼a iloÅ›Ä‡ danych wejÅ›ciowych, brak jasnych powiÄ…zaÅ„ miÄ™dzy danymi czy koniecznoÅ›Ä‡ reprezentacji ludzkiego rozumowania.
 
 \subsection{Motywacja projektu}
 
-Podstawow± motywacj± do stworzenia takiego produktu by³ brak podobnych rozwi±zañ dostêpnych obecnie na rynku oraz chêæ rozwijania siê w tematyce uczenia maszynowego.
-Bardzo ma³o jest materia³ów dotycz±cych problematyki naszego projektu, który mo¿e staæ podstaw± dla polepszenia zdrowia oraz pozwoli na wcze¶niejsze wykrywanie powa¿niejszych schorzeñ. Nasze rozwi±zanie mo¿e siê przydaæ osobom, które s± zagro¿one arytmi± i obawiaj± siê o swoje zdrowie. Ponadto stworzenie takiego programu pozwoli nam poszerzyæ wiedzê w dziedzinie uczenia maszynowego, które staje siê coraz popularniejsze. W naszym projekcie zdecydowali¶my siê wykorzystaæ sieæ neuronow±, co wydaje siê byæ bardzo ciekawym pomys³em. Coraz wiêcej siê o niej s³yszy oraz technologia to jest coraz lepiej rozwijana i udoskonalana. Rozwi±zanie takie ma bardzo du¿y potencja³, jednak pojawiæ siê mog± te¿ liczne problemy ze stworzeniem takiego systemu. Bardzo wa¿n± kwesti±, je¿eli chodzi o nasz projekt jest odpowiednio oznaczona i du¿a baza danych.
-Sieæ neuronowa aby uzyskaæ skuteczno¶æ musi zostaæ wytrenowana na odpowiedniej ilo¶ci danych. Dodatkowo dane te musz± byæ szczegó³owo oznakowane. Jako ¿e nie ma podobnych rozwi±zañ na rynku, nie mamy te¿ pewno¶ci ¿e mo¿liwe jest skuteczne przewidywanie arytmii.
+PodstawowÄ… motywacjÄ… do stworzenia takiego produktu byÅ‚ brak podobnych rozwiÄ…zaÅ„ dostÄ™pnych obecnie na rynku oraz chÄ™Ä‡ rozwijania siÄ™ w tematyce uczenia maszynowego.
+Bardzo maÅ‚o jest materiaÅ‚Ã³w dotyczÄ…cych problematyki naszego projektu, ktÃ³ry moÅ¼e staÄ‡ podstawÄ… dla polepszenia zdrowia oraz pozwoli na wczeÅ›niejsze wykrywanie powaÅ¼niejszych schorzeÅ„. Nasze rozwiÄ…zanie moÅ¼e siÄ™ przydaÄ‡ osobom, ktÃ³re sÄ… zagroÅ¼one arytmiÄ… i obawiajÄ… siÄ™ o swoje zdrowie. Ponadto stworzenie takiego programu pozwoli nam poszerzyÄ‡ wiedzÄ™ w dziedzinie uczenia maszynowego, ktÃ³re staje siÄ™ coraz popularniejsze. W naszym projekcie zdecydowaliÅ›my siÄ™ wykorzystaÄ‡ sieÄ‡ neuronowÄ…, co wydaje siÄ™ byÄ‡ bardzo ciekawym pomysÅ‚em. Coraz wiÄ™cej siÄ™ o niej sÅ‚yszy oraz technologia to jest coraz lepiej rozwijana i udoskonalana. RozwiÄ…zanie takie ma bardzo duÅ¼y potencjaÅ‚, jednak pojawiÄ‡ siÄ™ mogÄ… teÅ¼ liczne problemy ze stworzeniem takiego systemu. Bardzo waÅ¼nÄ… kwestiÄ…, jeÅ¼eli chodzi o nasz projekt jest odpowiednio oznaczona i duÅ¼a baza danych.
+SieÄ‡ neuronowa aby uzyskaÄ‡ skutecznoÅ›Ä‡ musi zostaÄ‡ wytrenowana na odpowiedniej iloÅ›ci danych. Dodatkowo dane te muszÄ… byÄ‡ szczegÃ³Å‚owo oznakowane. Jako Å¼e nie ma podobnych rozwiÄ…zaÅ„ na rynku, nie mamy teÅ¼ pewnoÅ›ci Å¼e moÅ¼liwe jest skuteczne przewidywanie arytmii.
 
 \subsection{Wizja produktu}
 
-Celem naszego projektu jest stworzenie aplikacji na komputery z systemem Windows, wykorzystuj±c± sieæ neuronow± do przewidywania wyst±pienia arytmii serca. Program po odpowiednim przetrenowaniu na zbiorze danych ma byæ w stanie przewidywaæ mo¿liwe nieprawid³owo¶ci w dzia³aniu serca z wyprzedzeniem. U¿ytkownik bêdzie móg³ odczytywaæ predykcje dostarczone przez algorytm. Mo¿liwe równie¿ bêdzie wy¶wietlanie wykresów EKG oraz zarz±dzanie nimi, jak i odczytanie z nich oznaczeñ wyst±pienia arytmii. Docelowo program ma umo¿liwiaæ monitorowanie i analizowanie w czasie rzeczywistym. Aplikacja bêdzie mia³a klasyczny wygl±d aplikacji Windows z menu w górnej czê¶ci. Przebieg wykresu bêdzie mo¿na przewijaæ na pasku, a oznaczenia bêd± obecne pod nim.
+Celem naszego projektu jest stworzenie aplikacji na komputery z systemem Windows, wykorzystujÄ…cÄ… sieÄ‡ neuronowÄ… do przewidywania wystÄ…pienia arytmii serca. Program po odpowiednim przetrenowaniu na zbiorze danych ma byÄ‡ w stanie przewidywaÄ‡ moÅ¼liwe nieprawidÅ‚owoÅ›ci w dziaÅ‚aniu serca z wyprzedzeniem. UÅ¼ytkownik bÄ™dzie mÃ³gÅ‚ odczytywaÄ‡ predykcje dostarczone przez algorytm. MoÅ¼liwe rÃ³wnieÅ¼ bÄ™dzie wyÅ›wietlanie wykresÃ³w EKG oraz zarzÄ…dzanie nimi, jak i odczytanie z nich oznaczeÅ„ wystÄ…pienia arytmii. Docelowo program ma umoÅ¼liwiaÄ‡ monitorowanie i analizowanie w czasie rzeczywistym. Aplikacja bÄ™dzie miaÅ‚a klasyczny wyglÄ…d aplikacji Windows z menu w gÃ³rnej czÄ™Å›ci. Przebieg wykresu bÄ™dzie moÅ¼na przewijaÄ‡ na pasku, a oznaczenia bÄ™dÄ… obecne pod nim.
 
-\subsection{Studium wykonalno¶ci}
+\subsection{Studium wykonalnoÅ›ci}
 
-% Jak z³o¿ony jest problem
-Projekt ma skomplikowan± problematykê, g³ównie ze wzglêdu na ma³± ilo¶æ badañ i publikacji na ten temat. Dodatkowo problem jest interdyscyplinarny, obejmuj±c w swoim zakresie zagadnienia informatyczne, jak i zagadnienia zwi±zane z medycyn±. Z tego wzglêdu konieczne jest uwa¿ne przestudiowanie wiedzy dziedzinowej, z któr± nie jeste¶my zaznajomieni, a która do pe³nego zrozumienia wymaga osobnych studiów.
+% Jak zÅ‚oÅ¼ony jest problem
+Projekt ma skomplikowanÄ… problematykÄ™, gÅ‚Ã³wnie ze wzglÄ™du na maÅ‚Ä… iloÅ›Ä‡ badaÅ„ i publikacji na ten temat. Dodatkowo problem jest interdyscyplinarny, obejmujÄ…c w swoim zakresie zagadnienia informatyczne, jak i zagadnienia zwiÄ…zane z medycynÄ…. Z tego wzglÄ™du konieczne jest uwaÅ¼ne przestudiowanie wiedzy dziedzinowej, z ktÃ³rÄ… nie jesteÅ›my zaznajomieni, a ktÃ³ra do peÅ‚nego zrozumienia wymaga osobnych studiÃ³w.
 
-Ze wzglêdu na konieczno¶æ posiadania wiedzy specjalistycznej jako wykorzystywan± metodê uczenia maszynowego zosta³a wybrana sieæ neuronowa. Umo¿liwi to wykorzystanie baz danych wykresów EKG ju¿ oznaczonych przez specjalistów z wymagan± wiedz± dziedzinow±. Sieci neuronowe dziêki algorytmom propagacji wstecznej mog± "nauczyæ"\ siê reprezentacji wiedzy specjalistycznej z danych bez wymagania tej wiedzy, i mo¿liwo¶ci jej bezpo¶redniego prze³o¿enia na algorytm, przez implementatora.
+Ze wzglÄ™du na koniecznoÅ›Ä‡ posiadania wiedzy specjalistycznej jako wykorzystywanÄ… metodÄ™ uczenia maszynowego zostaÅ‚a wybrana sieÄ‡ neuronowa. UmoÅ¼liwi to wykorzystanie baz danych wykresÃ³w EKG juÅ¼ oznaczonych przez specjalistÃ³w z wymaganÄ… wiedzÄ… dziedzinowÄ…. Sieci neuronowe dziÄ™ki algorytmom propagacji wstecznej mogÄ… "nauczyÄ‡"\ siÄ™ reprezentacji wiedzy specjalistycznej z danych bez wymagania tej wiedzy, i moÅ¼liwoÅ›ci jej bezpoÅ›redniego przeÅ‚oÅ¼enia na algorytm, przez implementatora.
 
-Dodatkowo ma³a ilo¶æ dostêpnych publicznie publikacji w zakresie rozwi±zywanego problemu dyktuje wybór technologii. W trakcie wykonywania projektu konieczne jest przetestowanie wielu ró¿nych sposobów rozwi±zania i przeprowadzanie eksperymentów w celu okre¶lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzaj± siê iteracyjne modele organizacyjne, umo¿liwiaj±ce czêst± aktualizacjê projektu do zmieniaj±cych siê mo¿liwo¶ci wynikaj±cych z eksperymentów i zwi±zanych z nimi wymagañ. Podej¶cie takie umo¿liwia równie¿ stopniowe rozszerzanie funkcjonalno¶ci systemu. Ze wzglêdu na brak informacji czy przewidywanie wszystkich rodzajów arytmii jest mo¿liwe, system bêdzie stopniowo rozszerzany o bardziej szczegó³owe analizy na podstawie wyników prototypów i eksperymentów.
+Dodatkowo maÅ‚a iloÅ›Ä‡ dostÄ™pnych publicznie publikacji w zakresie rozwiÄ…zywanego problemu dyktuje wybÃ³r technologii. W trakcie wykonywania projektu konieczne jest przetestowanie wielu rÃ³Å¼nych sposobÃ³w rozwiÄ…zania i przeprowadzanie eksperymentÃ³w w celu okreÅ›lenia formy ostatecznego produktu. W sytuacji tej najlepiej sprawdzajÄ… siÄ™ iteracyjne modele organizacyjne, umoÅ¼liwiajÄ…ce czÄ™stÄ… aktualizacjÄ™ projektu do zmieniajÄ…cych siÄ™ moÅ¼liwoÅ›ci wynikajÄ…cych z eksperymentÃ³w i zwiÄ…zanych z nimi wymagaÅ„. PodejÅ›cie takie umoÅ¼liwia rÃ³wnieÅ¼ stopniowe rozszerzanie funkcjonalnoÅ›ci systemu. Ze wzglÄ™du na brak informacji czy przewidywanie wszystkich rodzajÃ³w arytmii jest moÅ¼liwe, system bÄ™dzie stopniowo rozszerzany o bardziej szczegÃ³Å‚owe analizy na podstawie wynikÃ³w prototypÃ³w i eksperymentÃ³w.
 
-Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ dostêpnych technologi do pracy z sieciami neuronowymi oraz jego du¿± ekspresywno¶æ. Cechy te bardzo dobrze komponuj± siê z modelem wykonywania projektu zmniejszaj±c znacznie czas potrzebny na przetestowanie ró¿nych rozwi±zañ i umo¿liwiaj±c elastyczniejsze podej¶cie do problemu.
+Jako jÄ™zyk implementacji systemu wybrany zostaÅ‚ Python ze wzglÄ™du na duÅ¼Ä… iloÅ›Ä‡ dostÄ™pnych technologi do pracy z sieciami neuronowymi oraz jego duÅ¼Ä… ekspresywnoÅ›Ä‡. Cechy te bardzo dobrze komponujÄ… siÄ™ z modelem wykonywania projektu zmniejszajÄ…c znacznie czas potrzebny na przetestowanie rÃ³Å¼nych rozwiÄ…zaÅ„ i umoÅ¼liwiajÄ…c elastyczniejsze podejÅ›cie do problemu.
 
 \begin{figure}[h!]
 	\centering
@@ -102,7 +102,7 @@ Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ 
 	\label{fig:mitdb}
 \end{figure}
 
-Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zestaw technologi Keras + Tensorflow. Umo¿liwia on bardzo ³atwe tworzenie sieci neuronowych, co jeszcze bardziej zmniejsza czas potrzebny na przetestowanie ró¿nych architektur sieci. S± to aktywnie rozwijane technologie posiadaj±ce bardzo rozleg³e mo¿liwo¶ci, a przy tym posiadaj± szczegó³owe dokumentacje. Dodatkowo biblioteki te s± szeroko wykorzystywane w profesjonalnych rozwi±zaniach co prowadzi do du¿ej liczby dostêpnych informacji i aktywnego wsparcia.
+Do implementacji modelu analizy wykresÃ³w i sieci neuronowych wybrany zostaÅ‚ zestaw technologi Keras + Tensorflow. UmoÅ¼liwia on bardzo Å‚atwe tworzenie sieci neuronowych, co jeszcze bardziej zmniejsza czas potrzebny na przetestowanie rÃ³Å¼nych architektur sieci. SÄ… to aktywnie rozwijane technologie posiadajÄ…ce bardzo rozlegÅ‚e moÅ¼liwoÅ›ci, a przy tym posiadajÄ… szczegÃ³Å‚owe dokumentacje. Dodatkowo biblioteki te sÄ… szeroko wykorzystywane w profesjonalnych rozwiÄ…zaniach co prowadzi do duÅ¼ej liczby dostÄ™pnych informacji i aktywnego wsparcia.
 
 \begin{figure}[h!]
 	\centering
@@ -111,7 +111,7 @@ Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zest
 	\label{fig:kt}
 \end{figure}
 
-Jako technologiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zosta³a biblioteka PySide2, dostarczaj±ca interfejs dla jêzyka Python do biblioteki Qt. Dziêki temu dostêpna jest rozleg³a dokumentacja, której brakuje w innych rozwa¿anych bibliotekach dla jêzyka Python. Dodatkowo jest to biblioteka aktywnie rozwijana w przeciwieñstwie do przestarza³ej biblioteki dostêpnej domy¶lnie w jêzyku Python - Tkinter. Inn± rozwa¿an± opcj± by³a biblioteka PyQt, jednak nie zosta³a ona finalnie wybrana, gdy¿ posiada zbyt restrykcyjn± licencjê GPL.
+Jako technologiÄ™ do implementacji aplikacji i interfejsu uÅ¼ytkownika wybrana zostaÅ‚a biblioteka PySide2, dostarczajÄ…ca interfejs dla jÄ™zyka Python do biblioteki Qt. DziÄ™ki temu dostÄ™pna jest rozlegÅ‚a dokumentacja, ktÃ³rej brakuje w innych rozwaÅ¼anych bibliotekach dla jÄ™zyka Python. Dodatkowo jest to biblioteka aktywnie rozwijana w przeciwieÅ„stwie do przestarzaÅ‚ej biblioteki dostÄ™pnej domyÅ›lnie w jÄ™zyku Python - Tkinter. InnÄ… rozwaÅ¼anÄ… opcjÄ… byÅ‚a biblioteka PyQt, jednak nie zostaÅ‚a ona finalnie wybrana, gdyÅ¼ posiada zbyt restrykcyjnÄ… licencjÄ™ GPL.
 
 \begin{figure}[h!]
 	\centering
@@ -120,42 +120,42 @@ Jako technologiê do implementacji aplikacji i interfejsu u¿ytkownika wybrana zos
 	\label{fig:pyside}
 \end{figure}
 
-Podsumowuj±c, projekt niesie ze sob± du¿± ilo¶æ wyzwañ i niewiadomych. Z tego wzglêdu wybrany zosta³ model iteracyjny i szereg elastycznych technologii wspieraj±cych takie podej¶cie. Wszystkie podjête decyzje organizacyjne i technologiczne maj± na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. Umo¿liwia to okre¶lenie, ¿e projekt jako ca³o¶æ z du¿ym prawdopodobieñstwem zostanie wykonany, a wszelkie powa¿niejsze zagro¿enia ograniczone bêd± do poszczególnych funkcjonalno¶ci i modu³ów.
+PodsumowujÄ…c, projekt niesie ze sobÄ… duÅ¼Ä… iloÅ›Ä‡ wyzwaÅ„ i niewiadomych. Z tego wzglÄ™du wybrany zostaÅ‚ model iteracyjny i szereg elastycznych technologii wspierajÄ…cych takie podejÅ›cie. Wszystkie podjÄ™te decyzje organizacyjne i technologiczne majÄ… na celu zmniejszenie ryzyka i odpowiednie reagowanie na napotkane problemy. UmoÅ¼liwia to okreÅ›lenie, Å¼e projekt jako caÅ‚oÅ›Ä‡ z duÅ¼ym prawdopodobieÅ„stwem zostanie wykonany, a wszelkie powaÅ¼niejsze zagroÅ¼enia ograniczone bÄ™dÄ… do poszczegÃ³lnych funkcjonalnoÅ›ci i moduÅ‚Ã³w.
 
-\subsection{Analiza zagro¿eñ}
+\subsection{Analiza zagroÅ¼eÅ„}
 
-Podczas tworzenia aplikacji do predykcji arytmii w tak ma³ym zespole istnieje wiele zagro¿eñ. Najistotniejsze z nich to:
+Podczas tworzenia aplikacji do predykcji arytmii w tak maÅ‚ym zespole istnieje wiele zagroÅ¼eÅ„. Najistotniejsze z nich to:
 
 \begin{itemize}
-\item Brak wiedzy dziedzinowej - jako studenci informatyki nie posiadamy ¿adnej wiedzy z zakresu medycyny i chorób serca, nie wiemy szczegó³owo jak dzia³a ludzki organizm oraz jak pracuje narz±d, który pompuje krew w jego wnêtrzu. Mo¿e to bardzo utrudniæ pracê oraz prowadziæ do pewnych b³êdów w rozumowaniu.
+\item Brak wiedzy dziedzinowej - jako studenci informatyki nie posiadamy Å¼adnej wiedzy z zakresu medycyny i chorÃ³b serca, nie wiemy szczegÃ³Å‚owo jak dziaÅ‚a ludzki organizm oraz jak pracuje narzÄ…d, ktÃ³ry pompuje krew w jego wnÄ™trzu. MoÅ¼e to bardzo utrudniÄ‡ pracÄ™ oraz prowadziÄ‡ do pewnych bÅ‚Ä™dÃ³w w rozumowaniu.
 
-\item Brak wystarczaj±cej ilo¶ci danych - potrzebujemy du¿ej ilo¶ci danych, aby program móg³ siê nauczyæ przewidywaæ arytmie. Dodatkowo dane te musz± byæ dok³adnie oznaczone, gdy¿ nie jeste¶my w stanie zrobiæ tego sami, a bardzo ciê¿ko o takie dane.
+\item Brak wystarczajÄ…cej iloÅ›ci danych - potrzebujemy duÅ¼ej iloÅ›ci danych, aby program mÃ³gÅ‚ siÄ™ nauczyÄ‡ przewidywaÄ‡ arytmie. Dodatkowo dane te muszÄ… byÄ‡ dokÅ‚adnie oznaczone, gdyÅ¼ nie jesteÅ›my w stanie zrobiÄ‡ tego sami, a bardzo ciÄ™Å¼ko o takie dane.
 
-\item Niewystarczaj±ca skuteczno¶æ sieci neuronowej - mo¿e siê okazaæ ¿e nie jeste¶my w stanie uzyskaæ skuteczno¶ci, która by³aby satysfakcjonuj±ca, byæ mo¿e nie ma specjalnych prawid³owo¶ci, które pozwoli³yby przewidywaæ nieprawid³owo¶ci w pracy serca lub sieæ neuronowa nie poradzi sobie z tak skomplikowanym problemem.
+\item NiewystarczajÄ…ca skutecznoÅ›Ä‡ sieci neuronowej - moÅ¼e siÄ™ okazaÄ‡ Å¼e nie jesteÅ›my w stanie uzyskaÄ‡ skutecznoÅ›ci, ktÃ³ra byÅ‚aby satysfakcjonujÄ…ca, byÄ‡ moÅ¼e nie ma specjalnych prawidÅ‚owoÅ›ci, ktÃ³re pozwoliÅ‚yby przewidywaÄ‡ nieprawidÅ‚owoÅ›ci w pracy serca lub sieÄ‡ neuronowa nie poradzi sobie z tak skomplikowanym problemem.
 
-\item Ró¿norodno¶æ typów arytmii - rodzajów arytmii jest wiele, nie wszystkie s± dok³adnie zbadane i opisane. Prawdopodobnie niektórych nie da siê przewidzieæ i nie bêdziemy mogli braæ wszystkich pod uwagê.
+\item RÃ³Å¼norodnoÅ›Ä‡ typÃ³w arytmii - rodzajÃ³w arytmii jest wiele, nie wszystkie sÄ… dokÅ‚adnie zbadane i opisane. Prawdopodobnie niektÃ³rych nie da siÄ™ przewidzieÄ‡ i nie bÄ™dziemy mogli braÄ‡ wszystkich pod uwagÄ™.
 \end{itemize}
-%\emph{Charakterystyka problemu, motywacja projektu (w tym przegl±d
-%istniej±cych rozwi±zañ prowadz±ca do uzasadnienia celu prac),
-% wizja produktu, studium wykonalno¶ci i analiza zagro¿eñ.}
+%\emph{Charakterystyka problemu, motywacja projektu (w tym przeglÄ…d
+%istniejÄ…cych rozwiÄ…zaÅ„ prowadzÄ…ca do uzasadnienia celu prac),
+% wizja produktu, studium wykonalnoÅ›ci i analiza zagroÅ¼eÅ„.}
 
 \section{\SectionTitleScope}
 \label{sec:zakres-funkcjonalnosci}
-\subsection{Charakterystyka u¿ytkowników systemu}
+\subsection{Charakterystyka uÅ¼ytkownikÃ³w systemu}
 
-W naszym systemie wyró¿nia siê tylko jednego g³ównego u¿ytkownika. Korzysta on z programu na platformê Windows i ma dostêp do wszystkich funkcjonalno¶ci dostarczanych przez produkt.
+W naszym systemie wyrÃ³Å¼nia siÄ™ tylko jednego gÅ‚Ã³wnego uÅ¼ytkownika. Korzysta on z programu na platformÄ™ Windows i ma dostÄ™p do wszystkich funkcjonalnoÅ›ci dostarczanych przez produkt.
 
 \subsection{Wymagania funkcjonalne}
 
-Wymagania funkcjonalne zosta³y przedstawione za pomoc± historyjek u¿ytkownika (ang. user stories), które okre¶laj± co u¿ytkownik chcê zrobiæ za pomoc± systemu i w jakim celu.
+Wymagania funkcjonalne zostaÅ‚y przedstawione za pomocÄ… historyjek uÅ¼ytkownika (ang. user stories), ktÃ³re okreÅ›lajÄ… co uÅ¼ytkownik chcÄ™ zrobiÄ‡ za pomocÄ… systemu i w jakim celu.
 
 \begin{itemize}
-	\item Chcê wy¶wietliæ zapisany wykres EKG ¿eby go przeanalizowaæ
-	\item Chcê zobaczyæ wykres EKG aktualizowany w czasie rzeczywistym ¿eby na bie¿±co widzieæ jego zmiany i wyniki analizy
-	\item Chcê zobaczyæ oznaczenia poszczególnych uderzeñ serca ¿eby lepiej zorientowaæ siê w wykresie i ³atwiej odnale¼æ interesuj±ce fragmenty
-	\item Chcê zobaczyæ oznaczenia wykrytej arytmii serca ¿eby zlokalizowaæ poszczególne epizody oraz móc ³atwiej je przeanalizowaæ
-	\item Chcê zobaczyæ podstawowe informacjê o poszczególnych arytmiach ¿eby lepiej zrozumieæ wyniki analizy i odpowiednio na nie zareagowaæ
-	\item Chcê zobaczyæ wyniki predykcji arytmii w przysz³o¶ci ¿eby odpowiednio wcze¶niej zareagowaæ na spodziewane nieprawid³owo¶ci
+	\item ChcÄ™ wyÅ›wietliÄ‡ zapisany wykres EKG Å¼eby go przeanalizowaÄ‡
+	\item ChcÄ™ zobaczyÄ‡ wykres EKG aktualizowany w czasie rzeczywistym Å¼eby na bieÅ¼Ä…co widzieÄ‡ jego zmiany i wyniki analizy
+	\item ChcÄ™ zobaczyÄ‡ oznaczenia poszczegÃ³lnych uderzeÅ„ serca Å¼eby lepiej zorientowaÄ‡ siÄ™ w wykresie i Å‚atwiej odnaleÅºÄ‡ interesujÄ…ce fragmenty
+	\item ChcÄ™ zobaczyÄ‡ oznaczenia wykrytej arytmii serca Å¼eby zlokalizowaÄ‡ poszczegÃ³lne epizody oraz mÃ³c Å‚atwiej je przeanalizowaÄ‡
+	\item ChcÄ™ zobaczyÄ‡ podstawowe informacjÄ™ o poszczegÃ³lnych arytmiach Å¼eby lepiej zrozumieÄ‡ wyniki analizy i odpowiednio na nie zareagowaÄ‡
+	\item ChcÄ™ zobaczyÄ‡ wyniki predykcji arytmii w przyszÅ‚oÅ›ci Å¼eby odpowiednio wczeÅ›niej zareagowaÄ‡ na spodziewane nieprawidÅ‚owoÅ›ci
 \end{itemize}
 
 \subsection{Wymagania niefunkcjonalne}
@@ -163,45 +163,45 @@ Wymagania funkcjonalne zosta³y przedstawione za pomoc± historyjek u¿ytkownika (a
 Wymagania aplikacji:
 
 \begin{itemize}
-	\item Musi dzia³aæ na systemach Windows
-	\item Interfejs musi byæ intuicyjny, przejrzysty i dostarczaæ wszystkich wymaganych informacji
-	\item Wy¶wietlane wykresy musz± byæ skalowalne
+	\item Musi dziaÅ‚aÄ‡ na systemach Windows
+	\item Interfejs musi byÄ‡ intuicyjny, przejrzysty i dostarczaÄ‡ wszystkich wymaganych informacji
+	\item WyÅ›wietlane wykresy muszÄ… byÄ‡ skalowalne
 \end{itemize}
 
 Wymagania technologiczne:
 
 \begin{itemize}
-	\item Musi istnieæ prosty sposób rozszerzania systemu o nowe formaty zapisu wykresów EKG
-	\item System musi umo¿liwiaæ proste rozszerzanie o nowe metody analizy, w tym o ró¿ne algorytmy wykrywania i predykcji
+	\item Musi istnieÄ‡ prosty sposÃ³b rozszerzania systemu o nowe formaty zapisu wykresÃ³w EKG
+	\item System musi umoÅ¼liwiaÄ‡ proste rozszerzanie o nowe metody analizy, w tym o rÃ³Å¼ne algorytmy wykrywania i predykcji
 \end{itemize}
 
 \section{\SectionTitleRealizationAspects}
 \label{sec:wybrane-aspekty-realizacji}
-%\emph{Przyjête za³o¿enia, struktura i zasada dzia³ania systemu,
-%  wykorzystane rozwi±zania technologiczne wraz z uzasadnieniem
+%\emph{PrzyjÄ™te zaÅ‚oÅ¼enia, struktura i zasada dziaÅ‚ania systemu,
+%  wykorzystane rozwiÄ…zania technologiczne wraz z uzasadnieniem
 %  ich wyboru, istotne mechanizmy i zastosowane algorytmy.} 
-Projekt zosta³ podzielony na 3 g³ówne modu³y : 
+Projekt zostaÅ‚ podzielony na 3 gÅ‚Ã³wne moduÅ‚y : 
 
 \begin{itemize}
-	\item interface - jest w pe³ni odpowiedzialny za interfejs graficzny
-	\item model - zawiera wszystkie elementy dotycz±ce przetwarzania danych oraz predykcji
-	\item experimental - znajduje siê w nim kod odpowiedzialny za testowanie i trenowanie ró¿nych konfiguracji sieci neuronowych
+	\item interface - jest w peÅ‚ni odpowiedzialny za interfejs graficzny
+	\item model - zawiera wszystkie elementy dotyczÄ…ce przetwarzania danych oraz predykcji
+	\item experimental - znajduje siÄ™ w nim kod odpowiedzialny za testowanie i trenowanie rÃ³Å¼nych konfiguracji sieci neuronowych
 \end{itemize}
 
-W odrêbnym module znajduj± siê wszystkie napisane przez nas testy.
+W odrÄ™bnym module znajdujÄ… siÄ™ wszystkie napisane przez nas testy.
 
 \subsection{Interfejs}
 
-Interfejs graficzny sk³ada siê na 4 g³ówne widoki: g³ówne menu, okno predykcji, okno do przegl±dania wykresów EKG oraz okno z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Poza g³ównymi widokami w oknie predykcji dostêpne s± 2 dodatkowe widoki: okno z logami predykcji oraz okno wyboru modelu predykcji. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie.
+Interfejs graficzny skÅ‚ada siÄ™ na 4 gÅ‚Ã³wne widoki: gÅ‚Ã³wne menu, okno predykcji, okno do przeglÄ…dania wykresÃ³w EKG oraz okno z mikro-bibliotekÄ… zawierajÄ…cÄ… informacje o uwzglÄ™dnionych typach arytmii. KaÅ¼dym widokiem zajmuje siÄ™ osobna klasa, a wszystkimi widokami zarzÄ…dza manager. Poza gÅ‚Ã³wnymi widokami w oknie predykcji dostÄ™pne sÄ… 2 dodatkowe widoki: okno z logami predykcji oraz okno wyboru modelu predykcji. Widoki zostaÅ‚y czÄ™Å›ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. SÄ… one Å‚adowane z tych plikÃ³w, a nastÄ™pnie odpowiednio modyfikowane juÅ¼ w kodzie.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{interface_class_diagram.png}
-	\caption{Diagram klas modu³u interface}
+	\caption{Diagram klas moduÅ‚u interface}
 	\label{fig:interface_diagram_class}
 \end{figure}
 
-\begin{lstlisting}[float=h!, caption={Kod managera widoków}]
+\begin{lstlisting}[float=h!, caption={Kod managera widokÃ³w}]
 class ViewManager(QStackedWidget):
 
     def __init__(self, *args, **kwargs):
@@ -241,26 +241,26 @@ class ViewManager(QStackedWidget):
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.9\linewidth]{ui_file.png}
-	\caption{Przyk³adowy fragment pliku .ui}
+	\caption{PrzykÅ‚adowy fragment pliku .ui}
 	\label{fig:ui_file}
 \end{figure}
 
-\subsubsection{G³ówne menu}
+\subsubsection{GÅ‚Ã³wne menu}
 
-Menu zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g³ównymi widokami. Ka¿dy z tych widoków umo¿liwia powrót do g³ównego menu.
+Menu zawiera 4 przyciski i pozwala przeÅ‚Ä…czaÄ‡ siÄ™ pomiÄ™dzy gÅ‚Ã³wnymi widokami. KaÅ¼dy z tych widokÃ³w umoÅ¼liwia powrÃ³t do gÅ‚Ã³wnego menu.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.3\linewidth]{menu.png}
-	\caption{G³ówne menu programu}
+	\caption{GÅ‚Ã³wne menu programu}
 	\label{fig:menu}
 \end{figure}
 
 \subsubsection{Okno predykcji}
 
-Podstawowe i najwa¿niejsze okno w programie. Umo¿liwia ono wczytanie danych EKG z pliku w formacie .dat(domy¶lny format bazy MIT-BIH z której korzystamy) poprzez wybranie go w eksploratorze plików.
+Podstawowe i najwaÅ¼niejsze okno w programie. UmoÅ¼liwia ono wczytanie danych EKG z pliku w formacie .dat(domyÅ›lny format bazy MIT-BIH z ktÃ³rej korzystamy) poprzez wybranie go w eksploratorze plikÃ³w.
  
-Na podstawie wczytanych danych generowany jest wykres podgl±du przedstawiaj±cy 6 sekundowy fragment rekordu. Wykres jest skalowany na osi Y do aktualnie wy¶wietlanych danych, tak aby by³y one zawsze dobrze widoczne. W prawym dolnym rogu tego wykresu znajduje siê mniejszy wykres, wraz z legend±, przedstawiaj±cy jak zmienia³y siê poszczególne warto¶ci predykcji na przestrzeni ostatnich 10 warto¶ci. 
+Na podstawie wczytanych danych generowany jest wykres podglÄ…du przedstawiajÄ…cy 6 sekundowy fragment rekordu. Wykres jest skalowany na osi Y do aktualnie wyÅ›wietlanych danych, tak aby byÅ‚y one zawsze dobrze widoczne. W prawym dolnym rogu tego wykresu znajduje siÄ™ mniejszy wykres, wraz z legendÄ…, przedstawiajÄ…cy jak zmieniaÅ‚y siÄ™ poszczegÃ³lne wartoÅ›ci predykcji na przestrzeni ostatnich 10 wartoÅ›ci. 
 
 \begin{figure}[h!]
 	\centering
@@ -269,14 +269,14 @@ Na podstawie wczytanych danych generowany jest wykres podgl±du przedstawiaj±cy 6
 	\label{fig:plot}
 \end{figure}
 
-Nad wykresem znajduje siê pasek nawigacyjny umo¿liwiaj±cy:
+Nad wykresem znajduje siÄ™ pasek nawigacyjny umoÅ¼liwiajÄ…cy:
 \begin{itemize}
-\item przeskok do wybranego fragmentu poprzez wpisanie warto¶ci pocz±tkowej wykresu w sekundach z dok³adno¶ci± do 2 cyfr dziesiêtnych, warto¶æ jest ograniczona do rozmiaru danych
-\item przewijanie wykresu wstecz lub do przodu poprzez klikanie b±d¼ przytrzymanie odpowiedniego przycisku
-\item odtwarzanie danych w przód co pozwala symulowaæ dzia³anie w czasie rzeczywistym
+\item przeskok do wybranego fragmentu poprzez wpisanie wartoÅ›ci poczÄ…tkowej wykresu w sekundach z dokÅ‚adnoÅ›ciÄ… do 2 cyfr dziesiÄ™tnych, wartoÅ›Ä‡ jest ograniczona do rozmiaru danych
+\item przewijanie wykresu wstecz lub do przodu poprzez klikanie bÄ…dÅº przytrzymanie odpowiedniego przycisku
+\item odtwarzanie danych w przÃ³d co pozwala symulowaÄ‡ dziaÅ‚anie w czasie rzeczywistym
 \end{itemize}
 
-Dodatkowo po wczytaniu danych wy¶wietlana jest nazwa rekordu oraz maksymalna warto¶æ do której mo¿na przeskoczyæ. Odtwarzanie danych inicjowane jest przez odrêbny w±tek.
+Dodatkowo po wczytaniu danych wyÅ›wietlana jest nazwa rekordu oraz maksymalna wartoÅ›Ä‡ do ktÃ³rej moÅ¼na przeskoczyÄ‡. Odtwarzanie danych inicjowane jest przez odrÄ™bny wÄ…tek.
 
 \begin{figure}[h!]
 	\centering
@@ -285,22 +285,22 @@ Dodatkowo po wczytaniu danych wy¶wietlana jest nazwa rekordu oraz maksymalna war
 	\label{fig:navigation}
 \end{figure}
 
-Pod wykresem z prawej strony znajduje siê pasek wy¶wietlaj±cy warto¶ci, które na wyj¶ciu daje model predykcji dla aktualnych danych. Rozwa¿amy 3 typy arytmii o oznaczeniach: SVEB, VEB oraz F.
-Predykcja równie¿ inicjowana jest w innym w±tku i odbywa siê co 1 sekundê w trakcie odtwarzania wykresu.
+Pod wykresem z prawej strony znajduje siÄ™ pasek wyÅ›wietlajÄ…cy wartoÅ›ci, ktÃ³re na wyjÅ›ciu daje model predykcji dla aktualnych danych. RozwaÅ¼amy 3 typy arytmii o oznaczeniach: SVEB, VEB oraz F.
+Predykcja rÃ³wnieÅ¼ inicjowana jest w innym wÄ…tku i odbywa siÄ™ co 1 sekundÄ™ w trakcie odtwarzania wykresu.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{output.png}
-	\caption{Pasek warto¶ci predykcji}
+	\caption{Pasek wartoÅ›ci predykcji}
 	\label{fig:output}
 \end{figure}
 
-Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawieraj±ce logi wszystkiego co siê do tej pory dzia³o w zak³adce dotycz±cej predykcji. W oknie mamy mo¿liwo¶æ wyczyszczenia dotychczasowej historii lub zapisania jej do pliku tekstowego.
+Dodatkowo na dole znajduje siÄ™ przycisk, ktÃ³ry umoÅ¼liwia otworzenie okna zawierajÄ…ce logi wszystkiego co siÄ™ do tej pory dziaÅ‚o w zakÅ‚adce dotyczÄ…cej predykcji. W oknie mamy moÅ¼liwoÅ›Ä‡ wyczyszczenia dotychczasowej historii lub zapisania jej do pliku tekstowego.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{logs.png}
-	\caption{Okno wy¶wietlaj±ce logi programu}
+	\caption{Okno wyÅ›wietlajÄ…ce logi programu}
 	\label{fig:logs}
 \end{figure}
 
@@ -311,7 +311,7 @@ Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawiera
 	\label{fig:models}
 \end{figure}
 
-Ca³o¶æ prezentuje siê nastêpuj±co:
+CaÅ‚oÅ›Ä‡ prezentuje siÄ™ nastÄ™pujÄ…co:
 
 \begin{figure}[H]
 	\centering
@@ -320,64 +320,64 @@ Ca³o¶æ prezentuje siê nastêpuj±co:
 	\label{fig:prediction}
 \end{figure}
 
-\subsubsection{Przegl±danie danych}
+\subsubsection{PrzeglÄ…danie danych}
 
-W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia wczytanie danych z plików wraz z informacjami na temat poszczególnych uderzeñ. Na podstawie danych generowany jest wykres na którym ka¿de uderzenie jest oznaczone w odpowiedni sposób. Nad wykresem znajduje siê pasek do nawigacji po wykresie taki sam jak w oknie predykcji.
+W oknie tym mamy moÅ¼liwoÅ›Ä‡ przeglÄ…dania bardziej szczegÃ³Å‚owych danych. UmoÅ¼liwia wczytanie danych z plikÃ³w wraz z informacjami na temat poszczegÃ³lnych uderzeÅ„. Na podstawie danych generowany jest wykres na ktÃ³rym kaÅ¼de uderzenie jest oznaczone w odpowiedni sposÃ³b. Nad wykresem znajduje siÄ™ pasek do nawigacji po wykresie taki sam jak w oknie predykcji.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{explore.png}
-	\caption{Okno do przegl±dania oznaczonych danych}
+	\caption{Okno do przeglÄ…dania oznaczonych danych}
 	\label{fig:explore}
 \end{figure}
 
 \subsubsection{Dodatkowe informacje}
 
-Jest to dodatkowe okno, bêd±ce ma³± bibliotek± rozwa¿anych przez nas typów arytmii. Z lewej strony mamy listê zawieraj±c± rodzaje nieprawid³owo¶ci. Po wybraniu elementu z listy po prawej stronie zostan± wy¶wietlone odpowiednie informacje. Dane wczytywane s± z plików tekstowych.
+Jest to dodatkowe okno, bÄ™dÄ…ce maÅ‚Ä… bibliotekÄ… rozwaÅ¼anych przez nas typÃ³w arytmii. Z lewej strony mamy listÄ™ zawierajÄ…cÄ… rodzaje nieprawidÅ‚owoÅ›ci. Po wybraniu elementu z listy po prawej stronie zostanÄ… wyÅ›wietlone odpowiednie informacje. Dane wczytywane sÄ… z plikÃ³w tekstowych.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{types.png}
-	\caption{Okno z informacjami na temat ró¿nych typów arytmii}
+	\caption{Okno z informacjami na temat rÃ³Å¼nych typÃ³w arytmii}
 	\label{fig:types}
 \end{figure}
 
 \subsection{Model}
 
-G³ównym zadaniem modu³u modelu w systemie jest dostarczenie funkcjonalno¶ci umo¿liwiaj±cej dokonywanie predykcji na podstawie wykresu EKG. W tym celu zdefiniowane zosta³o pojêcie silnika predykcji jako elementu dostarczaj±cego tak± funkcjonalno¶æ. Musi on dokonywaæ przetwarzania danych wej¶ciowych, takiego jak likwidacja szumów i normalizacja, oraz wykonywaæ predykcji. Predykcj± zwrócon± przez silnik bêdzie ci±g warto¶ci z przedzia³u od zera do jeden, o liczebno¶ci takiej samej jak ilo¶æ przewidywanych rodzajów arytmii. Ka¿da warto¶æ okre¶laæ bêdzie szansê na wyst±pienie danego rodzaju arytmii.
+GÅ‚Ã³wnym zadaniem moduÅ‚u modelu w systemie jest dostarczenie funkcjonalnoÅ›ci umoÅ¼liwiajÄ…cej dokonywanie predykcji na podstawie wykresu EKG. W tym celu zdefiniowane zostaÅ‚o pojÄ™cie silnika predykcji jako elementu dostarczajÄ…cego takÄ… funkcjonalnoÅ›Ä‡. Musi on dokonywaÄ‡ przetwarzania danych wejÅ›ciowych, takiego jak likwidacja szumÃ³w i normalizacja, oraz wykonywaÄ‡ predykcji. PredykcjÄ… zwrÃ³conÄ… przez silnik bÄ™dzie ciÄ…g wartoÅ›ci z przedziaÅ‚u od zera do jeden, o liczebnoÅ›ci takiej samej jak iloÅ›Ä‡ przewidywanych rodzajÃ³w arytmii. KaÅ¼da wartoÅ›Ä‡ okreÅ›laÄ‡ bÄ™dzie szansÄ™ na wystÄ…pienie danego rodzaju arytmii.
 
-% FIXME Nie lubiê tego "jak zosta³o wspomniane" vv
-Poniewa¿ jak wynik³o z analizy wykonalno¶ci projekt wymaga przetestowania du¿ej ilo¶ci sposobów dokonywania klasyfikacji, modu³ modelu musi dostarczaæ mo¿liwo¶æ stworzenia ró¿nych silników predykcji. W tym celu konieczna jest funkcjonalno¶æ do ³atwego tworzenia nowych silników. Dodatkowo model musi udostêpniaæ reszcie systemu mo¿liwo¶æ wyboru spo¶ród dostêpnych silników za pomoc± jednolitego interfejsu.
+% FIXME Nie lubiÄ™ tego "jak zostaÅ‚o wspomniane" vv
+PoniewaÅ¼ jak wynikÅ‚o z analizy wykonalnoÅ›ci projekt wymaga przetestowania duÅ¼ej iloÅ›ci sposobÃ³w dokonywania klasyfikacji, moduÅ‚ modelu musi dostarczaÄ‡ moÅ¼liwoÅ›Ä‡ stworzenia rÃ³Å¼nych silnikÃ³w predykcji. W tym celu konieczna jest funkcjonalnoÅ›Ä‡ do Å‚atwego tworzenia nowych silnikÃ³w. Dodatkowo model musi udostÄ™pniaÄ‡ reszcie systemu moÅ¼liwoÅ›Ä‡ wyboru spoÅ›rÃ³d dostÄ™pnych silnikÃ³w za pomocÄ… jednolitego interfejsu.
 
-\subsubsection{Zasada dzia³ania}
+\subsubsection{Zasada dziaÅ‚ania}
 
-W celu zrealizowania za³o¿onych wymagañ podjêta zosta³a decyzja o warstwowej budowie silnika predykcji. Przy takim za³o¿eniu modu³ modelu dostarcza gotowych warstw, z których zbudowane mog± zostaæ ró¿nego rodzaju silniki.  Na rysunku \ref{fig:model_example_flow}. przedstawiony zosta³ przyk³adowy schemat silnika predykcji ilustruj±cy przep³yw danych. Znajduj±ce siê na nim warstwy podane jako przyk³ad to:
+W celu zrealizowania zaÅ‚oÅ¼onych wymagaÅ„ podjÄ™ta zostaÅ‚a decyzja o warstwowej budowie silnika predykcji. Przy takim zaÅ‚oÅ¼eniu moduÅ‚ modelu dostarcza gotowych warstw, z ktÃ³rych zbudowane mogÄ… zostaÄ‡ rÃ³Å¼nego rodzaju silniki.  Na rysunku \ref{fig:model_example_flow}. przedstawiony zostaÅ‚ przykÅ‚adowy schemat silnika predykcji ilustrujÄ…cy przepÅ‚yw danych. ZnajdujÄ…ce siÄ™ na nim warstwy podane jako przykÅ‚ad to:
 
 \begin{description}
-	\item[Fragmentacja danych] - z wej¶ciowych danych zostaje wydzielony fragment u¿ywany do predykcji. Rozmiar tego fragmentu odpowiada oknu na podstawie, którego wykonywana jest predykcja.
-	\item[Zmniejszenie rozdzielczo¶ci] - czêstotliwo¶æ próbek zmniejszona jest w celu redukcji ilo¶ci cech i likwidacji szumów wysokich czêstotliwo¶ci. Przyk³adowo czêstotliwo¶æ mo¿e zostaæ zmniejszona z \SI{360}{\hertz} do \SI{60}{\hertz} przez usuniêcie wszystkich poza  co szóst± warto¶ci±.
-	\item[Usuwanie niskich czêstotliwo¶ci] - za pomoc± transformaty Fouriera i jej odwrócenia likwidowane s± niskie czêstotliwo¶ci spowodowane miêdzy innymi przez oddech pacjenta. Przyk³adowo zlikwidowane mog± zostaæ czêstotliwo¶ci poni¿ej \SI{0.3}{\hertz} poprzez wyzerowanie odpowiednich warto¶ci po zastosowaniu szybkiej transformaty Fouriera.
-	\item [Normalizacja danych] - przed wprowadzeniem danych do sieci neuronowej dane musz± zostaæ znormalizowane zgodnie z oczekiwan± normalizacj± dla sieci. Przyk³adowa funkcja normalizuj±ca to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to ¶rednia warto¶ci $x$, a $x_{\sigma}$ to ich odchylenie standardowe.
-	\item [Klasyfikacja] - sieæ neuronowa dokonuje klasyfikacji wieloklasowej i jako rezultat otrzymywane s± przewidywane szansê na wyst±pienie danej arytmii w przewidywanym oknie, okre¶lonym w trakcie trenowania sieci.
+	\item[Fragmentacja danych] - z wejÅ›ciowych danych zostaje wydzielony fragment uÅ¼ywany do predykcji. Rozmiar tego fragmentu odpowiada oknu na podstawie, ktÃ³rego wykonywana jest predykcja.
+	\item[Zmniejszenie rozdzielczoÅ›ci] - czÄ™stotliwoÅ›Ä‡ prÃ³bek zmniejszona jest w celu redukcji iloÅ›ci cech i likwidacji szumÃ³w wysokich czÄ™stotliwoÅ›ci. PrzykÅ‚adowo czÄ™stotliwoÅ›Ä‡ moÅ¼e zostaÄ‡ zmniejszona z \SI{360}{\hertz} do \SI{60}{\hertz} przez usuniÄ™cie wszystkich poza  co szÃ³stÄ… wartoÅ›ciÄ….
+	\item[Usuwanie niskich czÄ™stotliwoÅ›ci] - za pomocÄ… transformaty Fouriera i jej odwrÃ³cenia likwidowane sÄ… niskie czÄ™stotliwoÅ›ci spowodowane miÄ™dzy innymi przez oddech pacjenta. PrzykÅ‚adowo zlikwidowane mogÄ… zostaÄ‡ czÄ™stotliwoÅ›ci poniÅ¼ej \SI{0.3}{\hertz} poprzez wyzerowanie odpowiednich wartoÅ›ci po zastosowaniu szybkiej transformaty Fouriera.
+	\item [Normalizacja danych] - przed wprowadzeniem danych do sieci neuronowej dane muszÄ… zostaÄ‡ znormalizowane zgodnie z oczekiwanÄ… normalizacjÄ… dla sieci. PrzykÅ‚adowa funkcja normalizujÄ…ca to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to Å›rednia wartoÅ›ci $x$, a $x_{\sigma}$ to ich odchylenie standardowe.
+	\item [Klasyfikacja] - sieÄ‡ neuronowa dokonuje klasyfikacji wieloklasowej i jako rezultat otrzymywane sÄ… przewidywane szansÄ™ na wystÄ…pienie danej arytmii w przewidywanym oknie, okreÅ›lonym w trakcie trenowania sieci.
 \end{description}
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.4\linewidth]{model_example_flow.png}
-	\caption{Schemat warstw w przyk³adowym silniku predykcji}
+	\caption{Schemat warstw w przykÅ‚adowym silniku predykcji}
 	\label{fig:model_example_flow}
 \end{figure}
 
-W celu umo¿liwienia takiej modu³owo¶ci dla budowy silników predykcji zdefiniowany zosta³ wspólny interfejs dla wszystkich warstw i zrealizowany jako abstrakcyjna klasa \emph{Layer}. Jej podstawowym za³o¿eniem jest przetwarzanie danych i przekazywanie ich do nastêpnych warstw w ci±gu. W tym celu posiada ona nastêpuj±ce metody:
+W celu umoÅ¼liwienia takiej moduÅ‚owoÅ›ci dla budowy silnikÃ³w predykcji zdefiniowany zostaÅ‚ wspÃ³lny interfejs dla wszystkich warstw i zrealizowany jako abstrakcyjna klasa \emph{Layer}. Jej podstawowym zaÅ‚oÅ¼eniem jest przetwarzanie danych i przekazywanie ich do nastÄ™pnych warstw w ciÄ…gu. W tym celu posiada ona nastÄ™pujÄ…ce metody:
 
 \begin{itemize}
 	\itemsep0em
-	\item[] \emph{set\_next(Layer)} - ustawia nastêpny obiekt w silniku, do którego przekazywane bêd± wyniki obliczeñ
-	\item[] \emph{push\_value(Numpy array)} - dostarcza obiekt na którym wykonane zostan± obliczenia, a ich wynik zostanie przekazany dalej
-	\item[] \emph{compute(Numpy array): Numpy array} - abstrakcyjna metoda, która w klasach dziedzicz±cych powinna wykonywaæ zadane obliczenie i zwracaæ wynik
+	\item[] \emph{set\_next(Layer)} - ustawia nastÄ™pny obiekt w silniku, do ktÃ³rego przekazywane bÄ™dÄ… wyniki obliczeÅ„
+	\item[] \emph{push\_value(Numpy array)} - dostarcza obiekt na ktÃ³rym wykonane zostanÄ… obliczenia, a ich wynik zostanie przekazany dalej
+	\item[] \emph{compute(Numpy array): Numpy array} - abstrakcyjna metoda, ktÃ³ra w klasach dziedziczÄ…cych powinna wykonywaÄ‡ zadane obliczenie i zwracaÄ‡ wynik
 \end{itemize}
 
-W trakcie tworzenia nowych silników predykcji stworzone zosta³y odpowiednie warstwy wewn±trz modelu, umo¿liwiaj±c ich ponowne wykorzystanie. Rysunek \ref{fig:pipes_uml} zawiera diagram klas przedstawiaj±cy relacjê miêdzy klasami implementuj±cymi  warstwy wewn±trz modelu, za¶ poni¿ej znajduj± siê ich szczegó³owe opisy.
+W trakcie tworzenia nowych silnikÃ³w predykcji stworzone zostaÅ‚y odpowiednie warstwy wewnÄ…trz modelu, umoÅ¼liwiajÄ…c ich ponowne wykorzystanie. Rysunek \ref{fig:pipes_uml} zawiera diagram klas przedstawiajÄ…cy relacjÄ™ miÄ™dzy klasami implementujÄ…cymi  warstwy wewnÄ…trz modelu, zaÅ› poniÅ¼ej znajdujÄ… siÄ™ ich szczegÃ³Å‚owe opisy.
 
 \begin{figure}[h!]
 	\centering
@@ -386,31 +386,31 @@ W trakcie tworzenia nowych silników predykcji stworzone zosta³y odpowiednie wars
 	\label{fig:pipes_uml}
 \end{figure}
 
-\paragraph{IntervalSplitter} Pocz±tkowa warstwa, dokonuj±ca wyciêcia z wej¶ciowych danych okna zadanego rozmiaru. Na wej¶ciu otrzymuje ona ca³y dotychczasowy wykres EKG, z którego przekazywany dalej zostaje tylko ostatni fragment o rozmiarze oczekiwanym przez nastêpne warstwy i klasyfikator.
+\paragraph{IntervalSplitter} PoczÄ…tkowa warstwa, dokonujÄ…ca wyciÄ™cia z wejÅ›ciowych danych okna zadanego rozmiaru. Na wejÅ›ciu otrzymuje ona caÅ‚y dotychczasowy wykres EKG, z ktÃ³rego przekazywany dalej zostaje tylko ostatni fragment o rozmiarze oczekiwanym przez nastÄ™pne warstwy i klasyfikator.
 
-\paragraph{StandardNormalizer} Jest to warstwa dokonuj±ca normalizacji danych za pomoc± tzw. \emph{standaryzacji Z}. Wzór okre¶laj±cy ten rodzaj normalizacji to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to warto¶æ ¶rednia, za¶ $x_\sigma$ to odchylenie standardowe. Dziêki zastosowaniu takiej normalizacji wyj¶ciowe warto¶ci posiadaj± ¶redni± równ± zero, za¶ odchylenie standardowe równe jeden. Ten rodzaj normalizacji jest szczególnie przydatny przy przetwarzaniu danych dla sieci neuronowych z warstwami zawieraj±cymi jako aktywacje funkcjê \emph{ReLU - Rectified Linear Unit}.
+\paragraph{StandardNormalizer} Jest to warstwa dokonujÄ…ca normalizacji danych za pomocÄ… tzw. \emph{standaryzacji Z}. WzÃ³r okreÅ›lajÄ…cy ten rodzaj normalizacji to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to wartoÅ›Ä‡ Å›rednia, zaÅ› $x_\sigma$ to odchylenie standardowe. DziÄ™ki zastosowaniu takiej normalizacji wyjÅ›ciowe wartoÅ›ci posiadajÄ… Å›redniÄ… rÃ³wnÄ… zero, zaÅ› odchylenie standardowe rÃ³wne jeden. Ten rodzaj normalizacji jest szczegÃ³lnie przydatny przy przetwarzaniu danych dla sieci neuronowych z warstwami zawierajÄ…cymi jako aktywacje funkcjÄ™ \emph{ReLU - Rectified Linear Unit}.
 
-% TODO Wstawiæ rysunek prezentuj±cy dzia³anie i mo¿e kod
+% TODO WstawiÄ‡ rysunek prezentujÄ…cy dziaÅ‚anie i moÅ¼e kod
 
-\paragraph{Downsampler} Warstwa odpowiadaj±ca za redukcjê czêstotliwo¶ci. Dziêki jej zastosowaniu jeste¶my w stanie znacz±co przy¶pieszyæ dzia³anie sieci neuronowej oraz zmniejszyæ wymiarowo¶æ danych. Oba te efekty pomagaj± zredukowaæ wp³yw \emph{przekleñstwa wymiaru} spowodowanego ogromn± ilo¶ci± cech w wej¶ciowym fragmencie EKG. Dodatkowo zmniejszenie ilo¶ci próbek pozwala usun±æ szum w wysokich czêstotliwo¶ciach spowodowany przez zak³ócenia elektroniczne lub niedoskona³o¶ci w trakcie analogowego zapisu i pó¼niejszej digitalizacji.
-Rysunek \ref{fig:downsampling} prezentuje efekt redukcji czêstotliwo¶ci na przyk³adzie piêciosekundowego wycinka wykresu.
+\paragraph{Downsampler} Warstwa odpowiadajÄ…ca za redukcjÄ™ czÄ™stotliwoÅ›ci. DziÄ™ki jej zastosowaniu jesteÅ›my w stanie znaczÄ…co przyÅ›pieszyÄ‡ dziaÅ‚anie sieci neuronowej oraz zmniejszyÄ‡ wymiarowoÅ›Ä‡ danych. Oba te efekty pomagajÄ… zredukowaÄ‡ wpÅ‚yw \emph{przekleÅ„stwa wymiaru} spowodowanego ogromnÄ… iloÅ›ciÄ… cech w wejÅ›ciowym fragmencie EKG. Dodatkowo zmniejszenie iloÅ›ci prÃ³bek pozwala usunÄ…Ä‡ szum w wysokich czÄ™stotliwoÅ›ciach spowodowany przez zakÅ‚Ã³cenia elektroniczne lub niedoskonaÅ‚oÅ›ci w trakcie analogowego zapisu i pÃ³Åºniejszej digitalizacji.
+Rysunek \ref{fig:downsampling} prezentuje efekt redukcji czÄ™stotliwoÅ›ci na przykÅ‚adzie piÄ™ciosekundowego wycinka wykresu.
 
-% TODO Wykonaæ wykres z wiêksz± rozdzielczo¶ci±, poprawiæ tytu³ i oznaczenia osi x.
+% TODO WykonaÄ‡ wykres z wiÄ™kszÄ… rozdzielczoÅ›ciÄ…, poprawiÄ‡ tytuÅ‚ i oznaczenia osi x.
 \begin{figure}[h!]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.6\linewidth]{downsampling.png}
-	\caption{Redukcja czêstotliwo¶ci z \SI{360}{\hertz} (niebieski wykres) do \SI{60}{\hertz} (pomarañczowy wykres)}
+	\caption{Redukcja czÄ™stotliwoÅ›ci z \SI{360}{\hertz} (niebieski wykres) do \SI{60}{\hertz} (pomaraÅ„czowy wykres)}
 	\label{fig:downsampling}
 \end{figure}
 
-\paragraph{NoiseRemover} Jest to warstwa usuwaj±ca szum niskich czêstotliwo¶ci, który spowodowany jest oddechem pacjenta, zmian± po³o¿enia i czynnikami zewnêtrznymi obecnymi w trakcie nagrywania zapisu. Operacja ta zosta³a zaimplementowana za pomoc± transformaty Fouriera. W pierwszej kolejno¶ci wej¶ciowy fragment przekszta³cany jest do domeny czêstotliwo¶ci, nastêpnie zerowane s± warto¶ci poni¿ej wybranej granicznej czêstotliwo¶ci. Po usuniêciu odpowiedniego przedzia³u wykonywana zostaje odwrotna transformata Fouriera, przywracaj±ca fragment do domeny czasu. Na rysunku \ref{fig:fft} widoczne jest dzia³anie tej warstwy na przyk³adzie fragmentu EKG, za¶ rysunek \ref{fig:fft_f} przedstawia ten sam fragment przedstawiony w dziedzinie czêstotliwo¶ci po zastosowaniu transformaty.
+\paragraph{NoiseRemover} Jest to warstwa usuwajÄ…ca szum niskich czÄ™stotliwoÅ›ci, ktÃ³ry spowodowany jest oddechem pacjenta, zmianÄ… poÅ‚oÅ¼enia i czynnikami zewnÄ™trznymi obecnymi w trakcie nagrywania zapisu. Operacja ta zostaÅ‚a zaimplementowana za pomocÄ… transformaty Fouriera. W pierwszej kolejnoÅ›ci wejÅ›ciowy fragment przeksztaÅ‚cany jest do domeny czÄ™stotliwoÅ›ci, nastÄ™pnie zerowane sÄ… wartoÅ›ci poniÅ¼ej wybranej granicznej czÄ™stotliwoÅ›ci. Po usuniÄ™ciu odpowiedniego przedziaÅ‚u wykonywana zostaje odwrotna transformata Fouriera, przywracajÄ…ca fragment do domeny czasu. Na rysunku \ref{fig:fft} widoczne jest dziaÅ‚anie tej warstwy na przykÅ‚adzie fragmentu EKG, zaÅ› rysunek \ref{fig:fft_f} przedstawia ten sam fragment przedstawiony w dziedzinie czÄ™stotliwoÅ›ci po zastosowaniu transformaty.
 
 \begin{figure}[h!]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.6\linewidth]{noise_remove.png}
-	\caption{Usuniêcie czêstotliwo¶ci poni¿ej \SI{0,5}{\hertz} za pomoc± transformaty Fouriera. Kolor niebieski - oryginalny fragment, kolor pomarañczowy - po wyciêciu niskich czêstotliwo¶ci.}
+	\caption{UsuniÄ™cie czÄ™stotliwoÅ›ci poniÅ¼ej \SI{0,5}{\hertz} za pomocÄ… transformaty Fouriera. Kolor niebieski - oryginalny fragment, kolor pomaraÅ„czowy - po wyciÄ™ciu niskich czÄ™stotliwoÅ›ci.}
 	\label{fig:fft}
 \end{figure}
 
@@ -418,28 +418,28 @@ Rysunek \ref{fig:downsampling} prezentuje efekt redukcji czêstotliwo¶ci na przyk
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.6\linewidth]{fft_fdomain.png}
-	\caption{Widok fragmentu wykresu EKG w dziedzinie czêstotliwo¶ci}
+	\caption{Widok fragmentu wykresu EKG w dziedzinie czÄ™stotliwoÅ›ci}
 	\label{fig:fft_f}
 \end{figure}
 
-\paragraph{NNPredictor} Warstwa zawieraj±ca klasyfikator w postaci sieci neuronowej. Odpowiada ona za integracjê z bibliotek± Keras, w tym celu dokonuje zmiany kszta³tu danych wej¶ciowych do tego oczekiwanego przez sieæ. Wszystkie sieci u¿ywane w modelu s± wcze¶niej wytrenowane w module eksperymentów, warstwa ta wiêc wczytuje budowê sieci oraz wagi z pliku w formacie \emph{HDF5}. % TODO Dodaæ odno¶nik do opisu formatu %
+\paragraph{NNPredictor} Warstwa zawierajÄ…ca klasyfikator w postaci sieci neuronowej. Odpowiada ona za integracjÄ™ z bibliotekÄ… Keras, w tym celu dokonuje zmiany ksztaÅ‚tu danych wejÅ›ciowych do tego oczekiwanego przez sieÄ‡. Wszystkie sieci uÅ¼ywane w modelu sÄ… wczeÅ›niej wytrenowane w module eksperymentÃ³w, warstwa ta wiÄ™c wczytuje budowÄ™ sieci oraz wagi z pliku w formacie \emph{HDF5}. % TODO DodaÄ‡ odnoÅ›nik do opisu formatu %
 
-\paragraph{FunctionLayer} Pomocnicza warstwa s³u¿±ca jedynie do integracji z pozosta³ymi elementami systemu. Nie przekszta³ca ona danych, a jej jedyn± funkcjonalno¶ci± jest wywo³anie zewnêtrznej funkcji, przekazuj±c jako argument rezultat poprzednich warstw.
+\paragraph{FunctionLayer} Pomocnicza warstwa sÅ‚uÅ¼Ä…ca jedynie do integracji z pozostaÅ‚ymi elementami systemu. Nie przeksztaÅ‚ca ona danych, a jej jedynÄ… funkcjonalnoÅ›ciÄ… jest wywoÅ‚anie zewnÄ™trznej funkcji, przekazujÄ…c jako argument rezultat poprzednich warstw.
 
-\paragraph{Sequence} Pomocnicza warstwa tworz±ca abstrakcjê nad grup± innych warstw. W jej wypadku wykonanie obliczeñ jest równoznaczne wykonaniu obliczeñ przez wszystkie warstwy które w sobie zawiera. Dziêki jej zastosowaniu interfejs dla sekwencji warstw jest taki sam jak dla pojedynczej warstwy. Jest to przydatne poniewa¿ silnik wewn±trz modelu zdefiniowany jest jako ci±g warstw, dziêki takiej abstrakcji silnik wykorzystuje istniej±cy interfejs, co zwiêksza czytelno¶æ kodu i pomaga w integracji z reszt± systemu.
+\paragraph{Sequence} Pomocnicza warstwa tworzÄ…ca abstrakcjÄ™ nad grupÄ… innych warstw. W jej wypadku wykonanie obliczeÅ„ jest rÃ³wnoznaczne wykonaniu obliczeÅ„ przez wszystkie warstwy ktÃ³re w sobie zawiera. DziÄ™ki jej zastosowaniu interfejs dla sekwencji warstw jest taki sam jak dla pojedynczej warstwy. Jest to przydatne poniewaÅ¼ silnik wewnÄ…trz modelu zdefiniowany jest jako ciÄ…g warstw, dziÄ™ki takiej abstrakcji silnik wykorzystuje istniejÄ…cy interfejs, co zwiÄ™ksza czytelnoÅ›Ä‡ kodu i pomaga w integracji z resztÄ… systemu.
 
-Dla pozosta³ych modu³ów wyznaczony zosta³ interfejs s³u¿±cy do wy¶wietlenia dostêpnych silników, stworzenia ¿±danego silnika oraz integracji jego funkcjonalno¶ci z obecn± struktur±. Poni¿ej znajduje siê szczegó³owy opis elementów tego interfejsu, za¶ na fragmencie 2. widoczny jest kod definiuj±cy interfejs oraz przyk³adowy silnik predykcji.
+Dla pozostaÅ‚ych moduÅ‚Ã³w wyznaczony zostaÅ‚ interfejs sÅ‚uÅ¼Ä…cy do wyÅ›wietlenia dostÄ™pnych silnikÃ³w, stworzenia Å¼Ä…danego silnika oraz integracji jego funkcjonalnoÅ›ci z obecnÄ… strukturÄ…. PoniÅ¼ej znajduje siÄ™ szczegÃ³Å‚owy opis elementÃ³w tego interfejsu, zaÅ› na fragmencie 2. widoczny jest kod definiujÄ…cy interfejs oraz przykÅ‚adowy silnik predykcji.
 
 \begin{itemize}
 	\itemsep0em
-	\item[] \emph{PredictionEngine} - klasa definiuj±ca silnik predykcji, zawiera jego nazwê, opis i warstwy z których siê sk³ada
-	\item[] \emph{engines} - lista dostêpnych silników predykcji
-	\item[] \emph{create\_prediction\_engine(PredictionEngine)} - pomocnicza funkcja buduj±ca silnik, wczytuje klasyfikator oraz ³±czy ze sob± warstwy
-	\item[] \emph{FunctionLayer} - klasa umo¿liwiaj±ca do³±czenie na koñcu silnika wywo³ania funkcji z wynikiem predykcji
+	\item[] \emph{PredictionEngine} - klasa definiujÄ…ca silnik predykcji, zawiera jego nazwÄ™, opis i warstwy z ktÃ³rych siÄ™ skÅ‚ada
+	\item[] \emph{engines} - lista dostÄ™pnych silnikÃ³w predykcji
+	\item[] \emph{create\_prediction\_engine(PredictionEngine)} - pomocnicza funkcja budujÄ…ca silnik, wczytuje klasyfikator oraz Å‚Ä…czy ze sobÄ… warstwy
+	\item[] \emph{FunctionLayer} - klasa umoÅ¼liwiajÄ…ca doÅ‚Ä…czenie na koÅ„cu silnika wywoÅ‚ania funkcji z wynikiem predykcji
 \end{itemize}
 
-\begin{lstlisting}[float=h, style=custompy, caption=Interfejsu modelu i przyk³ad wykorzystania]
-# Przyk³ad definicji silnika:
+\begin{lstlisting}[float=h, style=custompy, caption=Interfejsu modelu i przykÅ‚ad wykorzystania]
+# PrzykÅ‚ad definicji silnika:
 engines = [
     PredictionEngine('convolutional', [
         IntervalSplitter(360*60*5, 360),
@@ -457,38 +457,37 @@ def create_prediction_engine(engine):
 # Stworzenie silnika predykcji:
 p_engine = create_prediction_engine(engines[0])
 
-# Przyk³ad integracji - tutaj wypisanie wyników
+# PrzykÅ‚ad integracji - tutaj wypisanie wynikÃ³w
 p_engine.set_next(FunctionLayer(print))
 
-values = # Warto¶ci fragmentu EKG
+values = # WartoÅ›ci fragmentu EKG
 
-# Wywo³anie obliczeñ:
+# WywoÅ‚anie obliczeÅ„:
 p_engine.push_value(values)
 \end{lstlisting}
 
 \subsubsection{Silniki predykcji}
 
-Model udostêpnia ró¿ne silniki predykcji ró¿ni±ce siê struktur±, algorytmem, rozmiarami przedzia³ów danych i skuteczno¶ci±. Silniki zosta³y podzielone na dwie grupy w zale¿no¶ci od budowy sieci neuronowej, któr± wykorzystuj±. S± to silniki gêste i konwolucyjne. Poni¿ej znajduj± siê ogólne opisy ka¿dej grupy, budowa udostêpnianych silników, wykorzystywanych sieci oraz ich skuteczno¶æ. Opis metodologii testowania, dok³adniejsze rezultaty testów oraz wszystkie wypróbowane architektury znajduj± siê w dziale \ref{sec:experimental} - Eksperymenty.
+Model udostÄ™pnia rÃ³Å¼ne silniki predykcji rÃ³Å¼niÄ…ce siÄ™ strukturÄ…, algorytmem, rozmiarami przedziaÅ‚Ã³w danych i skutecznoÅ›ciÄ…. Silniki zostaÅ‚y podzielone na dwie grupy w zaleÅ¼noÅ›ci od budowy sieci neuronowej, ktÃ³rÄ… wykorzystujÄ…. SÄ… to silniki gÄ™ste i konwolucyjne. PoniÅ¼ej znajdujÄ… siÄ™ ogÃ³lne opisy kaÅ¼dej grupy, budowa udostÄ™pnianych silnikÃ³w, wykorzystywanych sieci oraz ich skutecznoÅ›Ä‡. Opis metodologii testowania, dokÅ‚adniejsze rezultaty testÃ³w oraz wszystkie wyprÃ³bowane architektury znajdujÄ… siÄ™ w dziale \ref{sec:experimental} - Eksperymenty.
 
-\paragraph{Gêste}
+\paragraph{GÄ™ste}
 
-Jako pierwsze utworzone zosta³y silniki predykcji oparte na sieciach neuronowych zbudowanych z gêstych warstw (ang. \emph{dense}). W warstwach tych wszystkie warto¶ci wyj¶ciowe obliczane s± na podstawie wszystkich danych wej¶ciowych. Matematycznie warstwa gêsta zdefiniowana jest jako:
+Jako pierwsze utworzone zostaÅ‚y silniki predykcji oparte na sieciach neuronowych zbudowanych z gÄ™stych warstw (ang. \emph{dense}). W warstwach tych wszystkie wartoÅ›ci wyjÅ›ciowe obliczane sÄ… na podstawie wszystkich danych wejÅ›ciowych. Matematycznie warstwa gÄ™sta zdefiniowana jest jako:
 $$
 out = f_a(A \cdot in + bias)
 $$
-, gdzie $f_a$ to funkcja aktywacji, $A, bias$ to wewnêtrzne warto¶ci warstwy aktualizowane w trakcie uczenia, $in, out$ to kolejno wej¶cie i wyj¶cie gêstej warstwy. 
+, gdzie $f_a$ to funkcja aktywacji, $A, bias$ to wewnÄ™trzne wartoÅ›ci warstwy aktualizowane w trakcie uczenia, $in, out$ to kolejno wejÅ›cie i wyjÅ›cie gÄ™stej warstwy. 
 
-W warstwie gêstej neurony \emph{³±cz±} ka¿d± warto¶æ wej¶ciow± z ka¿d± warto¶ci± wyj¶ciow±, z tego powodu ilo¶æ parametrów w sieci zbudowanej z takich warstw ro¶nie bardzo szybko wraz ze wzrostem z³o¿ono¶ci i wymiarowo¶ci danych. Z tego powodu sieæ taka jest bardzo podatna na przetrenowania, to znaczy wyuczenie siê zbioru treningowego zamiast zale¿no¶ci jakie reprezentuje. Dodatkowo sieæ taka traktuje w ten sam sposób zale¿no¶æ miêdzy odleg³ymi warto¶ciami w danych wej¶ciowych, a warto¶ciami s±siednimi. Z tego powodu sieæ ta niezbyt dobrze nadaje siê do klasyfikacji wykresów zale¿nych od czasu tak jak w naszym przypadku.
-
-Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu model udostêpnia tylko jeden silnik predykcji oparte o nie.
+W warstwie gÄ™stej neurony \emph{Å‚Ä…czÄ…} kaÅ¼dÄ… wartoÅ›Ä‡ wejÅ›ciowÄ… z kaÅ¼dÄ… wartoÅ›ciÄ… wyjÅ›ciowÄ…, z tego powodu iloÅ›Ä‡ parametrÃ³w w sieci zbudowanej z takich warstw roÅ›nie bardzo szybko wraz ze wzrostem zÅ‚oÅ¼onoÅ›ci i wymiarowoÅ›ci danych. Z tego powodu sieÄ‡ taka jest bardzo podatna na przetrenowania, to znaczy wyuczenie siÄ™ zbioru treningowego zamiast zaleÅ¼noÅ›ci jakie reprezentuje. Dodatkowo sieÄ‡ taka traktuje w ten sam sposÃ³b zaleÅ¼noÅ›Ä‡ miÄ™dzy odlegÅ‚ymi wartoÅ›ciami w danych wejÅ›ciowych, a wartoÅ›ciami sÄ…siednimi. Z tego powodu sieÄ‡ ta niezbyt dobrze nadaje siÄ™ do klasyfikacji wykresÃ³w zaleÅ¼nych od czasu tak jak w naszym przypadku.
 
 \begin{table}[h]
 	\centering
 \begin{tabular}{l|lllll}
-	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
-	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{69,00}{\percent}
+	Nazwa & WejÅ›cie & Okres predykcji & CzÄ™stotliwoÅ›Ä‡ & Redukcja szumÃ³w & SkutecznoÅ›Ä‡ \\ \hline
+	dense1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{69,00}{\percent} \\
+	dense2 & 3 minuty & 1 minuta & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{73,48}{\percent}
 \end{tabular}
-\caption{Silniki predykcji oparte o gêste sieci neuronowe}
+\caption{Silniki predykcji oparte o gÄ™ste sieci neuronowe}
 \label{tab:dense_engines}
 \end{table}
 
@@ -501,47 +500,48 @@ Z powodu nieefektywno¶ci gêstych sieci neuronowych dla rozwi±zywanego problemu m
 	Dense        & units = 100           & relu         \\
 	Dense        & units = 3             & sigmoid
 \end{tabular}
-\caption{Warstwy w sieci gêstej dla silnika \emph{dense1}}
+\caption{Warstwy w sieci gÄ™stej dla silnikÃ³w \emph{dense1} i \emph{dense2}}
 \label{tab:dense1}
 \end{table}
 
 \paragraph{Konwolucyjne}
 
-W konwolucyjnych silnikach predykcji g³ównym za³o¿eniem by³o wykorzystanie konwolucyjnej sieci neuronowej. Spowodowane by³o to bardzo s³abymi wynikami dla gêstych sieci z powodu przetrenowania oraz sekwencyjn± struktur± danych. Sieci konwolucyjne pozwalaj± bardzo dobrze klasyfikowaæ dane, gdzie wa¿ne jest wzajemne po³o¿enie cech, czyli w naszym przypadku odleg³o¶æ miêdzy warto¶ciami na wykresie EKG. Innym przypadkiem przydatno¶ci takiej reprezentacji jest klasyfikacja obrazów, gdzie bardziej istotne s± s±siednie piksele ni¿ te znajduj±ce siê na osobnych koñcach.
+W konwolucyjnych silnikach predykcji gÅ‚Ã³wnym zaÅ‚oÅ¼eniem byÅ‚o wykorzystanie konwolucyjnej sieci neuronowej. Spowodowane byÅ‚o to bardzo sÅ‚abymi wynikami dla gÄ™stych sieci z powodu przetrenowania oraz sekwencyjnÄ… strukturÄ… danych. Sieci konwolucyjne pozwalajÄ… bardzo dobrze klasyfikowaÄ‡ dane, gdzie waÅ¼ne jest wzajemne poÅ‚oÅ¼enie cech, czyli w naszym przypadku odlegÅ‚oÅ›Ä‡ miÄ™dzy wartoÅ›ciami na wykresie EKG. Innym przypadkiem przydatnoÅ›ci takiej reprezentacji jest klasyfikacja obrazÃ³w, gdzie bardziej istotne sÄ… sÄ…siednie piksele niÅ¼ te znajdujÄ…ce siÄ™ na osobnych koÅ„cach.
 
-G³ównymi czê¶ciami sk³adowymi w konwolucyjnych sieciach neuronowych s± warstwy wykonuj±ce konwolucjê oraz warstwy redukuj±ce ich rozmiar przez tzw. \emph{pooling}. W kontek¶cie przetwarzania danych EKG, wykonywali¶my konwolucji w jednym wymiarze. Polega ona na sumie iloczynów warto¶ci filtra i fragmentu wej¶ciowych danych. Wyj¶ciowa sekwencja jest ci±giem wyników takich operacji dla kolejnych fragmentów wej¶cia. Ilustracja dzia³ania konwolucji znajduje siê na rysunku \ref{fig:convolution}.
+GÅ‚Ã³wnymi czÄ™Å›ciami skÅ‚adowymi w konwolucyjnych sieciach neuronowych sÄ… warstwy wykonujÄ…ce konwolucjÄ™ oraz warstwy redukujÄ…ce ich rozmiar przez tzw. \emph{pooling}. W kontekÅ›cie przetwarzania danych EKG, wykonywaliÅ›my konwolucji w jednym wymiarze. Polega ona na sumie iloczynÃ³w wartoÅ›ci filtra i fragmentu wejÅ›ciowych danych. WyjÅ›ciowa sekwencja jest ciÄ…giem wynikÃ³w takich operacji dla kolejnych fragmentÃ³w wejÅ›cia. Ilustracja dziaÅ‚ania konwolucji znajduje siÄ™ na rysunku \ref{fig:convolution}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{convolution.png}
-	\caption{Dzia³anie konwolucji w jednym wymiarze, dla rozmiaru filtra 3 i przesuniêcia 1}
+	\caption{DziaÅ‚anie konwolucji w jednym wymiarze, dla rozmiaru filtra 3 i przesuniÄ™cia 1}
 	\label{fig:convolution}
 \end{figure}
 
-Dodatkowo pojedyncza warstwa konwolucyjna mo¿e sk³adaæ siê z dowolnej ilo¶ci filtrów, wyj¶ciem jest wiêc ci±g sekwencji. W celu zmniejszenia ilo¶ci wyj¶ciowych danych jako nastêpn± warstwê stosuje siê \emph{pooling}.
-W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± najwiêksz± warto¶æ z zadanego przedzia³u i podobnie jak konwolucje produkuj± ci±g warto¶ci dla przesuniêtych przedzia³ów. Dzia³anie tej operacji ilustruje rysunek \ref{fig:max_pool}.
+Dodatkowo pojedyncza warstwa konwolucyjna moÅ¼e skÅ‚adaÄ‡ siÄ™ z dowolnej iloÅ›ci filtrÃ³w, wyjÅ›ciem jest wiÄ™c ciÄ…g sekwencji. W celu zmniejszenia iloÅ›ci wyjÅ›ciowych danych jako nastÄ™pnÄ… warstwÄ™ stosuje siÄ™ \emph{pooling}.
+W naszym wypadku wykorzystaliÅ›my warstwy \emph{max-poolingu}, ktÃ³re wybierajÄ… najwiÄ™kszÄ… wartoÅ›Ä‡ z zadanego przedziaÅ‚u i podobnie jak konwolucje produkujÄ… ciÄ…g wartoÅ›ci dla przesuniÄ™tych przedziaÅ‚Ã³w. DziaÅ‚anie tej operacji ilustruje rysunek \ref{fig:max_pool}.
 
 \begin{figure}[h]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.4\linewidth]{max_pool.png}
-	\caption{Dzia³anie operacji 'max-pool' w jednym wymiarze, dla przedzia³u 3 i przesuniêcia 3}
+	\caption{DziaÅ‚anie operacji 'max-pool' w jednym wymiarze, dla przedziaÅ‚u 3 i przesuniÄ™cia 3}
 	\label{fig:max_pool}
 \end{figure}
 
-% TODO Opisaæ silniki dostêpne w modelu
+% TODO OpisaÄ‡ silniki dostÄ™pne w modelu
 
 \begin{table}[h]
 	\centering
 \begin{tabular}{l|lllll}
-	Nazwa & Wej¶cie & Okres predykcji & Czêstotliwo¶æ & Redukcja szumów & Skuteczno¶æ \\ \hline
-	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{84.21}{\percent}
+	Nazwa & WejÅ›cie & Okres predykcji & CzÄ™stotliwoÅ›Ä‡ & Redukcja szumÃ³w & SkutecznoÅ›Ä‡ \\ \hline
+	conv1 & 5 minut & 2 minuty & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{84.21}{\percent} \\
+	conv2 & 3 minuty & 1 minuta & \SI{60}{\hertz} & < \SI{1}{\hertz} & \SI{85.06}{\percent}
 \end{tabular}
-\caption{Silniki predykcji oparte o gêste sieci neuronowe}
+\caption{Silniki predykcji oparte o gÄ™ste sieci neuronowe}
 \label{tab:conv_engines}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 	\centering
 \begin{tabular}{l|ll}
 	Warstwa      & Parametry                       & Aktywacja \\ \hline
@@ -559,30 +559,46 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 \label{tab:conv1}
 \end{table}
 
+\begin{table}[h!]
+	\centering
+\begin{tabular}{l|ll}
+	Warstwa      & Parametry                       & Aktywacja \\ \hline
+	Reshape      & -                               & -         \\
+	Conv1D       & kernels = 32, filter\_size = 16 & relu \\
+	MaxPooling1D & pool\_size = 16                 & - \\
+	Conv1D       & kernels = 16, filter\_size = 16 & relu \\
+	MaxPooling1D & pool\_size = 16                 & - \\
+	Flatten      & -                               & - \\
+	Dense        & units = 3                       & sigmoid
+\end{tabular}
+\caption{Warstwy w sieci konwolucyjnej dla silnika \emph{conv2}}
+\label{tab:conv2}
+\end{table}
+
 \subsection{Eksperymenty} \label{sec:experimental}
 
 \subsubsection{Baza treningowa}
 
-Jako bazê treningow± wykorzystali¶my ogólnodostêpn± bazê danych EKG z oznaczonymi danymi - MIT-BIH Arrhythmia Database. Baza ta zawiera 48 pó³-godzinnych, 2 kana³owych zapisów EKG. 23 rekordy zosta³y wybrane losowo ze zbioru 4000 24-godzinnych nagrañ. Pozosta³e 25 rekordów zosta³ wybranych z tego samego zbioru, jednak zawieraj±cych rzadsze, ale równie¿ klinicznie istotne przypadki arytmii.
+Jako bazÄ™ treningowÄ… wykorzystaliÅ›my ogÃ³lnodostÄ™pnÄ… bazÄ™ danych EKG z oznaczonymi danymi - MIT-BIH Arrhythmia Database. Baza ta zawiera 48 pÃ³Å‚-godzinnych, 2 kanaÅ‚owych zapisÃ³w EKG. 23 rekordy zostaÅ‚y wybrane losowo ze zbioru 4000 24-godzinnych nagraÅ„. PozostaÅ‚e 25 rekordÃ³w zostaÅ‚ wybranych z tego samego zbioru, jednak zawierajÄ…cych rzadsze, ale rÃ³wnieÅ¼ klinicznie istotne przypadki arytmii.
 
-Rekordy zosta³y zapisane z czêstotliwo¶ci± 360 próbek na sekundê, dla ka¿dego z kana³ów z 11 bitow± rozdzielczo¶ci± w zakresie 10mV. Ka¿de nagranie zosta³o niezale¿nie oznaczone przez 2 lub wiêcej kardiologów. Sprzeczno¶ci zosta³y rozwi±zane w taki sposób aby uzyskaæ czytelne komputerowo referencje dla ka¿dego uderzenia znajduj±cego siê w bazie. W przybli¿eniu jest to 110,00 oznaczeñ w ca³ej bazie.
-%TODO ¼ród³o: MIT-BIH
+Rekordy zostaÅ‚y zapisane z czÄ™stotliwoÅ›ciÄ… 360 prÃ³bek na sekundÄ™, dla kaÅ¼dego z kanaÅ‚Ã³w z 11 bitowÄ… rozdzielczoÅ›ciÄ… w zakresie 10mV. KaÅ¼de nagranie zostaÅ‚o niezaleÅ¼nie oznaczone przez 2 lub wiÄ™cej kardiologÃ³w. SprzecznoÅ›ci zostaÅ‚y rozwiÄ…zane w taki sposÃ³b aby uzyskaÄ‡ czytelne komputerowo referencje dla kaÅ¼dego uderzenia znajdujÄ…cego siÄ™ w bazie. W przybliÅ¼eniu jest to 110,00 oznaczeÅ„ w caÅ‚ej bazie.
+%TODO ÅºrÃ³dÅ‚o: MIT-BIH
 
-Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
+Dla kaÅ¼dego rekordu w bazie znajdujÄ… siÄ™ 3 pliki:
 
 \begin{itemize}
-	\item plik .dat zawieraj±cy warto¶ci kolejnych próbek
-	\item plik .atr zawieraj±cy oznaczenie typu arytmii oraz miejsce jej wyst±pienia na przebiegu EKG
-	\item plik .hea zawieraj±cy nag³ówek opisuj±cy format danych
+	\item plik .dat zawierajÄ…cy wartoÅ›ci kolejnych prÃ³bek
+	\item plik .atr zawierajÄ…cy oznaczenie typu arytmii oraz miejsce jej wystÄ…pienia na przebiegu EKG
+	\item plik .hea zawierajÄ…cy nagÅ‚Ã³wek opisujÄ…cy format danych
 \end{itemize}
 
-Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêzyku Python, która umo¿liwia w bardzo prosty sposób pobranie ca³ej bazy.
+Do pobrania danych z sieci wykorzystaliÅ›my gotowÄ… bibliotekÄ™ wfdb napisanÄ… w jÄ™zyku Python, ktÃ³ra umoÅ¼liwia w bardzo prosty sposÃ³b pobranie caÅ‚ej bazy.
 
 \subsubsection{Typy arytmii}
 
-Baza MIT-BIH zawiera dane z oznaczeniami 15 ró¿nych typów uderzeñ serca. Jest to zbyt du¿a ilo¶æ, aby uwzglêdniaæ je wszystkie. Postanowili¶my wiêc zastosowaæ standard AAMI i przekszta³ciæ dane w odpowiedni sposób.
+Baza MIT-BIH zawiera dane z oznaczeniami 15 rÃ³Å¼nych typÃ³w uderzeÅ„ serca. Jest to zbyt duÅ¼a iloÅ›Ä‡, aby uwzglÄ™dniaÄ‡ je wszystkie. PostanowiliÅ›my wiÄ™c zastosowaÄ‡ standard AAMI i przeksztaÅ‚ciÄ‡ dane w odpowiedni sposÃ³b.
 
-Zawêzi³o to zbiór typów uderzeñ do 5:
+ZawÄ™ziÅ‚o to zbiÃ³r typÃ³w uderzeÅ„ do 5:
 
 \begin{itemize}
 	\item N - Normal beat
@@ -592,7 +608,7 @@ Zawêzi³o to zbiór typów uderzeñ do 5:
 	\item Q - Unknown beat
 \end{itemize}
 
-\begin{lstlisting}[float=h!, caption={Kod mapuj±cy oznaczenia z bazy MIT-BIH do standardu AAMI}]
+\begin{lstlisting}[float=h!, caption={Kod mapujÄ…cy oznaczenia z bazy MIT-BIH do standardu AAMI}]
 mapping = {
 	BeatType('N', 'Normal beat'): {'N', 'L', 'R'},
 	BeatType('SVEB', 'Supraventricular ectopic beat'): {'e', 'j', 'A', 'a', 'J', 'S'},
@@ -609,11 +625,11 @@ def mit_to_aami(symbol):
 	
 \end{lstlisting}
  
-\subsubsection{Podzia³ danych}
+\subsubsection{PodziaÅ‚ danych}
 
-Aby w pe³ni wykorzystaæ dane znajduj±ce siê w bazie, ka¿dy rekord jest dzielony na fragmenty o okre¶lonej d³ugo¶ci, wybierane co okre¶lony krok czasowy. W ten sposób otrzymujemy wiele unikalnych fragmentów stanowi±cych podci±gi ca³ego rekordu.
+Aby w peÅ‚ni wykorzystaÄ‡ dane znajdujÄ…ce siÄ™ w bazie, kaÅ¼dy rekord jest dzielony na fragmenty o okreÅ›lonej dÅ‚ugoÅ›ci, wybierane co okreÅ›lony krok czasowy. W ten sposÃ³b otrzymujemy wiele unikalnych fragmentÃ³w stanowiÄ…cych podciÄ…gi caÅ‚ego rekordu.
 
-\begin{lstlisting}[float=h!, caption={Funkcja dziel±ca rekordy na fragmenty}]
+\begin{lstlisting}[float=h!, caption={Funkcja dzielÄ…ca rekordy na fragmenty}]
 def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True):
     for record in records:
         for start in range(0, len(record[0]) - pred_len - post_len, increment):
@@ -636,44 +652,44 @@ def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True
 
 \end{lstlisting}
 
-Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± walidacje krzy¿ow± (z ang. K-fold cross-validation). Polega ona na tym ¿e oryginalny zbiór jest dzielony na K podzbiorów. Nastêpnie ka¿dy z nich jest brany jako zbiór testowy, a pozosta³e razem stanowi± zbiór ucz±cy. Odbywa siê wiêc K iteracji, których wyniki s± nastêpnie u¶redniane w celu uzyskania ostatecznego wyniku. W naszym wypadku jako parametr $K$ oraz ilo¶æ iteracji wybrali¶my warto¶æ 5.
+DzielÄ…c dane na treningowe i testowe zdecydowaliÅ›my siÄ™ zastosowaÄ‡ K-krotnÄ… walidacje krzyÅ¼owÄ… (z ang. K-fold cross-validation). Polega ona na tym Å¼e oryginalny zbiÃ³r jest dzielony na K podzbiorÃ³w. NastÄ™pnie kaÅ¼dy z nich jest brany jako zbiÃ³r testowy, a pozostaÅ‚e razem stanowiÄ… zbiÃ³r uczÄ…cy. Odbywa siÄ™ wiÄ™c K iteracji, ktÃ³rych wyniki sÄ… nastÄ™pnie uÅ›redniane w celu uzyskania ostatecznego wyniku. W naszym wypadku jako parametr $K$ oraz iloÅ›Ä‡ iteracji wybraliÅ›my wartoÅ›Ä‡ 5.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{kfold.png}
-	\caption{Wizualizacja dzia³ania K-fold dla K=10}
+	\caption{Wizualizacja dziaÅ‚ania K-fold dla K=10}
 	\label{fig:kfold}
 \end{figure}
 %obrazek z https://stats.stackexchange.com/questions/336038/question-on-double-cross-validation
 
-\subsubsection{Metodologia oceny skuteczno¶ci}
+\subsubsection{Metodologia oceny skutecznoÅ›ci}
 
-Klasyfikujemy cztery klasy uderzeñ serca:
+Klasyfikujemy cztery klasy uderzeÅ„ serca:
 \begin{itemize}
 \item Nadkomorowy skurcz dodatkowy (SVEB)
 \item Komorowy skurcz dodatkowy (VEB)
-\item Uderzenia po³±czone (F)
+\item Uderzenia poÅ‚Ä…czone (F)
 
 \end{itemize}
 
-W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich metryk, które dawa³aby informacjê o jako¶ci testowanych sieci. Poniewa¿ rozwa¿any problem sprowadza siê do klasyfikacji wieloklasowej, niemo¿liwe by³o wykorzystanie gotowych metryk dostêpnych w bibliotece Keras. Spo¶ród sposobów oceny modeli dla klasyfikacji wieloklasowej \cite{mlpsurvey2010} do eksperymentów wybrali¶my nastêpuj±ce:
+W celu oceny skutecznoÅ›ci naszych predykcji konieczne byÅ‚o wybranie odpowiednich metryk, ktÃ³re dawaÅ‚aby informacjÄ™ o jakoÅ›ci testowanych sieci. PoniewaÅ¼ rozwaÅ¼any problem sprowadza siÄ™ do klasyfikacji wieloklasowej, niemoÅ¼liwe byÅ‚o wykorzystanie gotowych metryk dostÄ™pnych w bibliotece Keras. SpoÅ›rÃ³d sposobÃ³w oceny modeli dla klasyfikacji wieloklasowej \cite{mlpsurvey2010} do eksperymentÃ³w wybraliÅ›my nastÄ™pujÄ…ce:
 
 \begin{description}
-\item [Skuteczno¶æ (\emph{Accuracy})] W wypadku jednej klasy jest to stosunek ilo¶ci poprawnie sklasyfikowanych przypadków do liczby wszystkich przypadków. Dla klasyfikacji wieloklasowej skuteczno¶æ zdefiniowana jest jako ¶rednia skuteczno¶ci klasyfikacji dla poszczególnych klas.
+\item [SkutecznoÅ›Ä‡ (\emph{Accuracy})] W wypadku jednej klasy jest to stosunek iloÅ›ci poprawnie sklasyfikowanych przypadkÃ³w do liczby wszystkich przypadkÃ³w. Dla klasyfikacji wieloklasowej skutecznoÅ›Ä‡ zdefiniowana jest jako Å›rednia skutecznoÅ›ci klasyfikacji dla poszczegÃ³lnych klas.
 
-\item [B³±d ¶redniokwadratowy (\emph{Mean Squared Error})] B³±d dla pojedynczej próbki jest to odleg³o¶æ miêdzy warto¶ci± oczekiwan±, a przewidywan±. Metryka ta jest równa ¶redniej kwadratów tych b³êdów dla wszystkich próbek. Ma to efekt taki, ¿e na b³±d mocniej wp³ywaj± du¿e ró¿nice miêdzy warto¶ciami. Dla idealnego klasyfikatora b³±d by³by równy jeden.
+\item [BÅ‚Ä…d Å›redniokwadratowy (\emph{Mean Squared Error})] BÅ‚Ä…d dla pojedynczej prÃ³bki jest to odlegÅ‚oÅ›Ä‡ miÄ™dzy wartoÅ›ciÄ… oczekiwanÄ…, a przewidywanÄ…. Metryka ta jest rÃ³wna Å›redniej kwadratÃ³w tych bÅ‚Ä™dÃ³w dla wszystkich prÃ³bek. Ma to efekt taki, Å¼e na bÅ‚Ä…d mocniej wpÅ‚ywajÄ… duÅ¼e rÃ³Å¼nice miÄ™dzy wartoÅ›ciami. Dla idealnego klasyfikatora bÅ‚Ä…d byÅ‚by rÃ³wny jeden.
 
-\item [Precyzja (\emph{Precision})] Precyzja dla jednej klasy to stosunek poprawnie sklasyfikowanych wyst±pieñ do wszystkich przewidzianych wyst±pieñ. Dla klasyfikacji wieloklasowej jest to ¶rednia precyzji jednoklasowej ze wszystkich klas. W naszym wypadku jest to ¶rednia stosunku poprawnie przewidzianych arytmii do wszystkich przewidzianych wyst±pieñ.
+\item [Precyzja (\emph{Precision})] Precyzja dla jednej klasy to stosunek poprawnie sklasyfikowanych wystÄ…pieÅ„ do wszystkich przewidzianych wystÄ…pieÅ„. Dla klasyfikacji wieloklasowej jest to Å›rednia precyzji jednoklasowej ze wszystkich klas. W naszym wypadku jest to Å›rednia stosunku poprawnie przewidzianych arytmii do wszystkich przewidzianych wystÄ…pieÅ„.
 
-\item [Czu³o¶æ (\emph{Recall})] Czu³o¶æ dla jednej klasy to stosunek poprawnie przewidzianych pozytywów do ilo¶ci pozytywnych próbek. Podobnie jak w przypadku czu³o¶ci, dla klasyfikacji wieloklasowej jest to ¶rednia metryki jednoklasowej ze wszystkich klas. Dla naszego problemu jest to ¶rednia stosunku poprawnie przewidzianych wyst±pieñ do wszystkich arytmii.
+\item [CzuÅ‚oÅ›Ä‡ (\emph{Recall})] CzuÅ‚oÅ›Ä‡ dla jednej klasy to stosunek poprawnie przewidzianych pozytywÃ³w do iloÅ›ci pozytywnych prÃ³bek. Podobnie jak w przypadku czuÅ‚oÅ›ci, dla klasyfikacji wieloklasowej jest to Å›rednia metryki jednoklasowej ze wszystkich klas. Dla naszego problemu jest to Å›rednia stosunku poprawnie przewidzianych wystÄ…pieÅ„ do wszystkich arytmii.
 
-\item [Miara $F_1$ (\emph{$F_1$-Measure})] Jest to ¶rednia harmoniczna czu³o¶ci i precyzji, dziêki czemu jej warto¶æ dok³adniej odzwierciedla jako¶æ klasyfikatora ni¿ osobne metryki.
+\item [Miara $F_1$ (\emph{$F_1$-Measure})] Jest to Å›rednia harmoniczna czuÅ‚oÅ›ci i precyzji, dziÄ™ki czemu jej wartoÅ›Ä‡ dokÅ‚adniej odzwierciedla jakoÅ›Ä‡ klasyfikatora niÅ¼ osobne metryki.
 \end{description}
 
 
-\subsubsection{Wyniki dla ró¿nych modeli}
+\subsubsection{Wyniki dla rÃ³Å¼nych modeli}
 
-Przy obrabianiu wyników poszczególnych sieci bardzo przydatne okaza³o siê narzêdzie Jupyter Notebook.
+Przy obrabianiu wynikÃ³w poszczegÃ³lnych sieci bardzo przydatne okazaÅ‚o siÄ™ narzÄ™dzie Jupyter Notebook.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{jupyter.png}
@@ -681,68 +697,68 @@ Przy obrabianiu wyników poszczególnych sieci bardzo przydatne okaza³o siê narzêd
 	\label{fig:jupyter}
 \end{figure}
 
-\paragraph{Sieci gêste} - wyniki dla sieci gêstych sk³adaj±cych siê z kilku warstw ukrytych o ró¿nych rozmiarach oraz warstwy wyj¶ciowej.
+\paragraph{Sieci gÄ™ste} - wyniki dla sieci gÄ™stych skÅ‚adajÄ…cych siÄ™ z kilku warstw ukrytych o rÃ³Å¼nych rozmiarach oraz warstwy wyjÅ›ciowej.
 
-Sieæ gêsta z 3 warstwami ukrytymi o szeroko¶ciach 10, 50 i 10.
+SieÄ‡ gÄ™sta z 3 warstwami ukrytymi o szerokoÅ›ciach 10, 50 i 10.
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej o rozmiarach warstw 10, 50, 10}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gÄ™stej o rozmiarach warstw 10, 50, 10}]
 loss: 0.6130 (+/-0.0159), binary_accuracy: 0.6704 (+/-0.0213), mean_squared_error: 0.2102 (+/-0.0071), precision: 0.4789 (+/-0.0475), recall: 0.3681 (+/-0.0560), fmeasure: 0.3917 (+/-0.0182)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_10_50_10_loss.png}
-	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 10, 50, 10}
+	\caption{Wykres straty dla sieci gÄ™stej o rozmiarach warstw 10, 50, 10}
 	\label{fig:dense_10_50_10_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_10_50_10_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 10, 50, 10}
+	\caption{Wykres dokÅ‚adnoÅ›ci dla sieci gÄ™stej o rozmiarach warstw 10, 50, 10}
 	\label{fig:dense_10_50_10_acc}
 \end{figure}
 
-Sieæ gêsta z 2 warstwami ukrytymi o szeroko¶ci 100 i 100.
+SieÄ‡ gÄ™sta z 2 warstwami ukrytymi o szerokoÅ›ci 100 i 100.
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej o rozmiarach warstw 100, 100}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gÄ™stej o rozmiarach warstw 100, 100}]
 loss: 0.6172 (+/-0.0219), binary_accuracy: 0.6820 (+/-0.0200), mean_squared_error: 0.2086 (+/-0.0084), precision: 0.4631 (+/-0.0315), recall: 0.3754 (+/-0.0372), fmeasure: 0.3973 (+/-0.0376)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_100_100_loss.png}
-	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 100, 100}
+	\caption{Wykres straty dla sieci gÄ™stej o rozmiarach warstw 100, 100}
 	\label{fig:dense_100_100_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_100_100_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100, 100}
+	\caption{Wykres dokÅ‚adnoÅ›ci dla sieci gÄ™stej o rozmiarach warstw 100, 100}
 	\label{fig:dense_100_100_acc}
 \end{figure}
 
-Sieæ gêsta z 3 warstwami  ukrytymi o szeroko¶ciach 100, 200 i 100.
+SieÄ‡ gÄ™sta z 3 warstwami  ukrytymi o szerokoÅ›ciach 100, 200 i 100.
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej o rozmiarach warstw 100, 200, 100}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gÄ™stej o rozmiarach warstw 100, 200, 100}]
 loss: 0.5799 (+/-0.0133), binary_accuracy: 0.6900 (+/-0.0091), mean_squared_error: 0.1969 (+/-0.0045), precision: 0.4926 (+/-0.0249), recall: 0.3370 (+/-0.0282), fmeasure: 0.3836 (+/-0.0115)
 \end{lstlisting}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_100_200_100_loss.png}
-	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 100, 200, 100}
+	\caption{Wykres straty dla sieci gÄ™stej o rozmiarach warstw 100, 200, 100}
 	\label{fig:dense_100_200_100_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_100_200_100_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100, 200, 100}
+	\caption{Wykres dokÅ‚adnoÅ›ci dla sieci gÄ™stej o rozmiarach warstw 100, 200, 100}
 	\label{fig:dense_100_200_100_acc}
 \end{figure}
 
 \paragraph{Sieci konwolucyjne} - sieci konwolucyje %TODO KD opisy
 
-Sieæ konwolucyjna pool=16, warstwy=[(4, 16), (16, 16)]
+SieÄ‡ konwolucyjna pool=16, warstwy=[(4, 16), (16, 16)]
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
 loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_error: 0.1174 (+/-0.0095), precision: 0.8013 (+/-0.0821), recall: 0.6223 (+/-0.1151), fmeasure: 0.6768 (+/-0.0526)
@@ -759,11 +775,11 @@ loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_erro
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_4_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\caption{Wykres dokÅ‚adnoÅ›ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
 	\label{fig:conv_16_4_acc}
 \end{figure}
 
-Sieæ konwolucyjna pool=16, warstwy=[(32, 16), (16, 16)]
+SieÄ‡ konwolucyjna pool=16, warstwy=[(32, 16), (16, 16)]
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
 loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_error: 0.1178 (+/-0.0204), precision: 0.7980 (+/-0.1436), recall: 0.6589 (+/-0.1287), fmeasure: 0.6813 (+/-0.0438)
@@ -780,11 +796,11 @@ loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_erro
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_32_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\caption{Wykres dokÅ‚adnoÅ›ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
 	\label{fig:conv_16_32_acc}
 \end{figure}
 
-Sieæ konwolucyjna pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]
+SieÄ‡ konwolucyjna pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
 loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_error: 0.1134 (+/-0.0218), precision: 0.8229 (+/-0.0607), recall: 0.5770 (+/-0.0925), fmeasure: 0.6546 (+/-0.0808)
@@ -801,16 +817,16 @@ loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_erro
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_8_16_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=8, warstwy[(16, 16), (8, 16), (4, 16)]}
+	\caption{Wykres dokÅ‚adnoÅ›ci dla sieci konwolucyjnej z parametrami: pool=8, warstwy[(16, 16), (8, 16), (4, 16)]}
 	\label{fig:conv_8_16_acc}
 \end{figure}
 
 
 \subsection{Testy}
 
-Wraz z rozrastaniem siê projektu starali¶my siê równolegle pisaæ testy dla nowo powstaj±cych elementów. U³atwi³o to znacznie znajdowanie b³êdów i usprawni³o tworzenie projektu.
+Wraz z rozrastaniem siÄ™ projektu staraliÅ›my siÄ™ rÃ³wnolegle pisaÄ‡ testy dla nowo powstajÄ…cych elementÃ³w. UÅ‚atwiÅ‚o to znacznie znajdowanie bÅ‚Ä™dÃ³w i usprawniÅ‚o tworzenie projektu.
 %TODO 
-\begin{lstlisting}[float=h!, caption={Przyk³adowy test interfejsu}]
+\begin{lstlisting}[float=h!, caption={PrzykÅ‚adowy test interfejsu}]
 def test_loading_and_plotting_predict(qtbot, manager):
     """
     Simple test for loading and plotting in predict window
@@ -825,7 +841,7 @@ def test_loading_and_plotting_predict(qtbot, manager):
     assert predict.figure is not None
 \end{lstlisting}
 
-\begin{lstlisting}[float=h!, caption={Przyk³adowy test normalizacji}]
+\begin{lstlisting}[float=h!, caption={PrzykÅ‚adowy test normalizacji}]
 def test_standard_normalizer():
     # Given:
     # Create random sequence of uniform values from interval [0, 1)
@@ -858,51 +874,51 @@ def test_standard_normalizer():
 
 \section{\SectionTitleWorkOrganization}
 \label{sec:organizacja-pracy}
-%\emph{Struktura zespo³u (role poszczególnych osób), krótki opis i
-%  uzasadnienie przyjêtej metodyki i/lub kolejno¶ci prac, planowane i
-%  zrealizowane etapy prac ze wskazaniem udzia³u poszczególnych
-%  cz³onków zespo³u, wykorzystane praktyki i narzêdzia w zarz±dzaniu
+%\emph{Struktura zespoÅ‚u (role poszczegÃ³lnych osÃ³b), krÃ³tki opis i
+%  uzasadnienie przyjÄ™tej metodyki i/lub kolejnoÅ›ci prac, planowane i
+%  zrealizowane etapy prac ze wskazaniem udziaÅ‚u poszczegÃ³lnych
+%  czÅ‚onkÃ³w zespoÅ‚u, wykorzystane praktyki i narzÄ™dzia w zarzÄ…dzaniu
 %  projektem.}
 
 \subsection{Charakterystyka projektu}
 
-Zaproponowany temat projektu obejmowa³ zagadnienia z dziedziny nie powi±zanej z naszym kierunkiem studiów. Praca ma te¿ w pewnym stopniu charakter eksperymentalny, gdy¿ nie jest udokumentowane w jakim stopniu metody uczenia maszynowego maj± zastosowanie w predykcji arytmii serca na podstawie samego wykresu EKG. Wiele czasu po¶wiêcili¶my na testowanie skuteczno¶ci predykcji ró¿nych modeli sieci. Dodatkowo musieli¶my te¿ zbadaæ wp³yw parametrów danych wej¶ciowych, takich jak d³ugo¶æ fragmentu EKG na wej¶ciu, okres w którym staramy siê przewidzieæ wyst±pienie arytmii, jak i stopieñ redukcji szumów czy interpolacja danych do mniejszych czêstotliwo¶ci. 
+Zaproponowany temat projektu obejmowaÅ‚ zagadnienia z dziedziny nie powiÄ…zanej z naszym kierunkiem studiÃ³w. Praca ma teÅ¼ w pewnym stopniu charakter eksperymentalny, gdyÅ¼ nie jest udokumentowane w jakim stopniu metody uczenia maszynowego majÄ… zastosowanie w predykcji arytmii serca na podstawie samego wykresu EKG. Wiele czasu poÅ›wiÄ™ciliÅ›my na testowanie skutecznoÅ›ci predykcji rÃ³Å¼nych modeli sieci. Dodatkowo musieliÅ›my teÅ¼ zbadaÄ‡ wpÅ‚yw parametrÃ³w danych wejÅ›ciowych, takich jak dÅ‚ugoÅ›Ä‡ fragmentu EKG na wejÅ›ciu, okres w ktÃ³rym staramy siÄ™ przewidzieÄ‡ wystÄ…pienie arytmii, jak i stopieÅ„ redukcji szumÃ³w czy interpolacja danych do mniejszych czÄ™stotliwoÅ›ci. 
 
-Dodatkowo aby predykcja by³a mo¿liwa musimy mieæ oznaczone dane treningowe, na których bêdziemy mogli trenowaæ nasz± sieæ. Jednak ciê¿ko znale¼æ ogólnodostêpne dane, które spe³nia³yby to wymaganie. Wykorzystali¶my wiêc jedynie bazê, któr± zaproponowa³ nam promotor. Ze wzglêdu na niedu¿y rozmiar danych, starali¶my siê w pe³ni wykorzystaæ u¿ywan± przez nas bazê danych.
+Dodatkowo aby predykcja byÅ‚a moÅ¼liwa musimy mieÄ‡ oznaczone dane treningowe, na ktÃ³rych bÄ™dziemy mogli trenowaÄ‡ naszÄ… sieÄ‡. Jednak ciÄ™Å¼ko znaleÅºÄ‡ ogÃ³lnodostÄ™pne dane, ktÃ³re speÅ‚niaÅ‚yby to wymaganie. WykorzystaliÅ›my wiÄ™c jedynie bazÄ™, ktÃ³rÄ… zaproponowaÅ‚ nam promotor. Ze wzglÄ™du na nieduÅ¼y rozmiar danych, staraliÅ›my siÄ™ w peÅ‚ni wykorzystaÄ‡ uÅ¼ywanÄ… przez nas bazÄ™ danych.
 
-\subsection{Struktura zespo³u i role}
+\subsection{Struktura zespoÅ‚u i role}
 
-W sk³ad naszego zespo³u wchodzi³o dwóch studentów Informatyki. Pracê nad systemem podzielili¶my na zadania, które starali¶my siê równo podzieliæ miêdzy cz³onkami zespo³u. Dodatkowo przy dzieleniu siê prac± brali¶my pod uwagê umiejêtno¶ci, zainteresowania i do¶wiadczenie. Nad szczególnymi i kluczowymi elementami projektu pracowali¶my wspólnie.
+W skÅ‚ad naszego zespoÅ‚u wchodziÅ‚o dwÃ³ch studentÃ³w Informatyki. PracÄ™ nad systemem podzieliliÅ›my na zadania, ktÃ³re staraliÅ›my siÄ™ rÃ³wno podzieliÄ‡ miÄ™dzy czÅ‚onkami zespoÅ‚u. Dodatkowo przy dzieleniu siÄ™ pracÄ… braliÅ›my pod uwagÄ™ umiejÄ™tnoÅ›ci, zainteresowania i doÅ›wiadczenie. Nad szczegÃ³lnymi i kluczowymi elementami projektu pracowaliÅ›my wspÃ³lnie.
 
 \begin{itemize}
 	\item \textbf{Tomasz Nizio}	
 	
-	Implementacja redukcja szumów o niskich czêstotliwo¶ciach przy pomocy FFT, projekt ca³ego interfejsu graficznego, prze³±czanie pomiêdzy widokami, rysowanie wykresu EKG oraz nawigacja po nim, wy¶wietlanie wyników oraz logów predykcji
-	\item  \textbf{Konrad Dobro¶}
+	Implementacja redukcja szumÃ³w o niskich czÄ™stotliwoÅ›ciach przy pomocy FFT, projekt caÅ‚ego interfejsu graficznego, przeÅ‚Ä…czanie pomiÄ™dzy widokami, rysowanie wykresu EKG oraz nawigacja po nim, wyÅ›wietlanie wynikÃ³w oraz logÃ³w predykcji
+	\item  \textbf{Konrad DobroÅ›}
 	
-	Implementacja pobierania bazy z sieci, wczytywania, interpolacji oraz normalizacji danych, podzia³ danych na treningowe i testowe, struktura silnika predykcji, testowanie ró¿nych modeli siec neuronowych, dobór parametrów wej¶cia
+	Implementacja pobierania bazy z sieci, wczytywania, interpolacji oraz normalizacji danych, podziaÅ‚ danych na treningowe i testowe, struktura silnika predykcji, testowanie rÃ³Å¼nych modeli siec neuronowych, dobÃ³r parametrÃ³w wejÅ›cia
 	
 \end{itemize}
 
-Wspólnie zajmowali¶my siê wyszukiwaniem informacji przydatnych w rozwoju projektu, tworzeniem prymitywnego prototypu, pisaniem testów dla elementów które stworzyli¶my, a tak¿e tworzeniem dokumentacji.
-Dodatkowo za ka¿dym razem recenzowali¶my siê nawzajem w sprawie wprowadzanych zmian.
+WspÃ³lnie zajmowaliÅ›my siÄ™ wyszukiwaniem informacji przydatnych w rozwoju projektu, tworzeniem prymitywnego prototypu, pisaniem testÃ³w dla elementÃ³w ktÃ³re stworzyliÅ›my, a takÅ¼e tworzeniem dokumentacji.
+Dodatkowo za kaÅ¼dym razem recenzowaliÅ›my siÄ™ nawzajem w sprawie wprowadzanych zmian.
 
 \subsection{Etapy przebiegu pracy}
 
-Prace nad projektem przebiega³y dosyæ nieregularnie. Pod koniec semestru letniego uda³o siê uzyskaæ prototyp o minimalnej funkcjonalno¶ci. W trakcie przerwy semestralnej prace nad projektem spowolni³y. Najwiêksza czê¶æ projektu powsta³a w trakcie semestru zimowego. 
+Prace nad projektem przebiegaÅ‚y dosyÄ‡ nieregularnie. Pod koniec semestru letniego udaÅ‚o siÄ™ uzyskaÄ‡ prototyp o minimalnej funkcjonalnoÅ›ci. W trakcie przerwy semestralnej prace nad projektem spowolniÅ‚y. NajwiÄ™ksza czÄ™Å›Ä‡ projektu powstaÅ‚a w trakcie semestru zimowego. 
 
-Wyszczególniæ mo¿emy nastêpuj±ce etapy prac:
+WyszczegÃ³lniÄ‡ moÅ¼emy nastÄ™pujÄ…ce etapy prac:
 
-\subsubsection{Zapoznanie z tematyk± projektu oraz konfiguracja ¶rodowiska}
+\subsubsection{Zapoznanie z tematykÄ… projektu oraz konfiguracja Å›rodowiska}
 
 Czas trwania: 03.2018 - 04.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
-	\item zapoznanie siê z pojêciem arytmii, na czym polega, jak mo¿na j± wykrywaæ
-	\item zapoznanie siê z postaci± wykresu EKG, co dok³adnie przedstawia
-	\item zapoznanie siê z dzia³aniem sieci neuronowych oraz jak mo¿na j± wykorzystaæ do przewidywania wyst±pienia arytmii
-	\item utworzenie ¶rodowiska - repozytorium, CI, narzêdzia organizacji pracy
+	\item zapoznanie siÄ™ z pojÄ™ciem arytmii, na czym polega, jak moÅ¼na jÄ… wykrywaÄ‡
+	\item zapoznanie siÄ™ z postaciÄ… wykresu EKG, co dokÅ‚adnie przedstawia
+	\item zapoznanie siÄ™ z dziaÅ‚aniem sieci neuronowych oraz jak moÅ¼na jÄ… wykorzystaÄ‡ do przewidywania wystÄ…pienia arytmii
+	\item utworzenie Å›rodowiska - repozytorium, CI, narzÄ™dzia organizacji pracy
 	\item research technologii
 \end{itemize}
 
@@ -910,54 +926,54 @@ Osi±gniête cele:
 
 Czas trwania: 04.2018 - 05.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
-	\item zapoznanie siê ze struktur± wykorzystywanej bazy EKG
+	\item zapoznanie siÄ™ ze strukturÄ… wykorzystywanej bazy EKG
 	\item pobranie bazy danych
-	\item wyodrêbnienie wymaganych danych z bazy
+	\item wyodrÄ™bnienie wymaganych danych z bazy
 \end{itemize}
 
 \subsubsection{Stworzenie prototypu}
 
 Czas trwania: 05.2018 - 06.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
 	\item stworzenie prostego modelu sieci
-	\item okre¶lenie formatu danych na wej¶ciu sieci neuronowej
+	\item okreÅ›lenie formatu danych na wejÅ›ciu sieci neuronowej
 	\item implementacja podstawowych operacji na danych
 	\item przygotowanie danych dla takiego modelu
-	\item przetestowanie dzia³ania przygotowanej sieci
+	\item przetestowanie dziaÅ‚ania przygotowanej sieci
 \end{itemize}
 
 \subsubsection{Struktura projektu oraz interfejsu}
 
 Czas trwania: 07.2018 - 09.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
-	\item wyodrêbnienie w projekcie poszczególnych modu³ów
-	\item okre¶lenie architektury modelu predykcji
-	\item wstêpny projekt interfejsu graficznego
+	\item wyodrÄ™bnienie w projekcie poszczegÃ³lnych moduÅ‚Ã³w
+	\item okreÅ›lenie architektury modelu predykcji
+	\item wstÄ™pny projekt interfejsu graficznego
 \end{itemize}
 
 \subsubsection{Implementacja interfejsu oraz testy innych modeli sieci}
 
 Czas trwania: 09.2018 - 10.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
 	\item implementacja podstawowego interfejsu graficznego
-	\item redukcja szumów o niskich czêstotliwo¶ciach na przebiegu EKG
+	\item redukcja szumÃ³w o niskich czÄ™stotliwoÅ›ciach na przebiegu EKG
 	\item stworzenie bardziej rozbudowanego modelu sieci neuronowej
-	\item testy skuteczno¶ci predykcji z ró¿nymi parametrami
+	\item testy skutecznoÅ›ci predykcji z rÃ³Å¼nymi parametrami
 \end{itemize}
 
-\subsubsection{Po³±czenie interfejsu z silnikiem predykcji}
+\subsubsection{PoÅ‚Ä…czenie interfejsu z silnikiem predykcji}
 
 Czas trwania: 10.2018 - 11.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
 	\item integracja modelu z interfejsem
 	\item wytrenowanie ostatecznych sieci neuronowych
@@ -968,61 +984,61 @@ Osi±gniête cele:
 
 Czas trwania: 11.2018 - 12.2018
 \newline
-Osi±gniête cele:
+OsiÄ…gniÄ™te cele:
 \begin{itemize}
 	\item poprawki interfejsu
 	\item poprawki modelu
 	\item stworzenie dokumentacji
 \end{itemize}
 
-\subsection{Wykorzystane narzêdzia}
+\subsection{Wykorzystane narzÄ™dzia}
 
-Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach w repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
+Do zarzÄ…dzania poszczegÃ³lnymi zadaniami i caÅ‚ym projektem wykorzystaliÅ›my aplikacje webowÄ… \textbf{Trello}. Do komunikacji w zespole wykorzystywaliÅ›my komunikator \textbf{Slack}, ktÃ³rego zintegrowaliÅ›my z narzÄ™dziem \textbf{GitHub} co sprawiÅ‚o Å¼e na kanaÅ‚ wysyÅ‚ane byÅ‚y informacje o zmianach w repozytorium. Sporadycznie komunikowaliÅ›my siÄ™ rÃ³wnieÅ¼ przez \textbf{Skype}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{slack.png}
-	\caption{Przyk³adowy zrzut ekranu z komunikatora Slack}
+	\caption{PrzykÅ‚adowy zrzut ekranu z komunikatora Slack}
 	\label{fig:slack}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{trello.png}
-	\caption{Przyk³adowy zrzut ekranu z Trello}
+	\caption{PrzykÅ‚adowy zrzut ekranu z Trello}
 	\label{fig:trello}
 \end{figure}
 
-Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}. Do jego tworzenia wykorzystywali¶my miêdzy innymi takie narzêdzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, którego pliki zosta³y zaimportowane do projektu.
+Kod wraz z dokumentacjÄ… trzymaliÅ›my w repozytorium \textbf{Git} na platformie \textbf{GitHub}. Do jego tworzenia wykorzystywaliÅ›my miÄ™dzy innymi takie narzÄ™dzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, ktÃ³rego pliki zostaÅ‚y zaimportowane do projektu.
 
-Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}.
+Przy tworzeniu interfejsu pomocy byÅ‚ rÃ³wnieÅ¼ program \textbf{QtDesigner}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{qt_designer.png}
-	\caption{Wygl±d programu Qt Designer}
+	\caption{WyglÄ…d programu Qt Designer}
 	\label{fig:qt_designer}
 \end{figure}
 
-Diagramy rysowali¶my przy pomocy narzêdzia \textbf{draw.io} oraz \textbf{Umlet}.
+Diagramy rysowaliÅ›my przy pomocy narzÄ™dzia \textbf{draw.io} oraz \textbf{Umlet}.
 
 \section{\SectionTitleResults}
 \label{sec:wyniki-projektu}
 
 \subsection{Zrealizowane cele}
 
-Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji projektu:
+UdaÅ‚o nam siÄ™ zrealizowaÄ‡ nastÄ™pujÄ…ce cele postawione na poczÄ…tku realizacji projektu:
 \begin{itemize}
-\item wy¶wietlanie wykresu EKG - wykres jest rysowany
-\item mo¿liwo¶æ nawigowania po wykresie - mo¿liwe jest przesuwanie wykresu w obydwie strony, a tak¿e przeskok do wybranego fragmentu
-\item mo¿liwo¶æ odtwarzania wykresu EKG - mo¿liwe jest odtwarzanie wykresu dla wczytanych danych co symuluje pracê w czasie rzeczywistym
-\item stworzenie oraz przetestowanie skuteczno¶ci ró¿nych modeli sieci neuronowych - przetestowane modele zosta³y opisane w rozdziale 3.3.
-\item zintegrowanie ostatecznych modeli z odtwarzaniem wykresu - w trakcie odtwarzania wykresu, co sekundê odbywa siê predykcja dla fragmentu EKG koñcz±cego siê w tym samym miejscu co aktualnie wy¶wietlany wykres. Wyniki predykcji wy¶wietlane s± w interfejsie, wpisywane do logów, a tak¿e wy¶wietlany jest wykres jak przebiega³a predykcja
-\item mo¿liwo¶æ przegl±dania danych z oznaczonymi typami uderzeñ - stworzyli¶my zak³adkê na której wykres wy¶wietlany jest wraz z adnotacjami przy ka¿dym uderzeniu serca 
-\item udostêpnienie informacji na temat arytmii - stworzyli¶my zak³adkê, w której znajduje siê lista arytmii wraz z ich opisami
+\item wyÅ›wietlanie wykresu EKG - wykres jest rysowany
+\item moÅ¼liwoÅ›Ä‡ nawigowania po wykresie - moÅ¼liwe jest przesuwanie wykresu w obydwie strony, a takÅ¼e przeskok do wybranego fragmentu
+\item moÅ¼liwoÅ›Ä‡ odtwarzania wykresu EKG - moÅ¼liwe jest odtwarzanie wykresu dla wczytanych danych co symuluje pracÄ™ w czasie rzeczywistym
+\item stworzenie oraz przetestowanie skutecznoÅ›ci rÃ³Å¼nych modeli sieci neuronowych - przetestowane modele zostaÅ‚y opisane w rozdziale 3.3.
+\item zintegrowanie ostatecznych modeli z odtwarzaniem wykresu - w trakcie odtwarzania wykresu, co sekundÄ™ odbywa siÄ™ predykcja dla fragmentu EKG koÅ„czÄ…cego siÄ™ w tym samym miejscu co aktualnie wyÅ›wietlany wykres. Wyniki predykcji wyÅ›wietlane sÄ… w interfejsie, wpisywane do logÃ³w, a takÅ¼e wyÅ›wietlany jest wykres jak przebiegaÅ‚a predykcja
+\item moÅ¼liwoÅ›Ä‡ przeglÄ…dania danych z oznaczonymi typami uderzeÅ„ - stworzyliÅ›my zakÅ‚adkÄ™ na ktÃ³rej wykres wyÅ›wietlany jest wraz z adnotacjami przy kaÅ¼dym uderzeniu serca 
+\item udostÄ™pnienie informacji na temat arytmii - stworzyliÅ›my zakÅ‚adkÄ™, w ktÃ³rej znajduje siÄ™ lista arytmii wraz z ich opisami
 \end{itemize}
 
-\subsection{Najwa¿niejsze wyniki}
+\subsection{NajwaÅ¼niejsze wyniki}
 
 %TODO najlepsze wyniki z sieci
 
@@ -1030,28 +1046,28 @@ Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji pro
 
 %TODO wnioski
 
-\subsection{Mo¿liwo¶ci rozwoju}
+\subsection{MoÅ¼liwoÅ›ci rozwoju}
 
-Projekt mo¿na rozbudowaæ o nastêpuj±ce elementy:
+Projekt moÅ¼na rozbudowaÄ‡ o nastÄ™pujÄ…ce elementy:
 \begin{itemize}
-\item inne formaty danych - do systemu mo¿na dodaæ obs³ugê wczytywania danych z plików o innych formatach ni¿ zrealizowane przez nas lub nawet pobieranie danych w czasie rzeczywistym z odpowiednich urz±dzeñ
-\item inne typy arytmii - powiêkszenie bazy uwzglêdnianych rodzajów uderzeñ lub bardziej szczegó³owy podzia³ na poszczególne rodzaje
-\item nowe modele - poszerzenie listy dostêpnych modeli predykcji o nowe modele, byæ mo¿e skuteczniejsze\
-\item rysowanie wykresów - optymalizacja rysowania wykresów, zastosowanie grafiki wektorowej
-%TODO rozszerzyæ
+\item inne formaty danych - do systemu moÅ¼na dodaÄ‡ obsÅ‚ugÄ™ wczytywania danych z plikÃ³w o innych formatach niÅ¼ zrealizowane przez nas lub nawet pobieranie danych w czasie rzeczywistym z odpowiednich urzÄ…dzeÅ„
+\item inne typy arytmii - powiÄ™kszenie bazy uwzglÄ™dnianych rodzajÃ³w uderzeÅ„ lub bardziej szczegÃ³Å‚owy podziaÅ‚ na poszczegÃ³lne rodzaje
+\item nowe modele - poszerzenie listy dostÄ™pnych modeli predykcji o nowe modele, byÄ‡ moÅ¼e skuteczniejsze\
+\item rysowanie wykresÃ³w - optymalizacja rysowania wykresÃ³w, zastosowanie grafiki wektorowej
+%TODO rozszerzyÄ‡
 \end{itemize}
 
 \subsection{Podsumowanie}
 
-W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe³niaj±c± za³o¿one wymagania. Przetestowali¶my równie¿ skuteczno¶æ predykcji arytmii przez ró¿ne modele predykcji.
+W ramach tej pracy inÅ¼ynierskiej udaÅ‚o nam siÄ™ stworzyÄ‡ aplikacjÄ™ desktopowÄ… speÅ‚niajÄ…cÄ… zaÅ‚oÅ¼one wymagania. PrzetestowaliÅ›my rÃ³wnieÅ¼ skutecznoÅ›Ä‡ predykcji arytmii przez rÃ³Å¼ne modele predykcji.
 
-Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my cenne do¶wiadczenie pracy w zespole. Nauczyli¶my siê sprawnie rozwi±zywaæ problemy pojawiaj±ce siê w trakcie rozwoju projeku. Poznali¶my te¿ nowe technologie, które zosta³y wykorzystane przy tworzeniu systemu.
+Praca nad projektem pozwoliÅ‚a nam siÄ™ duÅ¼o nauczyÄ‡. Przede wszystkim zdobyliÅ›my cenne doÅ›wiadczenie pracy w zespole. NauczyliÅ›my siÄ™ sprawnie rozwiÄ…zywaÄ‡ problemy pojawiajÄ…ce siÄ™ w trakcie rozwoju projeku. PoznaliÅ›my teÅ¼ nowe technologie, ktÃ³re zostaÅ‚y wykorzystane przy tworzeniu systemu.
 
-Jeste¶my zadowoleni z efektu koñcowego naszej pracy.
+JesteÅ›my zadowoleni z efektu koÅ„cowego naszej pracy.
 
 
 
-% Tak dla pewno¶ci, ¿eby wypisa³y siê wszystkie materia³y, które mamy.
+% Tak dla pewnoÅ›ci, Å¼eby wypisaÅ‚y siÄ™ wszystkie materiaÅ‚y, ktÃ³re mamy.
 \nocite{*}
 
 \bibliography{bibliografia}
