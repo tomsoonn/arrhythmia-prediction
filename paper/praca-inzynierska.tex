@@ -700,7 +700,16 @@ Wszystkie eksperymenty przeprowadzali¶my wykorzystuj±c notatniki Jupter. Pozwoli
 
 \paragraph{Sieci gêste} Wyniki dla sieci gêstych sk³adaj±cych siê z kilku warstw ukrytych o ró¿nych rozmiarach oraz warstwy wyj¶ciowej.
 
-Sieæ gêsta z 3 warstwami ukrytymi o szeroko¶ciach 10, 50 i 10.
+\begin{table}[h]
+\centering
+\begin{tabular}{p{4em}lllll}
+Rozmiary warstw & Skuteczno¶æ & MSE & Precyzja & Czu³o¶æ & Miara $F_1$ \\ \hline
+10, 50, 10      & \SI{67.04}{\percent} & $0.2102$ & $0.4789$ & $0.3681$ & $0.3917$ \\
+100, 100        & \SI{68.20}{\percent} & $0.2086$ & $0.4631$ & $0.3754$ & $0.3973$ \\
+100, 200, 100   & \SI{69.00}{\percent} & $0.1969$ & $0.4926$ & $0.3370$ & $0.3836$
+\end{tabular}
+\caption{Podsumowanie wyników dla sieci gêstych}
+\end{table}
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej o rozmiarach warstw 10, 50, 10}]
 loss: 0.6130 (+/-0.0159), binary_accuracy: 0.6704 (+/-0.0213), mean_squared_error: 0.2102 (+/-0.0071), precision: 0.4789 (+/-0.0475), recall: 0.3681 (+/-0.0560), fmeasure: 0.3917 (+/-0.0182)
@@ -719,8 +728,6 @@ loss: 0.6130 (+/-0.0159), binary_accuracy: 0.6704 (+/-0.0213), mean_squared_erro
 	\label{fig:dense_10_50_10_acc}
 \end{figure}
 
-Sieæ gêsta z 2 warstwami ukrytymi o szeroko¶ci 100 i 100.
-
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej o rozmiarach warstw 100, 100}]
 loss: 0.6172 (+/-0.0219), binary_accuracy: 0.6820 (+/-0.0200), mean_squared_error: 0.2086 (+/-0.0084), precision: 0.4631 (+/-0.0315), recall: 0.3754 (+/-0.0372), fmeasure: 0.3973 (+/-0.0376)
 \end{lstlisting}
@@ -731,14 +738,13 @@ loss: 0.6172 (+/-0.0219), binary_accuracy: 0.6820 (+/-0.0200), mean_squared_erro
 	\caption{Wykres straty dla sieci gêstej o rozmiarach warstw 100, 100}
 	\label{fig:dense_100_100_loss}
 \end{figure}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{dense_100_100_acc.png}
 	\caption{Wykres dok³adno¶ci dla sieci gêstej o rozmiarach warstw 100, 100}
 	\label{fig:dense_100_100_acc}
 \end{figure}
-
-Sieæ gêsta z 3 warstwami  ukrytymi o szeroko¶ciach 100, 200 i 100.
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci gêstej o rozmiarach warstw 100, 200, 100}]
 loss: 0.5799 (+/-0.0133), binary_accuracy: 0.6900 (+/-0.0091), mean_squared_error: 0.1969 (+/-0.0045), precision: 0.4926 (+/-0.0249), recall: 0.3370 (+/-0.0282), fmeasure: 0.3836 (+/-0.0115)
@@ -769,9 +775,10 @@ Rozmiar 'poolingu' & Rozmiar filtrów & Ilo¶ci filtrów & Skuteczno¶æ & MSE & Prec
 16 & 16 & 32, 16   & \SI{82.94}{\percent} & $0.1178$ & $0.7980$ & $0.6589$ & $0.6813$ \\
 8  & 16 & 16, 8, 4 & \SI{84.21}{\percent} & $0.1134$ & $0.8229$ & $0.5770$ & $0.6546$
 \end{tabular}
+\caption{Podsumowanie wyników dla sieci konwolucyjnych}
 \end{table}
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z parametrami: pool=16, warstwy=(4, 16), (16, 16)}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z rozmiarem 'poolingu' 16, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 4, 16}]
 loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_error: 0.1174 (+/-0.0095), precision: 0.8013 (+/-0.0821), recall: 0.6223 (+/-0.1151), fmeasure: 0.6768 (+/-0.0526)
 \end{lstlisting}
 
@@ -779,20 +786,19 @@ loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_erro
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_4_loss.png}
-	\caption{Wykres straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\caption{Wykres straty dla sieci konwolucyjnej z rozmiarem 'poolingu' 16, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 4, 16}
 	\label{fig:conv_16_4_loss}
 \end{figure}
+
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_4_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(4, 16), (16, 16)]}
+	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z rozmiarem 'poolingu' 16, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 4, 16}
 	\label{fig:conv_16_4_acc}
 \end{figure}
 
-Sieæ konwolucyjna pool=16, warstwy=[(32, 16), (16, 16)]
-
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z parametrami: pool=16, warstwy=(32, 16), (16, 16)}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z rozmiarem 'poolingu' 16, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 32, 16}]
 loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_error: 0.1178 (+/-0.0204), precision: 0.7980 (+/-0.1436), recall: 0.6589 (+/-0.1287), fmeasure: 0.6813 (+/-0.0438)
 \end{lstlisting}
 
@@ -800,20 +806,19 @@ loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_erro
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_32_loss.png}
-	\caption{Wykres straty dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\caption{Wykres straty dla sieci konwolucyjnej z rozmiarem 'poolingu' 16, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 32, 16}
 	\label{fig:conv_16_32_loss}
 \end{figure}
+
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_16_32_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=16, warstwy=[(32, 16), (16, 16)]}
+	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z rozmiarem 'poolingu' 16, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 32, 16}
 	\label{fig:conv_16_32_acc}
 \end{figure}
 
-Sieæ konwolucyjna pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]
-
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z parametrami: pool=8, warstwy=(16, 16), (8, 16), (4, 16)}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z rozmiarem 'poolingu' 8, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 16, 8, 4}]
 loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_error: 0.1134 (+/-0.0218), precision: 0.8229 (+/-0.0607), recall: 0.5770 (+/-0.0925), fmeasure: 0.6546 (+/-0.0808)
 \end{lstlisting}
 
@@ -821,14 +826,14 @@ loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_erro
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_8_16_loss.png}
-	\caption{Wykres straty dla sieci konwolucyjnej z parametrami: pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]}
+	\caption{Wykres straty dla sieci konwolucyjnej z rozmiarem 'poolingu' 8, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 16, 8, 4}
 	\label{fig:conv_8_16_loss}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\linewidth]{conv_8_16_acc.png}
-	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z parametrami: pool=8, warstwy[(16, 16), (8, 16), (4, 16)]}
+	\caption{Wykres dok³adno¶ci dla sieci konwolucyjnej z rozmiarem 'poolingu' 8, rozmiarem filtrów 16 i ilo¶ciami filtrów w warstwach: 16, 8, 4}
 	\label{fig:conv_8_16_acc}
 \end{figure}
 
