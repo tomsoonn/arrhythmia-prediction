@@ -89,10 +89,10 @@ class NNetwork:
 
 
 # List of available neural networks
-networks = [
-    NNetwork('', 'mlp_conv_f60_fft_win_5_2.hdf5', ''),
-    NNetwork('', 'mlp_dense_100_200_100_f60_fft_win_5_2.hdf5', '')
-]
+conv1_nn = NNetwork('', 'mlp_conv_f60_fft_win_5_2.hdf5', '')
+conv2_nn = NNetwork('', 'mlp_conv_f60_fft_win_3_1.hdf5', '')
+dense1_nn = NNetwork('', 'mlp_dense_100_200_100_f60_fft_win_5_2.hdf5', '')
+dense2_nn = NNetwork('', 'mlp_dense_100_200_100_f60_fft_win_3_1.hdf5', '')
 
 
 class PredictionEngine:
@@ -111,8 +111,7 @@ class PredictionEngine:
 # List of available engines
 dense1 = PredictionEngine(
     'dense1',
-    '''
-Engine based on dense neural network.
+    '''Engine based on dense neural network.
 First it performs downsampling of input signal to 60Hz.
 Then low frequency noise is removed by cutting out everything below 1Hz.
 
@@ -123,14 +122,29 @@ Size of predicted window: 2 minutes.
      Downsampler(360, 60),
      NoiseRemover(60, 1),
      StandardNormalizer(),
-     networks[1].load()]
+     dense1_nn.load()]
+)
+
+dense2 = PredictionEngine(
+    'dense2',
+    '''Engine based on dense neural network.
+First it performs downsampling of input signal to 60Hz.
+Then low frequency noise is removed by cutting out everything below 1Hz.
+
+Size of window before prediction: 3 minutes.
+Size of predicted window: 1 minute.
+    ''',
+    [IntervalSplitter(360*60*3),
+     Downsampler(360, 60),
+     NoiseRemover(60, 1),
+     StandardNormalizer(),
+     dense2_nn.load()]
 )
 
 
 conv1 = PredictionEngine(
     'conv1',
-    '''
-Engine based on convolutional neural network (CNN).
+    '''Engine based on convolutional neural network (CNN).
 First it performs downsampling of input signal to 60Hz.
 Then low frequency noise is removed by cutting out everything below 1Hz.
 
@@ -141,11 +155,31 @@ Size of predicted window: 2 minutes.
      Downsampler(360, 60),
      NoiseRemover(60, 1),
      StandardNormalizer(),
-     networks[0].load()]
+     conv1_nn.load()]
 )
+
+conv2 = PredictionEngine(
+    'conv2',
+    '''Engine based on convolutional neural network (CNN).
+First it performs downsampling of input signal to 60Hz.
+Then low frequency noise is removed by cutting out everything below 1Hz.
+
+Size of window before prediction: 3 minutes.
+Size of predicted window: 1 minutes.
+    ''',
+    [IntervalSplitter(360*60*3),
+     Downsampler(360, 60),
+     NoiseRemover(60, 1),
+     StandardNormalizer(),
+     conv2_nn.load()]
+)
+
+
 engines = [
+    conv1,
+    conv2,
     dense1,
-    conv1
+    dense2
 ]
 
 
