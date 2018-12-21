@@ -35,6 +35,7 @@
 	morekeywords={loss, binary_accuracy, mean_squared_error, precision, recall, fmeasure},
 	keywordstyle=\color{green!50!black}
 }
+\captionsetup{justification=centering}
 
 \lstset{captionpos=b, style=custompy}
 
@@ -101,6 +102,7 @@ Jako jêzyk implementacji systemu wybrany zosta³ Python ze wzglêdu na du¿± ilo¶æ 
 	\includegraphics[width=0.9\linewidth]{mitdb.jpg}
 	\caption{Fragment oznaczonych danych EKG z bazy MIT-BIH}
 	\label{fig:mitdb}
+	%TODO KD czy tu te¿ trzeba zacytowaæ ten obrazek z strony bazy?
 \end{figure}
 
 Do implementacji modelu analizy wykresów i sieci neuronowych wybrany zosta³ zestaw technologi Keras + Tensorflow. Umo¿liwia on bardzo ³atwe tworzenie sieci neuronowych, co jeszcze bardziej zmniejsza czas potrzebny na przetestowanie ró¿nych architektur sieci. S± to aktywnie rozwijane technologie posiadaj±ce bardzo rozleg³e mo¿liwo¶ci, a przy tym posiadaj± szczegó³owe dokumentacje. Dodatkowo biblioteki te s± szeroko wykorzystywane w profesjonalnych rozwi±zaniach co prowadzi do du¿ej liczby dostêpnych informacji i aktywnego wsparcia.
@@ -136,9 +138,6 @@ Podczas tworzenia aplikacji do predykcji arytmii w tak ma³ym zespole istnieje wi
 
 \item Ró¿norodno¶æ typów arytmii - rodzajów arytmii jest wiele, nie wszystkie s± dok³adnie zbadane i opisane. Prawdopodobnie niektórych nie da siê przewidzieæ i nie bêdziemy mogli braæ wszystkich pod uwagê.
 \end{itemize}
-%\emph{Charakterystyka problemu, motywacja projektu (w tym przegl±d
-%istniej±cych rozwi±zañ prowadz±ca do uzasadnienia celu prac),
-% wizja produktu, studium wykonalno¶ci i analiza zagro¿eñ.}
 
 \section{\SectionTitleScope}
 \label{sec:zakres-funkcjonalnosci}
@@ -178,9 +177,8 @@ Wymagania technologiczne:
 
 \section{\SectionTitleRealizationAspects}
 \label{sec:wybrane-aspekty-realizacji}
-%\emph{Przyjête za³o¿enia, struktura i zasada dzia³ania systemu,
-%  wykorzystane rozwi±zania technologiczne wraz z uzasadnieniem
-%  ich wyboru, istotne mechanizmy i zastosowane algorytmy.} 
+%TODO ma³o mamy kodu w tym rozdziale
+%TODO chyba jakis diagram by siê jeszcze przyda³ :/
 Projekt zosta³ podzielony na 3 g³ówne modu³y : 
 
 \begin{itemize}
@@ -193,7 +191,7 @@ W odrêbnym module znajduj± siê wszystkie napisane przez nas testy.
 
 \subsection{Interfejs}
 
-Interfejs graficzny sk³ada siê na 4 g³ówne widoki: g³ówne menu, okno predykcji, okno do przegl±dania wykresów EKG oraz okno z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Poza g³ównymi widokami w oknie predykcji dostêpne s± 2 dodatkowe widoki: okno z logami predykcji oraz okno wyboru modelu predykcji. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie.
+Interfejs graficzny sk³ada siê na 4 g³ówne widoki: g³ówne menu, widok predykcji, widok przegl±dania wykresów EKG oraz widok z mikro-bibliotek± zawieraj±c± informacje o uwzglêdnionych typach arytmii. Ka¿dym widokiem zajmuje siê osobna klasa, a wszystkimi widokami zarz±dza manager. Poza g³ównymi widokami w zak³adce predykcji dostêpne s± 2 dodatkowe widoki otwierane w oddzielnym oknie: logów predykcji oraz wyboru modelu predykcji. Widoki zosta³y czê¶ciowo stworzone przy pomocy programu Qt Designer i zapisane w plikach formatu .ui. S± one ³adowane z tych plików, a nastêpnie odpowiednio modyfikowane ju¿ w kodzie. Fragment takiego pliku zosta³ przedstawiony na rysunku \ref{fig:ui_file}.
 
 \begin{figure}[H]
 	\centering
@@ -202,44 +200,45 @@ Interfejs graficzny sk³ada siê na 4 g³ówne widoki: g³ówne menu, okno predykcji, 
 	\label{fig:interface_diagram_class}
 \end{figure}
 
-\begin{lstlisting}[float=h!, caption={Kod managera widoków}]
-class ViewManager(QStackedWidget):
+\begin{figure}[H]
+	\begin{lstlisting}[ caption={Kod managera widoków}]
+	class ViewManager(QStackedWidget):
+	
+	    def __init__(self, *args, **kwargs):
+	        super().__init__(*args, **kwargs)
+	        self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
+	        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'), load_ui('resources/models.ui'))
+	        self.types = TypesWindow(self, load_ui('resources/types.ui'))
+	        self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
+	
+	        self.addWidget(self.menu.window)
+	        self.addWidget(self.predict.window)
+	        self.addWidget(self.types.window)
+	        self.addWidget(self.explore.window)
+	
+	        self.resize(1100, 700)
+	        self.setWindowTitle("Arrhythmia prediction")
+	        self.show()
+	
+	    def show_menu(self):
+	        self.setCurrentWidget(self.menu.window)
+	
+	    def show_predict(self):
+	        self.setCurrentWidget(self.predict.window)
+	
+	    def show_types(self):
+	        self.setCurrentWidget(self.types.window)
+	
+	    def show_explore(self):
+	        self.setCurrentWidget(self.explore.window)
+	
+	    def closeEvent(self, event):
+	        self.explore.closeEvent()
+	        self.predict.closeEvent()
+	\end{lstlisting}
+\end{figure}
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.menu = MenuWindow(self, load_ui('resources/menu.ui'))
-        self.predict = PredictWindow(self, load_ui('resources/predict.ui'), load_ui('resources/logs.ui'), load_ui('resources/models.ui'))
-        self.types = TypesWindow(self, load_ui('resources/types.ui'))
-        self.explore = ExploreWindow(self, load_ui('resources/explore.ui'))
-
-        self.addWidget(self.menu.window)
-        self.addWidget(self.predict.window)
-        self.addWidget(self.types.window)
-        self.addWidget(self.explore.window)
-
-        self.resize(1100, 700)
-        self.setWindowTitle("Arrhythmia prediction")
-        self.show()
-
-    def show_menu(self):
-        self.setCurrentWidget(self.menu.window)
-
-    def show_predict(self):
-        self.setCurrentWidget(self.predict.window)
-
-    def show_types(self):
-        self.setCurrentWidget(self.types.window)
-
-    def show_explore(self):
-        self.setCurrentWidget(self.explore.window)
-
-    def closeEvent(self, event):
-        self.explore.closeEvent()
-        self.predict.closeEvent()
-        
-\end{lstlisting}
-
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{ui_file.png}
 	\caption{Przyk³adowy fragment pliku .ui}
@@ -257,11 +256,11 @@ Menu zawiera 4 przyciski i pozwala prze³±czaæ siê pomiêdzy g³ównymi widokami. Ka
 	\label{fig:menu}
 \end{figure}
 
-\subsubsection{Okno predykcji}
+\subsubsection{Widok predykcji}
 
-Podstawowe i najwa¿niejsze okno w programie. Umo¿liwia ono wczytanie danych EKG z pliku w formacie .dat(domy¶lny format bazy MIT-BIH z której korzystamy) poprzez wybranie go w eksploratorze plików.
+Podstawowy i najwa¿niejszy widok w programie. Umo¿liwia on wczytanie danych EKG z pliku w formacie .dat(domy¶lny format bazy MIT-BIH z której korzystamy) poprzez wybranie go w eksploratorze plików.
  
-Na podstawie wczytanych danych generowany jest wykres podgl±du przedstawiaj±cy 6 sekundowy fragment rekordu. Wykres jest skalowany na osi Y do aktualnie wy¶wietlanych danych, tak aby by³y one zawsze dobrze widoczne. W prawym dolnym rogu tego wykresu znajduje siê mniejszy wykres, wraz z legend±, przedstawiaj±cy jak zmienia³y siê poszczególne warto¶ci predykcji na przestrzeni ostatnich 10 warto¶ci. 
+Na podstawie wczytanych danych generowany jest wykres podgl±du przedstawiaj±cy 6 sekundowy fragment rekordu EKG. Wykres jest skalowany na osi Y do aktualnie wy¶wietlanych danych, tak aby by³y one zawsze dobrze widoczne. W prawym dolnym rogu tego wykresu znajduje siê mniejszy wykres, wraz z legend±, przedstawiaj±cy jak zmienia³y siê poszczególne warto¶ci predykcji na przestrzeni ostatnich 10 warto¶ci. 
 
 \begin{figure}[h!]
 	\centering
@@ -296,7 +295,15 @@ Predykcja równie¿ inicjowana jest w innym w±tku i odbywa siê co 1 sekundê w trak
 	\label{fig:output}
 \end{figure}
 
-Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawieraj±ce logi wszystkiego co siê do tej pory dzia³o w zak³adce dotycz±cej predykcji. W oknie mamy mo¿liwo¶æ wyczyszczenia dotychczasowej historii lub zapisania jej do pliku tekstowego.
+Pod wykresem z lewej strony znajduje siê przycisk, który umo¿liwia otworzenia okna wyboru modelu predykcji. Na li¶cie znajduj± siê dostêpne modele. Po wybraniu elementu z listy obok wy¶wietlany jest opis modelu. Zatwierdzenie przyciskiem OK powoduje ustawienie odpowiedniego modelu w programie.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{models.png}
+	\caption{Okno wyboru modelu predykcji}
+	\label{fig:models}
+\end{figure}
+
+Pod przyciskiem zmiany modelu znajduje siê przycisk do wy¶wietlania logów, który umo¿liwia otworzenie okna zawieraj±cego logi wszystkiego co siê do tej pory dzia³o w zak³adce dotycz±cej predykcji. W oknie mamy mo¿liwo¶æ wyczyszczenia dotychczasowej historii lub zapisania jej do pliku tekstowego.
 
 \begin{figure}[H]
 	\centering
@@ -305,18 +312,11 @@ Dodatkowo na dole znajduje siê przycisk, który umo¿liwia otworzenie okna zawiera
 	\label{fig:logs}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.6\linewidth]{models.png}
-	\caption{Okno wyboru modelu predykcji}
-	\label{fig:models}
-\end{figure}
-
 Ca³o¶æ prezentuje siê nastêpuj±co:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\linewidth]{prediction.png}
+	\includegraphics[width=0.8\linewidth]{prediction.png}
 	\caption{Widok okna predykcji}
 	\label{fig:prediction}
 \end{figure}
@@ -325,7 +325,7 @@ Ca³o¶æ prezentuje siê nastêpuj±co:
 
 W oknie tym mamy mo¿liwo¶æ przegl±dania bardziej szczegó³owych danych. Umo¿liwia wczytanie danych z plików wraz z informacjami na temat poszczególnych uderzeñ. Na podstawie danych generowany jest wykres na którym ka¿de uderzenie jest oznaczone w odpowiedni sposób. Nad wykresem znajduje siê pasek do nawigacji po wykresie taki sam jak w oknie predykcji.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{explore.png}
 	\caption{Okno do przegl±dania oznaczonych danych}
@@ -586,7 +586,7 @@ Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
 	\item plik .atr zawieraj±cy oznaczenie typu arytmii oraz miejsce jej wyst±pienia na przebiegu EKG
 	\item plik .hea zawieraj±cy nag³ówek opisuj±cy format danych
 \end{itemize}
-
+%TODO KD dodajemy w ¿ród³ach wfdb?
 Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêzyku Python, która umo¿liwia w bardzo prosty sposób pobranie ca³ej bazy.
 
 \subsubsection{Typy arytmii}
@@ -594,7 +594,7 @@ Do pobrania danych z sieci wykorzystali¶my gotow± bibliotekê wfdb napisan± w jêz
 Baza MIT-BIH zawiera dane z oznaczeniami 15 ró¿nych typów uderzeñ serca. Jest to zbyt du¿a ilo¶æ, aby uwzglêdniaæ je wszystkie. Postanowili¶my wiêc zastosowaæ standard AAMI i przekszta³ciæ dane w odpowiedni sposób.
 
 Zawêzi³o to zbiór typów uderzeñ do 5:
-
+%TODO moza jakies krótkie opisy uderzeñ
 \begin{itemize}
 	\item N - Normal beat
 	\item SVEB- Supraventricular ectopic beat
@@ -650,13 +650,15 @@ def slice_records(records, pred_len, post_len, increment=360*60, check_pred=True
 
 Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± walidacje krzy¿ow± (z ang. K-fold cross-validation). Polega ona na tym ¿e oryginalny zbiór jest dzielony na K podzbiorów. Nastêpnie ka¿dy z nich jest brany jako zbiór testowy, a pozosta³e razem stanowi± zbiór ucz±cy. Odbywa siê wiêc K iteracji, których wyniki s± nastêpnie u¶redniane w celu uzyskania ostatecznego wyniku. W naszym wypadku jako parametr $K$ oraz ilo¶æ iteracji wybrali¶my warto¶æ 5.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{kfold.png}
-	\caption{Wizualizacja dzia³ania K-fold dla K=10}
+	\caption{Wizualizacja dzia³ania K-fold dla K=10 \cite{kfold}}
 	\label{fig:kfold}
 \end{figure}
-%obrazek z https://stats.stackexchange.com/questions/336038/question-on-double-cross-validation
+%TODO KD czy to jest dobrze zcytowany obrazek?
+%¿ród³o: http://karlrosaen.com/ml/learning-log/2016-06-20/
+%licencja: https://creativecommons.org/licenses/by-nc/4.0/
 
 \subsubsection{Metodologia oceny skuteczno¶ci}
 
@@ -680,8 +682,10 @@ W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich
 \item [Czu³o¶æ (\emph{Recall})] Czu³o¶æ dla jednej klasy to stosunek poprawnie przewidzianych pozytywów do ilo¶ci pozytywnych próbek. Podobnie jak w przypadku czu³o¶ci, dla klasyfikacji wieloklasowej jest to ¶rednia metryki jednoklasowej ze wszystkich klas. Dla naszego problemu jest to ¶rednia stosunku poprawnie przewidzianych wyst±pieñ do wszystkich arytmii.
 
 \item [Miara $F_1$ (\emph{$F_1$-Measure})] Jest to ¶rednia harmoniczna czu³o¶ci i precyzji, dziêki czemu jej warto¶æ dok³adniej odzwierciedla jako¶æ klasyfikatora ni¿ osobne metryki.
+%TODO opisac funkcje loss
 \end{description}
 
+Funkcja straty któr± wykorzystujemy to \textbf{Binary Cross-entropy}. Mierzy ona wydajno¶æ modelu klasyfikacji, która na wyj¶ciu daje warto¶ci prawdopodobieñstwa pomiêdzy 0 i 1. Jej warto¶æ ro¶nie wraz z rosn±c± ró¿nic± miêdzy warto¶ci± przewidzian± a rzeczywist±. Dla idealnego modelu warto¶æ tej funkcji by³aby równa 0.
 
 \subsubsection{Wyniki dla ró¿nych modeli}
 
@@ -689,12 +693,12 @@ Wszystkie eksperymenty przeprowadzali¶my wykorzystuj±c notatniki Jupter. Pozwoli
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{jupyter.png}
+	\includegraphics[width=0.9\linewidth]{jupyter.png}
 	\caption{Widok z notebooka Jupytera}
 	\label{fig:jupyter}
 \end{figure}
 
-\paragraph{Sieci gêste} - wyniki dla sieci gêstych sk³adaj±cych siê z kilku warstw ukrytych o ró¿nych rozmiarach oraz warstwy wyj¶ciowej.
+\paragraph{Sieci gêste} Wyniki dla sieci gêstych sk³adaj±cych siê z kilku warstw ukrytych o ró¿nych rozmiarach oraz warstwy wyj¶ciowej.
 
 Sieæ gêsta z 3 warstwami ukrytymi o szeroko¶ciach 10, 50 i 10.
 
@@ -767,7 +771,7 @@ Rozmiar 'poolingu' & Rozmiar filtrów & Ilo¶ci filtrów & Skuteczno¶æ & MSE & Prec
 \end{tabular}
 \end{table}
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z parametrami: pool=16, warstwy=(4, 16), (16, 16)}]
 loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_error: 0.1174 (+/-0.0095), precision: 0.8013 (+/-0.0821), recall: 0.6223 (+/-0.1151), fmeasure: 0.6768 (+/-0.0526)
 \end{lstlisting}
 
@@ -788,7 +792,7 @@ loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_erro
 
 Sieæ konwolucyjna pool=16, warstwy=[(32, 16), (16, 16)]
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z parametrami: pool=16, warstwy=(32, 16), (16, 16)}]
 loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_error: 0.1178 (+/-0.0204), precision: 0.7980 (+/-0.1436), recall: 0.6589 (+/-0.1287), fmeasure: 0.6813 (+/-0.0438)
 \end{lstlisting}
 
@@ -809,7 +813,7 @@ loss: 0.3688 (+/-0.0522), binary_accuracy: 0.8294 (+/-0.0351), mean_squared_erro
 
 Sieæ konwolucyjna pool=8, warstwy=[(16, 16), (8, 16), (4, 16)]
 
-\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
+\begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej z parametrami: pool=8, warstwy=(16, 16), (8, 16), (4, 16)}]
 loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_error: 0.1134 (+/-0.0218), precision: 0.8229 (+/-0.0607), recall: 0.5770 (+/-0.0925), fmeasure: 0.6546 (+/-0.0808)
 \end{lstlisting}
 
@@ -828,7 +832,7 @@ loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_erro
 	\label{fig:conv_8_16_acc}
 \end{figure}
 
-
+%TODO podsumowanie wyników !!!
 \subsection{Testy}
 
 Wraz z rozrastaniem siê projektu starali¶my siê równolegle pisaæ testy dla nowo powstaj±cych elementów. Stworzyli¶my trzy zestawy testów: dla interfejsu, dla wewnêtrznych struktur modelu oraz osobny zestaw dla warstw udostêpnianych przez model. W celu zrealizowania walidacji wybrali¶my bibliotekê Pytest. Udostêpnia bardzo prosty i nieinwazyjny model pisania testów poprzez natywne funkcje, oraz posiada du¿± ilo¶æ wtyczek rozszerzaj±cych jej mo¿liwo¶ci, miêdzy innymi o funkcjonalno¶æ testowania interfejsów Qt.
@@ -839,9 +843,8 @@ Dziêki takiemu podej¶ciu do poprawno¶ci naszej pracy byli¶my w stanie znacz±co p
 
 \begin{lstlisting}[float=h!, caption={Przyk³adowy test interfejsu}]
 def test_loading_and_plotting_predict(qtbot, manager):
-    """
-    Simple test for loading and plotting in predict window
-    """
+    # Simple test for loading and plotting in predict window
+
     predict = manager.predict
     predict.load_plot_from_file("100.dat")
     predict.set_new_plot()
@@ -858,8 +861,7 @@ def test_standard_normalizer():
     # Create random sequence of uniform values from interval [0, 1)
     length = 100
     random_uniform = np.random.rand(length)
-    # Create the normalizer to test
-    normalizer = StandardNormalizer()
+    normalizer = StandardNormalizer()  # Create the normalizer to test
     # Helper pipe to save the result
     result = None
 
@@ -868,28 +870,20 @@ def test_standard_normalizer():
         result = v
 
     endp = FunctionLayer(set_result)
-    # Connect normalizer to ending pipe
-    normalizer.set_next(endp)
-
+    normalizer.set_next(endp)  # Connect normalizer to ending pipe
     # When:
     normalizer.push_value(random_uniform)
-
     # Then:
     # Length of output sequence should be the same as input sequence
     assert len(result) == length
     # Mean should be zero
-    assert abs(result.mean()) < epsilon
+    assert abs(result.mean()) < epsilon  
     # Standard deviation should be zero
     assert abs(result.std() - 1.0) < epsilon
 \end{lstlisting}
 
 \section{\SectionTitleWorkOrganization}
 \label{sec:organizacja-pracy}
-%\emph{Struktura zespo³u (role poszczególnych osób), krótki opis i
-%  uzasadnienie przyjêtej metodyki i/lub kolejno¶ci prac, planowane i
-%  zrealizowane etapy prac ze wskazaniem udzia³u poszczególnych
-%  cz³onków zespo³u, wykorzystane praktyki i narzêdzia w zarz±dzaniu
-%  projektem.}
 
 \subsection{Charakterystyka projektu}
 
@@ -902,12 +896,13 @@ Dodatkowo aby predykcja by³a mo¿liwa musimy mieæ oznaczone dane treningowe, na k
 W sk³ad naszego zespo³u wchodzi³o dwóch studentów Informatyki. Pracê nad systemem podzielili¶my na zadania, które starali¶my siê równo podzieliæ miêdzy cz³onkami zespo³u. Dodatkowo przy dzieleniu siê prac± brali¶my pod uwagê umiejêtno¶ci, zainteresowania i do¶wiadczenie. Nad szczególnymi i kluczowymi elementami projektu pracowali¶my wspólnie.
 
 \begin{itemize}
+%TODO zaktualizowaæ
 	\item \textbf{Tomasz Nizio}	
 	
-	Implementacja redukcja szumów o niskich czêstotliwo¶ciach przy pomocy FFT, projekt ca³ego interfejsu graficznego, prze³±czanie pomiêdzy widokami, rysowanie wykresu EKG oraz nawigacja po nim, wy¶wietlanie wyników oraz logów predykcji
+	Implementacja redukcja szumów o niskich czêstotliwo¶ciach przy pomocy FFT, projekt ca³ego interfejsu graficznego, prze³±czanie pomiêdzy widokami, rysowanie wykresów oraz nawigacja po nim, wy¶wietlanie wyników oraz logów predykcji
 	\item  \textbf{Konrad Dobro¶}
 	
-	Implementacja pobierania bazy z sieci, wczytywania, interpolacji oraz normalizacji danych, podzia³ danych na treningowe i testowe, struktura silnika predykcji, testowanie ró¿nych modeli siec neuronowych, dobór parametrów wej¶cia
+	Implementacja pobierania bazy z sieci, wczytywania, interpolacji oraz normalizacji danych, podzia³ danych na treningowe i testowe, struktura silnika predykcji, testowanie ró¿nych modeli sieci neuronowych, wytrenowanie ostatecznych modeli
 	
 \end{itemize}
 
@@ -1004,7 +999,7 @@ Osi±gniête cele:
 
 \subsection{Wykorzystane narzêdzia}
 
-Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z narzêdziem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach w repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
+Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplikacje webow± \textbf{Trello}. Do komunikacji w zespole wykorzystywali¶my komunikator \textbf{Slack}, którego zintegrowali¶my z serwisem \textbf{GitHub} co sprawi³o ¿e na kana³ wysy³ane by³y informacje o zmianach w repozytorium. Sporadycznie komunikowali¶my siê równie¿ przez \textbf{Skype}.
 
 \begin{figure}[H]
 	\centering
@@ -1020,13 +1015,21 @@ Do zarz±dzania poszczególnymi zadaniami i ca³ym projektem wykorzystali¶my aplika
 	\label{fig:trello}
 \end{figure}
 
-Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}. Do jego tworzenia wykorzystywali¶my miêdzy innymi takie narzêdzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, którego pliki zosta³y zaimportowane do projektu.
+Kod wraz z dokumentacj± trzymali¶my w repozytorium \textbf{Git} na platformie \textbf{GitHub}, któr± zintegrowali¶my z narzêdziem \textbf{SemaphoreCI} odpowiedzialnym za ci±g³± integracje oraz \textbf{CodeFactor} odpowiedzialnym za styl kodu. Do jego tworzenia wykorzystywali¶my miêdzy innymi takie narzêdzia jak \textbf{PyCharm} oraz \textbf{JupyterNotebook}, którego pliki zosta³y zaimportowane do projektu.
+
+%TODO mo¿e dodac tez screen z codefactor
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{semaphore.png}
+	\caption{Zrzut z SemaphoreCI}
+	\label{fig:semaphore}
+\end{figure}
 
 Przy tworzeniu interfejsu pomocy by³ równie¿ program \textbf{QtDesigner}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{qt_designer.png}
+	\includegraphics[width=0.9\linewidth]{qt_designer.png}
 	\caption{Wygl±d programu Qt Designer}
 	\label{fig:qt_designer}
 \end{figure}
@@ -1040,10 +1043,10 @@ Diagramy rysowali¶my przy pomocy narzêdzia \textbf{draw.io} oraz \textbf{Umlet}.
 
 Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji projektu:
 \begin{itemize}
-\item wy¶wietlanie wykresu EKG - wykres jest rysowany
+\item wy¶wietlanie wykresu EKG - wykres jest rysowany na podstawie wczytanych danych
 \item mo¿liwo¶æ nawigowania po wykresie - mo¿liwe jest przesuwanie wykresu w obydwie strony, a tak¿e przeskok do wybranego fragmentu
 \item mo¿liwo¶æ odtwarzania wykresu EKG - mo¿liwe jest odtwarzanie wykresu dla wczytanych danych co symuluje pracê w czasie rzeczywistym
-\item stworzenie oraz przetestowanie skuteczno¶ci ró¿nych modeli sieci neuronowych - przetestowane modele zosta³y opisane w rozdziale 3.3.
+\item stworzenie oraz przetestowanie skuteczno¶ci ró¿nych modeli sieci neuronowych - najwa¿niejsze z przetestowanych modeli zosta³y opisane w rozdziale 3.3.
 \item zintegrowanie ostatecznych modeli z odtwarzaniem wykresu - w trakcie odtwarzania wykresu, co sekundê odbywa siê predykcja dla fragmentu EKG koñcz±cego siê w tym samym miejscu co aktualnie wy¶wietlany wykres. Wyniki predykcji wy¶wietlane s± w interfejsie, wpisywane do logów, a tak¿e wy¶wietlany jest wykres jak przebiega³a predykcja
 \item mo¿liwo¶æ przegl±dania danych z oznaczonymi typami uderzeñ - stworzyli¶my zak³adkê na której wykres wy¶wietlany jest wraz z adnotacjami przy ka¿dym uderzeniu serca 
 \item udostêpnienie informacji na temat arytmii - stworzyli¶my zak³adkê, w której znajduje siê lista arytmii wraz z ich opisami
@@ -1052,10 +1055,13 @@ Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji pro
 \subsection{Najwa¿niejsze wyniki i wnioski}
 
 % TODO Najwa¿niejsze wyniki
+Z po¶ród testowanych przez nas modeli najlepszy wynik uzyska³ model oparty o sieæ konwolucyjn± z warstw± 'poolingu' rozmiaru 8, rozmiarem filtrów 16 i ilo¶ci filtrów kolejno 16, 8, 4. Jako wej¶cie bierze on 5 minutowy fragment rekordu. Nastêpnie dokonuje normalizacji, zmniejsza czêstotliwo¶æ sygna³u do 60 Hz i usuwa szumy niskiej czêstotliwo¶ci. Wynik przewiduje w okresie przysz³ych 2 minut. Jego skuteczno¶æ wynosi 84.21\%.
+
+Zauwa¿yli¶my równie¿ ¿e sieci gêste du¿o gorzej radz± sobie z problemem predykcji arytmii na podstawie przebiegu EKG od sieci konwolucyjnych. Ich skuteczno¶æ oscyluje w okolicach 69\%. Maj± one tendencje do overfittingu. Powodem takiego stanu rzeczy jest najprawdopodobniej ogromna ilo¶æ cech w wej¶ciu jakim jest przebieg EKG, co bardzo utrudnia wykonanie predykcji. Sieci konwolucyjne jednak radz± sobie z tym problemem du¿o lepiej i osi±gaj± znacznie lepsze wyniki. Skuteczno¶æ sieci konwolucyjnych oscyluje w okolicy 83\%.
 
 \subsection{Mo¿liwo¶ci rozwoju}
 
-Pomimo, i¿ wszystkie postawione wymagania zosta³y spe³nione to w naszej opinii projekt wci±¿ mo¿e byæ znacz±co rozszerzony. W trakcie tworzenia systemu znajdowali¶my pewne aspekty, których nie byli¶my w stanie bardziej rozbudowaæ, ze wzglêdu na czynniki takie jak ograniczenia czasowe lub konieczno¶æ dostêpu do niepublicznych baz danych, skupili¶my siê wiêc przede wszystkim na dostarczeniu wymaganej funkcjonalno¶ci. Poni¿ej znajduj± siê proponowane przez nas mo¿liwo¶ci rozwoju stworzonego systemu.
+Pomimo, i¿ wszystkie postawione wymagania zosta³y spe³nione, to w naszej opinii projekt wci±¿ mo¿e byæ znacz±co rozszerzony. W trakcie tworzenia systemu znajdowali¶my pewne aspekty, których nie byli¶my w stanie bardziej rozbudowaæ, ze wzglêdu na czynniki takie jak ograniczenia czasowe lub konieczno¶æ dostêpu do niepublicznych baz danych, skupili¶my siê wiêc przede wszystkim na dostarczeniu wymaganej funkcjonalno¶ci. Poni¿ej znajduj± siê proponowane przez nas mo¿liwo¶ci rozwoju stworzonego systemu.
 
 \begin{itemize}
 \item \textbf{Inne formaty danych}: Do systemu mo¿na dodaæ obs³ugê wczytywania danych z plików o innych formatach ni¿ zrealizowane przez nas lub nawet pobieranie danych w czasie rzeczywistym z odpowiednich urz±dzeñ.
@@ -1069,12 +1075,12 @@ Uwa¿amy, ¿e stworzony przez nas system, dziêki zastosowaniu praktyk takich jak c
 
 \subsection{Podsumowanie}
 
-W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe³niaj±c± za³o¿one wymagania. Przetestowali¶my równie¿ skuteczno¶æ predykcji arytmii przez ró¿ne modele predykcji.
+W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe³niaj±c± za³o¿one wymagania. Zarówno interfejs jaki i model predykcji spe³niaj± swoje zadanie. Uda³o nam siê równie¿ zbadaæ skuteczno¶æ predykcji arytmii przez ró¿ne modele predykcji. Projekt dostarcza równie¿ spore mo¿liwo¶ci je¿eli chodzi o rozwijanie i udoskonalania. 
 
-Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my cenne do¶wiadczenie pracy w zespole. Nauczyli¶my siê sprawnie rozwi±zywaæ problemy pojawiaj±ce siê w trakcie rozwoju projeku. Poznali¶my te¿ nowe technologie, które zosta³y wykorzystane przy tworzeniu systemu.
+Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my cenne do¶wiadczenie pracy w zespole. Nauczyli¶my siê sprawnie rozwi±zywaæ problemy pojawiaj±ce siê w trakcie rozwoju projektu. Poznali¶my te¿ nowe technologie, które zosta³y wykorzystane przy tworzeniu systemu.
 
-Jeste¶my zadowoleni z efektu koñcowego naszej pracy.
-
+Z koñcowego efektu naszej pracy jeste¶my jak najbardziej zadowoleni.
+%TODO KD mozesz cos dopisac bo krótko
 
 
 % Tak dla pewno¶ci, ¿eby wypisa³y siê wszystkie materia³y, które mamy.
