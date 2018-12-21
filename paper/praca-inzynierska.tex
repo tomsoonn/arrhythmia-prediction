@@ -16,6 +16,7 @@
 
 \renewcommand{\arraystretch}{1.3}
 \renewcommand{\lstlistingname}{Fragment}
+\newcommand{\sectionbreak}{\clearpage} 
 
 \lstdefinestyle{custompy}{
 	language=python,
@@ -390,12 +391,9 @@ W trakcie tworzenia nowych silników predykcji stworzone zosta³y odpowiednie wars
 
 \paragraph{StandardNormalizer} Jest to warstwa dokonuj±ca normalizacji danych za pomoc± tzw. \emph{standaryzacji Z}. Wzór okre¶laj±cy ten rodzaj normalizacji to $f(x) = \frac{x - \overline{x}}{x_{\sigma}}$, gdzie $\overline{x}$ to warto¶æ ¶rednia, za¶ $x_\sigma$ to odchylenie standardowe. Dziêki zastosowaniu takiej normalizacji wyj¶ciowe warto¶ci posiadaj± ¶redni± równ± zero, za¶ odchylenie standardowe równe jeden. Ten rodzaj normalizacji jest szczególnie przydatny przy przetwarzaniu danych dla sieci neuronowych z warstwami zawieraj±cymi jako aktywacje funkcjê \emph{ReLU - Rectified Linear Unit}.
 
-% TODO Wstawiæ rysunek prezentuj±cy dzia³anie i mo¿e kod
-
 \paragraph{Downsampler} Warstwa odpowiadaj±ca za redukcjê czêstotliwo¶ci. Dziêki jej zastosowaniu jeste¶my w stanie znacz±co przy¶pieszyæ dzia³anie sieci neuronowej oraz zmniejszyæ wymiarowo¶æ danych. Oba te efekty pomagaj± zredukowaæ wp³yw \emph{przekleñstwa wymiaru} spowodowanego ogromn± ilo¶ci± cech w wej¶ciowym fragmencie EKG. Dodatkowo zmniejszenie ilo¶ci próbek pozwala usun±æ szum w wysokich czêstotliwo¶ciach spowodowany przez zak³ócenia elektroniczne lub niedoskona³o¶ci w trakcie analogowego zapisu i pó¼niejszej digitalizacji.
 Rysunek \ref{fig:downsampling} prezentuje efekt redukcji czêstotliwo¶ci na przyk³adzie piêciosekundowego wycinka wykresu.
 
-% TODO Wykonaæ wykres z wiêksz± rozdzielczo¶ci±, poprawiæ tytu³ i oznaczenia osi x.
 \begin{figure}[h!]
 	\centering
 	\captionsetup{justification=centering}
@@ -422,7 +420,7 @@ Rysunek \ref{fig:downsampling} prezentuje efekt redukcji czêstotliwo¶ci na przyk
 	\label{fig:fft_f}
 \end{figure}
 
-\paragraph{NNPredictor} Warstwa zawieraj±ca klasyfikator w postaci sieci neuronowej. Odpowiada ona za integracjê z bibliotek± Keras, w tym celu dokonuje zmiany kszta³tu danych wej¶ciowych do tego oczekiwanego przez sieæ. Wszystkie sieci u¿ywane w modelu s± wcze¶niej wytrenowane w module eksperymentów, warstwa ta wiêc wczytuje budowê sieci oraz wagi z pliku w formacie \emph{HDF5}. % TODO Dodaæ odno¶nik do opisu formatu %
+\paragraph{NNPredictor} Warstwa zawieraj±ca klasyfikator w postaci sieci neuronowej. Odpowiada ona za integracjê z bibliotek± Keras, w tym celu dokonuje zmiany kszta³tu danych wej¶ciowych do tego oczekiwanego przez sieæ. Wszystkie sieci u¿ywane w modelu s± wcze¶niej wytrenowane w module eksperymentów, warstwa ta wiêc wczytuje budowê sieci oraz wagi z pliku w formacie \emph{HDF5}.
 
 \paragraph{FunctionLayer} Pomocnicza warstwa s³u¿±ca jedynie do integracji z pozosta³ymi elementami systemu. Nie przekszta³ca ona danych, a jej jedyn± funkcjonalno¶ci± jest wywo³anie zewnêtrznej funkcji, przekazuj±c jako argument rezultat poprzednich warstw.
 
@@ -528,8 +526,6 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 	\label{fig:max_pool}
 \end{figure}
 
-% TODO Opisaæ silniki dostêpne w modelu
-
 \begin{table}[h]
 	\centering
 \begin{tabular}{l|lllll}
@@ -579,10 +575,9 @@ W naszym wypadku wykorzystali¶my warstwy \emph{max-poolingu}, które wybieraj± na
 
 \subsubsection{Baza treningowa}
 
-Jako bazê treningow± wykorzystali¶my ogólnodostêpn± bazê danych EKG z oznaczonymi danymi - MIT-BIH Arrhythmia Database. Baza ta zawiera 48 pó³-godzinnych, 2 kana³owych zapisów EKG. 23 rekordy zosta³y wybrane losowo ze zbioru 4000 24-godzinnych nagrañ. Pozosta³e 25 rekordów zosta³ wybranych z tego samego zbioru, jednak zawieraj±cych rzadsze, ale równie¿ klinicznie istotne przypadki arytmii.
+Jako bazê treningow± wykorzystali¶my ogólnodostêpn± bazê danych EKG z oznaczonymi danymi - MIT-BIH Arrhythmia Database \cite{Moody2001TheIO}\cite{physionet}. Baza ta zawiera 48 pó³-godzinnych, 2 kana³owych zapisów EKG. 23 rekordy zosta³y wybrane losowo ze zbioru 4000 24-godzinnych nagrañ. Pozosta³e 25 rekordów zosta³ wybranych z tego samego zbioru, jednak zawieraj±cych rzadsze, ale równie¿ klinicznie istotne przypadki arytmii.
 
-Rekordy zosta³y zapisane z czêstotliwo¶ci± 360 próbek na sekundê, dla ka¿dego z kana³ów z 11 bitow± rozdzielczo¶ci± w zakresie 10mV. Ka¿de nagranie zosta³o niezale¿nie oznaczone przez 2 lub wiêcej kardiologów. Sprzeczno¶ci zosta³y rozwi±zane w taki sposób aby uzyskaæ czytelne komputerowo referencje dla ka¿dego uderzenia znajduj±cego siê w bazie. W przybli¿eniu jest to 110,00 oznaczeñ w ca³ej bazie.
-%TODO ¼ród³o: MIT-BIH
+Rekordy zosta³y zapisane z czêstotliwo¶ci± 360 próbek na sekundê, dla ka¿dego z kana³ów z 11 bitow± rozdzielczo¶ci± w zakresie \SI{10}{\milli\volt}. Ka¿de nagranie zosta³o niezale¿nie oznaczone przez 2 lub wiêcej kardiologów. Sprzeczno¶ci zosta³y rozwi±zane w taki sposób aby uzyskaæ czytelne komputerowo referencje dla ka¿dego uderzenia znajduj±cego siê w bazie. W przybli¿eniu jest to 110,00 oznaczeñ w ca³ej bazie.
 
 Dla ka¿dego rekordu w bazie znajduj± siê 3 pliki:
 
@@ -627,6 +622,7 @@ def mit_to_aami(symbol):
  
 \subsubsection{Podzia³ danych}
 
+W celu uproszczenia predykcji z zapisów wybrali¶my tylko jeden kana³, który powtarza³ siê we wszystkich przypadkach - \emph{MLII}.
 Aby w pe³ni wykorzystaæ dane znajduj±ce siê w bazie, ka¿dy rekord jest dzielony na fragmenty o okre¶lonej d³ugo¶ci, wybierane co okre¶lony krok czasowy. W ten sposób otrzymujemy wiele unikalnych fragmentów stanowi±cych podci±gi ca³ego rekordu.
 
 \begin{lstlisting}[float=h!, caption={Funkcja dziel±ca rekordy na fragmenty}]
@@ -689,7 +685,8 @@ W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich
 
 \subsubsection{Wyniki dla ró¿nych modeli}
 
-Przy obrabianiu wyników poszczególnych sieci bardzo przydatne okaza³o siê narzêdzie Jupyter Notebook.
+Wszystkie eksperymenty przeprowadzali¶my wykorzystuj±c notatniki Jupter. Pozwoli³y nam one na bie¿±co wizualizowaæ rezultaty naszych modeli dziêki wy¶wietlaniu wykresów straty, dok³adno¶ci i innych metryk. Dodatkowo mo¿liwe by³o podejrzenie rezultatów i dyskusja nad nimi bez konieczno¶ci uruchamiania czasoch³onnego trenowania, tylko po to by podejrzeæ wyniki. Równie¿ z poziomu notatników zapisywali¶my gotowe sieci neuronowe do wykorzystania w modelu.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{jupyter.png}
@@ -756,9 +753,19 @@ loss: 0.5799 (+/-0.0133), binary_accuracy: 0.6900 (+/-0.0091), mean_squared_erro
 	\label{fig:dense_100_200_100_acc}
 \end{figure}
 
-\paragraph{Sieci konwolucyjne} - sieci konwolucyje %TODO KD opisy
+\paragraph{Sieci konwolucyjne} W naszym projekcie sieci konwolucyjne, które testowali¶my zbudowane by³y z naprzemiennych warstw konwolucji jednowymiarowej oraz warstw 'max-poolingu'. We wszystkich warstwach konwolucyjnych jako aktywacjê wykorzystali¶my funkcjê \emph{ReLU}. Dodatkowo na koñcu znajdowa³a siê gêsta warstwa wyj¶ciowa z aktywacj± sigmoidaln±. W ramach eksperymentów zmieniali¶my rozmiar warstw 'max-pool' oraz ilo¶æ filtrów i ich rozmiar w poszczególnych warstwach konwolucyjnych.
 
-Sieæ konwolucyjna pool=16, warstwy=[(4, 16), (16, 16)]
+Poni¿ej prezentujemy wyniki eksperymentów dla sieci przy wymiarze danych wej¶ciowych 5 minut i przedziale predykcji 2 minuty. Przed wej¶ciem do sieci zastosowali¶my redukcjê czêstotliwo¶ci do \SI{60}{\hertz}, usuniêcie szumów poni¿ej \SI{1}{\hertz} oraz normalizacjê.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{p{5em}p{4em}p{3em}lllll}
+Rozmiar 'poolingu' & Rozmiar filtrów & Ilo¶ci filtrów & Skuteczno¶æ & MSE & Precyzja & Czu³o¶æ & Miara $F_1$ \\ \hline
+16 & 16 & 4, 16    & \SI{83.82}{\percent} & $0.1174$ & $0.8013$ & $0.6223$ & $0.6768$ \\
+16 & 16 & 32, 16   & \SI{82.94}{\percent} & $0.1178$ & $0.7980$ & $0.6589$ & $0.6813$ \\
+8  & 16 & 16, 8, 4 & \SI{84.21}{\percent} & $0.1134$ & $0.8229$ & $0.5770$ & $0.6546$
+\end{tabular}
+\end{table}
 
 \begin{lstlisting}[float=h!, style=result, caption={Wyniki sieci konwolucyjnej}]
 loss: 0.3686 (+/-0.0243), binary_accuracy: 0.8382 (+/-0.0234), mean_squared_error: 0.1174 (+/-0.0095), precision: 0.8013 (+/-0.0821), recall: 0.6223 (+/-0.1151), fmeasure: 0.6768 (+/-0.0526)
@@ -824,8 +831,12 @@ loss: 0.3577 (+/-0.0553), binary_accuracy: 0.8421 (+/-0.0366), mean_squared_erro
 
 \subsection{Testy}
 
-Wraz z rozrastaniem siê projektu starali¶my siê równolegle pisaæ testy dla nowo powstaj±cych elementów. U³atwi³o to znacznie znajdowanie b³êdów i usprawni³o tworzenie projektu.
-%TODO 
+Wraz z rozrastaniem siê projektu starali¶my siê równolegle pisaæ testy dla nowo powstaj±cych elementów. Stworzyli¶my trzy zestawy testów: dla interfejsu, dla wewnêtrznych struktur modelu oraz osobny zestaw dla warstw udostêpnianych przez model. W celu zrealizowania walidacji wybrali¶my bibliotekê Pytest. Udostêpnia bardzo prosty i nieinwazyjny model pisania testów poprzez natywne funkcje, oraz posiada du¿± ilo¶æ wtyczek rozszerzaj±cych jej mo¿liwo¶ci, miêdzy innymi o funkcjonalno¶æ testowania interfejsów Qt.
+
+Dodatkowo w projekcie zastosowali¶my praktykê ci±g³ej integracji (\emph{Continuous Integration}), ca³y zestaw testów by³ automatycznie uruchamiany przed i po ka¿dej zmianie, co równie¿ po¶rednio obejmowa³o testowanie instalacji i pobierania zale¿no¶ci dla aplikacji. Co wiêcej do testów automatycznych dodali¶my równie¿ sprawdzanie jako¶ci kodu poprzez zgodno¶æ ze wskazówkami zawartymi w PEP-8\cite{pep8}. Wszystko to poparte by³o wzajemn± recenzj± kodu przez autorów.
+
+Dziêki takiemu podej¶ciu do poprawno¶ci naszej pracy byli¶my w stanie znacz±co poprawiæ jako¶æ naszego kodu oraz zmniejszyæ ilo¶æ b³êdów. B³êdy natomiast, które dostawa³y siê do aplikacji, by³y znacznie ³atwiejsze do znalezienia oraz naprawienia. Dodatkowo dziêki recenzj± przed ka¿d± zmian±, oboje znali¶my nasz wzajemny postêp prac oraz ca³o¶ciow± strukturê aplikacji. Wszystko to znacz±co zmniejszy³o czas spêdzony nad poprawianiem b³êdów, rozszerzaniem funkcjonalno¶ci oraz integracj± modu³ów.
+
 \begin{lstlisting}[float=h!, caption={Przyk³adowy test interfejsu}]
 def test_loading_and_plotting_predict(qtbot, manager):
     """
@@ -1038,24 +1049,23 @@ Uda³o nam siê zrealizowaæ nastêpuj±ce cele postawione na pocz±tku realizacji pro
 \item udostêpnienie informacji na temat arytmii - stworzyli¶my zak³adkê, w której znajduje siê lista arytmii wraz z ich opisami
 \end{itemize}
 
-\subsection{Najwa¿niejsze wyniki}
+\subsection{Najwa¿niejsze wyniki i wnioski}
 
-%TODO najlepsze wyniki z sieci
-
-\subsection{Wnioski}
-
-%TODO wnioski
+% TODO Najwa¿niejsze wyniki
 
 \subsection{Mo¿liwo¶ci rozwoju}
 
-Projekt mo¿na rozbudowaæ o nastêpuj±ce elementy:
+Pomimo, i¿ wszystkie postawione wymagania zosta³y spe³nione to w naszej opinii projekt wci±¿ mo¿e byæ znacz±co rozszerzony. W trakcie tworzenia systemu znajdowali¶my pewne aspekty, których nie byli¶my w stanie bardziej rozbudowaæ, ze wzglêdu na czynniki takie jak ograniczenia czasowe lub konieczno¶æ dostêpu do niepublicznych baz danych, skupili¶my siê wiêc przede wszystkim na dostarczeniu wymaganej funkcjonalno¶ci. Poni¿ej znajduj± siê proponowane przez nas mo¿liwo¶ci rozwoju stworzonego systemu.
+
 \begin{itemize}
-\item inne formaty danych - do systemu mo¿na dodaæ obs³ugê wczytywania danych z plików o innych formatach ni¿ zrealizowane przez nas lub nawet pobieranie danych w czasie rzeczywistym z odpowiednich urz±dzeñ
-\item inne typy arytmii - powiêkszenie bazy uwzglêdnianych rodzajów uderzeñ lub bardziej szczegó³owy podzia³ na poszczególne rodzaje
-\item nowe modele - poszerzenie listy dostêpnych modeli predykcji o nowe modele, byæ mo¿e skuteczniejsze\
-\item rysowanie wykresów - optymalizacja rysowania wykresów, zastosowanie grafiki wektorowej
-%TODO rozszerzyæ
+\item \textbf{Inne formaty danych}: Do systemu mo¿na dodaæ obs³ugê wczytywania danych z plików o innych formatach ni¿ zrealizowane przez nas lub nawet pobieranie danych w czasie rzeczywistym z odpowiednich urz±dzeñ.
+\item \textbf{Inne typy arytmii}: Bazê uwzglêdnianych rodzajów uderzeñ mo¿na znacz±co rozszerzyæ, np. poprzez bardziej szczegó³owe podzielenie wykorzystanych przez nas klas. Wymaga³o by to jednak dostêpu do znacznie bardziej rozbudowanej bazy danych, poniewa¿ w³a¶nie brak wystarczaj±cej ilo¶ci przypadków ogranicza³ nasze decyzje w tym zakresie.
+\item \textbf{Nowe rodzaje klasyfikatorów}: Dodanie silników predykcji wykorzystuj±cych klasyfikatory inne ni¿ sieci neuronowe, np. SVM.
+\item \textbf{Zmiana bazy treningowej}: Wytrenowanie istniej±cych sieci neuronowych na bardziej rozbudowanej bazie danych mog³oby podnie¶æ skuteczno¶æ predykcji, jednak obecnie brak jest publicznie dostêpnych i wiêkszych baz zapisów EKG.
+\item \textbf{Rysowanie wykresów}: Rysowanie wykresów mo¿e zostaæ usprawnione poprzez zastosowanie grafiki wektorowej, co wi±za³oby siê ze zmian± wykorzystywanej biblioteki.
 \end{itemize}
+
+Uwa¿amy, ¿e stworzony przez nas system, dziêki zastosowaniu praktyk takich jak ci±g³a integracja czy recenzje kodu, dobrze nadaje siê do rozbudowywania funkcjonalno¶ci.
 
 \subsection{Podsumowanie}
 
