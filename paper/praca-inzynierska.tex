@@ -286,7 +286,7 @@ Dodatkowo po wczytaniu danych wy¶wietlana jest nazwa rekordu oraz maksymalna war
 \end{figure}
 
 Pod wykresem z prawej strony znajduje siê pasek wy¶wietlaj±cy warto¶ci, które na wyj¶ciu daje model predykcji dla aktualnych danych. Rozwa¿amy 3 typy arytmii o oznaczeniach: SVEB, VEB oraz F.
-Predykcja równie¿ inicjowana jest w innym w±tku i odbywa siê co 1 sekundê w trakcie odtwarzania wykresu.
+Predykcja równie¿ inicjowana jest w innym w±tku i odbywa siê co 1 sekundê w trakcie odtwarzania wykresu, o ile liczba danych jest ju¿ wystarczaj±ca dla wybranego modelu predykcji.
 
 \begin{figure}[H]
 	\centering
@@ -662,7 +662,7 @@ Dziel±c dane na treningowe i testowe zdecydowali¶my siê zastosowaæ K-krotn± wali
 
 \subsubsection{Metodologia oceny skuteczno¶ci}
 
-Klasyfikujemy cztery klasy uderzeñ serca:
+W ramach predykcji klasyfikujemy trzy rodzaje arytmii. Klasyfikacjê nieznanych uderzeñ (Q) pominêli¶my ze wzglêdu na zbyt ma³± ilo¶æ danych, co jest zgodne ze standardem AAMI. Predykcjê traktujemy jako uderzenie normalne wówczas gdy sieæ nie przewiduje wyst±pienia ¿adnej arytmii. Rodzaje uderzeñ, które uwzglêdniamy to:
 \begin{itemize}
 \item Nadkomorowy skurcz dodatkowy (SVEB)
 \item Komorowy skurcz dodatkowy (VEB)
@@ -688,6 +688,8 @@ W celu oceny skuteczno¶ci naszych predykcji konieczne by³o wybranie odpowiednich
 Funkcja straty któr± wykorzystujemy to \textbf{Binary Cross-entropy}. Mierzy ona wydajno¶æ modelu klasyfikacji, która na wyj¶ciu daje warto¶ci prawdopodobieñstwa pomiêdzy 0 i 1. Jej warto¶æ ro¶nie wraz z rosn±c± ró¿nic± miêdzy warto¶ci± przewidzian± a rzeczywist±. Dla idealnego modelu warto¶æ tej funkcji by³aby równa 0.
 
 \subsubsection{Wyniki dla ró¿nych modeli}
+
+W tym rozdziale opisujemy wyniki najwa¿niejszych testowanych przez nas modeli. Najlepsze z nich zosta³y wybrane do ostatecznej wersji aplikacji.
 
 Wszystkie eksperymenty przeprowadzali¶my wykorzystuj±c notatniki Jupter. Pozwoli³y nam one na bie¿±co wizualizowaæ rezultaty naszych modeli dziêki wy¶wietlaniu wykresów straty, dok³adno¶ci i innych metryk. Dodatkowo mo¿liwe by³o podejrzenie rezultatów i dyskusja nad nimi bez konieczno¶ci uruchamiania czasoch³onnego trenowania, tylko po to by podejrzeæ wyniki. Równie¿ z poziomu notatników zapisywali¶my gotowe sieci neuronowe do wykorzystania w modelu.
 
@@ -848,8 +850,9 @@ Dziêki takiemu podej¶ciu do poprawno¶ci naszej pracy byli¶my w stanie znacz±co p
 
 \begin{lstlisting}[float=h!, caption={Przyk³adowy test interfejsu}]
 def test_loading_and_plotting_predict(qtbot, manager):
-    # Simple test for loading and plotting in predict window
-
+	'''
+    Simple test for loading and plotting in predict window
+	'''
     predict = manager.predict
     predict.load_plot_from_file("100.dat")
     predict.set_new_plot()
@@ -866,7 +869,8 @@ def test_standard_normalizer():
     # Create random sequence of uniform values from interval [0, 1)
     length = 100
     random_uniform = np.random.rand(length)
-    normalizer = StandardNormalizer()  # Create the normalizer to test
+    # Create the normalizer to test
+    normalizer = StandardNormalizer()  
     # Helper pipe to save the result
     result = None
 
@@ -876,8 +880,10 @@ def test_standard_normalizer():
 
     endp = FunctionLayer(set_result)
     normalizer.set_next(endp)  # Connect normalizer to ending pipe
+    
     # When:
     normalizer.push_value(random_uniform)
+    
     # Then:
     # Length of output sequence should be the same as input sequence
     assert len(result) == length
@@ -1080,7 +1086,7 @@ Uwa¿amy, ¿e stworzony przez nas system, dziêki zastosowaniu praktyk takich jak c
 
 \subsection{Podsumowanie}
 
-W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe³niaj±c± za³o¿one wymagania. Zarówno interfejs jaki i model predykcji spe³niaj± swoje zadanie. Uda³o nam siê równie¿ zbadaæ skuteczno¶æ predykcji arytmii przez ró¿ne modele predykcji. Projekt dostarcza równie¿ spore mo¿liwo¶ci je¿eli chodzi o rozwijanie i udoskonalania. 
+W ramach tej pracy in¿ynierskiej uda³o nam siê stworzyæ aplikacjê desktopow± spe³niaj±c± za³o¿one wymagania. W programie dostêpne s± 4 modele predykcji: 2 oparte o sieci gêste oraz 2 oparte o sieci konwolucyjne. Zarówno interfejs jaki i modele predykcji spe³niaj± swoje zadanie. Uda³o nam siê równie¿ zbadaæ skuteczno¶æ predykcji arytmii przez ró¿ne modele predykcji. Projekt dostarcza równie¿ spore mo¿liwo¶ci je¿eli chodzi o rozwijanie i udoskonalania. 
 
 Praca nad projektem pozwoli³a nam siê du¿o nauczyæ. Przede wszystkim zdobyli¶my cenne do¶wiadczenie pracy w zespole. Nauczyli¶my siê sprawnie rozwi±zywaæ problemy pojawiaj±ce siê w trakcie rozwoju projektu. Poznali¶my te¿ nowe technologie, które zosta³y wykorzystane przy tworzeniu systemu.
 
