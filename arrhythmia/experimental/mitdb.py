@@ -18,7 +18,7 @@ data_dir = os.path.join(arrhythmia_root, db_dir)
 
 
 def download_mitdb():
-    wfdb.dl_database('mitdb', data_dir)
+    wfdb.dl_database('mitdb', data_dir, overwrite=False)
 
 
 ds1 = ['101', '106', '108', '109', '112', '114', '115', '116', '118', '119', '122',
@@ -56,7 +56,6 @@ def mit_to_aami(symbol):
         if symbol in value:
             return key
     return None
-
 
 if __name__ == '__main__':
     download_mitdb()
