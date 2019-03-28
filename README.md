@@ -4,32 +4,30 @@
 
 * Python 3.6
 * Tensorflow 1.8.0
-* Keras 2.1.6
+* Keras 2.2.4
 * wfdb 2.1.1
+* PySide2 5.11.2
 
+Dodatkowo w celu uruchomienia testów wymagana jest bibliotek pytest oraz
+wtyczka pytest-qt w celu przetestowania UI.
+
+Aby uruchomić eksperymentalne notatniki konieczna jest biblioteka Jupyter.
 
 ## Struktura
 
-paper - praca inżynierska
-
-arrhythmia - kod źródłowy
+* paper - praca inżynierska
+* arrhythmia - kod źródłowy:
+  * arrhythmia/interface
+  * arrhythmia/model
+  * arrhythmia/test
 
 ## Środowisko
 
-Zalecanym narzędziem do zarządzania środowiskiem jest Conda, plik opisujący wszystkie wymagane biblioteki to [environment.yml](environment.yml).
-Na chwilę obecną jest on przygotowany dla systemu Windows, dla systemu Linux należy ręcznie utworzyć środowisko i dodać wszystkie wymagane zależności.
+Wszystkie wymagane zależności znajdują się w pliku `requirements.txt`.
 
-Najpierw należy zaimportować środowisko:
-```
-conda env create -f environment.yml
-```
+W celu ich zainstalowania należy użyć komendy `pip install -r requirements.txt`.
 
-Aby aktywować środowisko:
-
-```
-activate arrhythmia_py36
-```
-
-
+Dodatkowo zalecane jest wcześniejsze utworzenie osobnego środowiska
+na przykład korzystając z narzędzia Anaconda.
 
 # Predicting cardiac arrhythmia using machine learning
