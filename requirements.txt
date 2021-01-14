@@ -46,7 +46,7 @@ tensorboard==1.8.0
 tensorflow==2.3.1
 termcolor==1.1.0
 Theano==1.0.2
-urllib3==1.23
+urllib3==1.24.2
 webencodings==0.5.1
 Werkzeug==0.14.1
 wfdb==2.1.1
