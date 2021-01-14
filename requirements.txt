@@ -37,7 +37,7 @@ pytest-qt==3.2.1
 python-dateutil==2.7.3
 pytz==2018.4
 PyYAML==3.12
-requests==2.19.0
+requests==2.20.0
 scikit-learn==0.19.1
 scipy==1.1.0
 six==1.11.0
