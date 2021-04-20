@@ -27,7 +27,7 @@ numpy==1.14.3
 pandas==0.23.1
 pluggy==0.7.1
 protobuf==3.5.2
-py==1.6.0
+py==1.10.0
 # pygpu==0.7.6 TODO Resolve version conflicts
 pyparsing==2.2.0
 pyreadline==2.1
