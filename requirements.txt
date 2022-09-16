@@ -15,7 +15,7 @@ html5lib==0.9999999
 idna==2.7
 Keras==2.2.4
 kiwisolver==1.0.1
-mako==1.0.7
+mako==1.2.2
 Markdown==2.6.11
 MarkupSafe==1.0
 matplotlib==3.0.2
